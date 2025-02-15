@@ -33,7 +33,7 @@ export default function Login() {
               ))}
             </div>
           )}
-          <div className="mb-4 mt-4">
+          <div className="mb-4">
             <label
               htmlFor="username"
               className="block mb-2 text-sm font-medium text-gray-600"
