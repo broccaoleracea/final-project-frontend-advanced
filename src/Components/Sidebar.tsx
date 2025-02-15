@@ -27,7 +27,7 @@ const Sidebar = () => {
           <li>
             <a
               href="/home"
-              className="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-[#038549] hover:text-gray-100 transition duration-300 ease-in-out"
+              className="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-[#4c9a75] hover:text-gray-100 transition duration-300 ease-in-out"
             >
               <svg
                 aria-hidden="true"
