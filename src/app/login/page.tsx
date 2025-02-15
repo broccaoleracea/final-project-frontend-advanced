@@ -22,7 +22,7 @@ export default function Login() {
       Heading yang sangat keren
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <form
-          onSubmit={onSubmit}
+          onSubmit={onsubmit}
           className="w-full max-w-sm p-6 rounded-lg bg-white shadow-md"
         >
           <h1 className="mb-6 text-xl font-bold text-gray-800">Login</h1>

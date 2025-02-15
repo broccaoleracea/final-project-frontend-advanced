@@ -28,8 +28,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Sidebar/>
-        {children}
+        <div className="flex w-100">
+          <Sidebar />
+
+        {children}</div>
       </body>
       <script src="node_modules\flowbite\dist\flowbite.min.js"></script>
     </html>

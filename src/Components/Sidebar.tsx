@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      className=" min-w-64 top-0 left-0 z-40 w-64 h-100 transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       {/* Background dengan efek shadow */}
@@ -26,7 +26,7 @@ const Sidebar = () => {
           {/* Dashboard */}
           <li>
             <a
-              href="#"
+              href="/home"
               className="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-[#038549] hover:text-gray-100 transition duration-300 ease-in-out"
             >
               <svg
@@ -39,7 +39,7 @@ const Sidebar = () => {
                 <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                 <path d="M12 2.252A8.001 8.001 0 0117.748 8H12V2.252z"></path>
               </svg>
-              <span className="ml-3">Dashboard</span>
+              <span className="ml-3">HOME</span>
             </a>
           </li>
 
