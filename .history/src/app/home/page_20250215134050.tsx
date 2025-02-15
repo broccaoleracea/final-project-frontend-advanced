@@ -1,11 +1,10 @@
-import Card from "@/Components/Card";
 import React from "react";
 
 const Home = () => {
   return (
-    <div className=" bg-gray">
+    <div className=" bg-gray-100">
       <div className="mx-auto flex justify-center">
-        <div className="w-full max-w-9xl bg-gray-900 text-white py-20 mt-4 rounded-lg shadow-2xl">
+        <div className="w-full mx-9 bg-gray-900 text-white max-w-9xl py-20 mt-4 rounded-lg shadow-2xl">
           <div className="px-1 text-center">
             <h1 className="text-2xl font-bold mb-4">Welcome to My Website</h1>
             <p className="text-sm mb-8">
@@ -18,15 +17,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <h2 className="font-bold text-3xl text-white mb-6 text-center"></h2>
-      <div className="flex gap-2 overflow-scroll">
-
-        <Card
-          title={"Nama alat"}
-          price={"harga peminjaman"}
-          description={"deskripsi produk"}
-        />
 
       {/* Features Section */}
       <section className="py-16">
@@ -102,7 +92,7 @@ const Home = () => {
         </div>
       </section>
 
-      </div>
+      {/* Footer */}
     </div>
   );
 };

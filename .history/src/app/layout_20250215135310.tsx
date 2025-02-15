@@ -29,13 +29,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full w-full`}
       >
-        <div className="h-screen w-screen">
-          <div className="flex w-full h-full">
-            <Sidebar />
-            <div className="h-full w-full">
-              {children}
-              <Footer />
-            </div>
+        <div className="">
+          
+        </div>
+        <div className="flex w-full h-full">
+          <Sidebar />
+          <div>
+          {children}
+            <Footer />
           </div>
         </div>
       </body>

@@ -1,9 +1,9 @@
-import Card from "@/Components/Card";
 import React from "react";
 
 const Home = () => {
   return (
-    <div className=" bg-gray">
+    <div className="ml-64 p-4 min-h-screen bg-gray-100 overflow-y-auto">
+      {/* Welcome Section */}
       <div className="mx-auto flex justify-center">
         <div className="w-full max-w-9xl bg-gray-900 text-white py-20 mt-4 rounded-lg shadow-2xl">
           <div className="px-1 text-center">
@@ -18,15 +18,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <h2 className="font-bold text-3xl text-white mb-6 text-center"></h2>
-      <div className="flex gap-2 overflow-scroll">
-
-        <Card
-          title={"Nama alat"}
-          price={"harga peminjaman"}
-          description={"deskripsi produk"}
-        />
 
       {/* Features Section */}
       <section className="py-16">
@@ -54,7 +45,6 @@ const Home = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
-
             {/* Feature 2 */}
             <div className="text-center">
               <svg
@@ -76,7 +66,6 @@ const Home = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
-
             {/* Feature 3 */}
             <div className="text-center">
               <svg
@@ -101,8 +90,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      </div>
     </div>
   );
 };
