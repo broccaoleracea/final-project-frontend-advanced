@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function kategori () {
+export default kategori = () => {
   return (
     <div>
         <p>Halaman ini Kategori</p>

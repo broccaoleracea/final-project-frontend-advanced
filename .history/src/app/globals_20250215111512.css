@@ -1,7 +1,7 @@
-@import "../../node_modules/flowbite/src/themes/default.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "flowbite/src/themes/default";
 @source "../node_modules/flowbite";
 @plugin "flowbite/plugin"
 

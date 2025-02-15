@@ -1,9 +1,7 @@
-@import "../../node_modules/flowbite/src/themes/default.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@source "../node_modules/flowbite";
-@plugin "flowbite/plugin"
+@import "flowbite/src/themes/default";
 
 :root {
   --background: #ffffff;
