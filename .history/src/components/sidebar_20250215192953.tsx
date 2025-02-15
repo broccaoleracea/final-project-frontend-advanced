@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto bg-[#000000] shadow-lg"
+      className="fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto bg-[#274538] shadow-lg"
       aria-label="Sidebar"
     >
       {/* Background dengan efek shadow */}
@@ -20,6 +20,7 @@ const Sidebar = () => {
             Flowbite
           </span>
         </a>
+
         {/* Menu Items */}
         <ul className="space-y-2">
           {/* Dashboard */}
@@ -41,6 +42,7 @@ const Sidebar = () => {
               <span className="ml-3">HOME</span>
             </a>
           </li>
+
           {/* Kategori */}
           <li>
             <a
