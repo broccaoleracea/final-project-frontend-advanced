@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto bg-[#1b162d] shadow-lg"
+      className="fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto bg-[#1b162d  ] shadow-lg"
       aria-label="Sidebar"
     >
       {/* Background dengan efek shadow */}
