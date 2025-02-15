@@ -29,16 +29,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-<<<<<<< HEAD
         <div className="flex w-100">
-          <Sidebar />
-
-        {children}</div>
-=======
+          
+       
         <Sidebar/>
         {children}
         <Footer/>
->>>>>>> aefb5e8f01a8d2fd687abaa0baada7bbe47be6e8
+        </div>
       </body>
       <script src="node_modules\flowbite\dist\flowbite.min.js"></script>
     </html>
