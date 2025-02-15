@@ -19,7 +19,7 @@ export default function Login() {
   };
   return (
     <div>
-      Heading
+      Heading tidak keren :(
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <form
           onSubmit={onSubmit}
