@@ -31,7 +31,7 @@ const Home = () => {
         {/* Hero Section */}
         <div className="bg-yellow-400 w-full max-w-5xl py-10 px-6 rounded-xl shadow-lg flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-extrabold mb-2 text-black">Hello Sarah!</h1>
+            <h1 className="text-3xl font-extrabold mb-2 text-black">Hello User!</h1>
             <p className="text-gray-700">Lorem Ipsum is simply dummy text of the printing industry.</p>
             <button className="mt-4 bg-black text-white font-bold py-2 px-6 rounded-lg shadow-md">Write new post</button>
           </div>

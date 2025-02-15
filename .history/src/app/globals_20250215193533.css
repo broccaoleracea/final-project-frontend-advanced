@@ -1,0 +1,23 @@
+@import "../../node_modules/flowbite/src/themes/default.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@source "../node_modules/flowbite";
+@plugin "flowbite/plugin"
+
+:root {
+  
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
