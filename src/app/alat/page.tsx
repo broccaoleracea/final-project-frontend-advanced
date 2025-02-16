@@ -9,17 +9,25 @@ const Page = () => {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 p-8">
-      <div className="w-full max-w-6xl bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-gray-200">
-        {/* Header */}
-        <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-500 text-transparent bg-clip-text">Daftar Barang</span>
-        </h2>
+    <div className="ml-64 flex min-h-screen bg-gray-100">
+      {/* Content */}
+      <div className="w-full p-8">
+        {/* Statistik */}
+        <div className="grid grid-cols-4 gap-6 mb-8">
+          {data.map((item) => (
+            <div key={item.id} className="bg-green-50 shadow-md p-6 rounded-xl">
+              <div>
+                <h3 className="text-lg font-semibold ">{item.nama}</h3>
+                <p className="text-gray-500">Stok: {item.stok}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* Tabel */}
-        <div className="overflow-hidden border border-gray-300 rounded-lg shadow-lg">
+        <div className="overflow-hidden border border-gray-100 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
-            <thead className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+            <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
                 <th className="py-5 px-8 text-left font-semibold">Kategori</th>
                 <th className="py-5 px-8 text-left font-semibold">Nama Barang</th>
@@ -32,14 +40,14 @@ const Page = () => {
                 <tr
                   key={item.id}
                   className={`transition-all duration-300 ${
-                    index % 2 === 0 ? "bg-gray-100" : "bg-gray-50"
-                  } hover:bg-indigo-100 hover:scale-105`}
+                    index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                  } hover:bg-indigo-50 hover:scale-105`}
                 >
                   <td className="py-6 px-8 border-b text-gray-700 font-medium">{item.kategori}</td>
                   <td className="py-6 px-8 border-b text-gray-700 font-semibold">{item.nama}</td>
                   <td className="py-6 px-8 border-b text-center">
                     <span className={`px-4 py-2 text-base font-semibold rounded-full shadow-md ${
-                      item.stok > 10 ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"
+                      item.stok > 10 ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
                     }`}>
                       {item.stok}
                     </span>
