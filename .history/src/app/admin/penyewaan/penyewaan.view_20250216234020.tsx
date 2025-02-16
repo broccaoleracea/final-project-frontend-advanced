@@ -39,8 +39,8 @@ const PenyewaanView = () => {
             <div key={item.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col">
               <h2 className="text-xl font-semibold">{item.name}</h2>
               <p className="text-gray-500">{item.category}</p>
-              <p className="text-gray-700 font-medium">Tgl Sewa: {item.penyewaan_tglSewa}</p>
-              <p className="text-gray-700 font-medium">Tgl Kembali: {item.penyewaan_tglKembali}</p>
+              <p className="text-gray-700 font-medium">tgl sewa: {item.penyewaan_tglSewa}</p>
+              <p className="text-gray-700 font-medium">tgl kembali: {item.penyewaan_tglKembali}</p>
               <p className="text-gray-700 font-medium">Penyewa: {item.penyewaan_pelanggan_id}</p>
               <span
                 className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
