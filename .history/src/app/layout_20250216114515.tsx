@@ -11,7 +11,7 @@ import Footer from "@/Components/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-}); 
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -37,7 +37,7 @@ export default function RootLayout({
           <div className="flex w-full h-full">
             <Sidebar />
             <div className="h-full w-full">
-              <Providers>{children}</Providers>
+              <Provider{children}
               <Footer />
             </div>
           </div>
