@@ -5,13 +5,14 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
 import {Providers} from "@/providers/Providers";
-import Sidebar from "@/Components/Sidebar";
-import Footer from "@/Components/Footer";
+import Sidebar from "@/Components/Sidebar/Sidebar";
+import Footer from "@/Components/Footer/Footer";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+}); 
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -37,13 +38,13 @@ export default function RootLayout({
           <div className="flex w-full h-full">
             <Sidebar />
             <div className="h-full w-full">
-              {children}
+              <Providers>{children}</Providers>
               <Footer />
             </div>
           </div>
         </div>
       </body>
-      <script src="node_modules\flowbite\dist\flowbite.min.js"></script>
+      <Script src="node_modules\flowbite\dist\flowbite.min.js"></Script>
     </html>
   );
 }
