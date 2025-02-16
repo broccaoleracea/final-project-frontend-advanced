@@ -39,7 +39,7 @@ const KategoriView = () => {
   const kategori = kategoriResponse?.data || [];
 
   return (
-    <div className=" p-4 min-h-screen bg-gray-100 overflow-y-auto">
+    <div className="ml-64 p-4 min-h-screen bg-gray-100 overflow-y-auto">
       {/* Hero Section */}
       <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt-10">
         <h1 className="text-3xl font-extrabold text-black">Selamat Datang di Halaman Kategori</h1>

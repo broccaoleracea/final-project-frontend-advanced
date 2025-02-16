@@ -35,7 +35,7 @@ export default function RegisterForm() {
           {/* Header */}
           <div>
             <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900">
-              Create Your Account
+              Daftar
             </h2>
           </div>
 

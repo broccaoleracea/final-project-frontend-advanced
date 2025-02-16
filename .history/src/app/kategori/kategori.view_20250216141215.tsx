@@ -1,40 +1,20 @@
-"use client"; // Directive untuk menandai Client Component
-import React, { useState } from 'react';
+import React from 'react';
 
-export default function Kategori() {
-  // Data barang elektronik
-  const [barang, setBarang] = useState([
-    { id: 1, nama: 'Lampu LED', kategori: 'pencahayaan', tersedia: true },
-    { id: 2, nama: 'AC Split', kategori: 'pendingin ruangan', tersedia: true },
-    { id: 3, nama: 'Kamera DSLR', kategori: 'kamera', tersedia: false },
-    { id: 4, nama: 'Smartphone X', kategori: 'handphone', tersedia: true },
-    { id: 5, nama: 'Laptop Pro', kategori: 'laptop', tersedia: true },
-    { id: 6, nama: 'Lampu Bohlam', kategori: 'pencahayaan', tersedia: false },
-    { id: 7, nama: 'Kipas Angin', kategori: 'pendingin ruangan', tersedia: true },
-    { id: 8, nama: 'Kamera Mirrorless', kategori: 'kamera', tersedia: true },
-    { id: 9, nama: 'Smartphone Y', kategori: 'handphone', tersedia: false },
-    { id: 10, nama: 'Laptop Gaming', kategori: 'laptop', tersedia: true },
-  ]);
+interface KategoriViewProps {
+  mode: 'kategori' | 'barang';
+  selectedKategori: string;
+  barang: Array<{ id: number; nama: string; kategori: string; tersedia: boolean }>;
+  onKategoriClick: (kategori: string) => void;
+  onBackToKategori: () => void;
+}
 
-  // State untuk melacak mode tampilan (kategori atau barang)
-  const [mode, setMode] = useState('kategori'); // 'kategori' atau 'barang'
-  const [selectedKategori, setSelectedKategori] = useState('');
-
-  // Fungsi untuk menampilkan daftar barang berdasarkan kategori
-  const handleKategoriClick = (kategori) => {
-    setSelectedKategori(kategori);
-    setMode('barang');
-  };
-
-  // Fungsi untuk kembali ke tampilan kategori
-  const handleBackToKategori = () => {
-    setMode('kategori');
-    setSelectedKategori('');
-  };
-
-  // Filter barang berdasarkan kategori yang dipilih
-  const filteredBarang = barang.filter((item) => item.kategori === selectedKategori);
-
+const KategoriView: React.FC<KategoriViewProps> = ({
+  mode,
+  selectedKategori,
+  barang,
+  onKategoriClick,
+  onBackToKategori,
+}) => {
   return (
     <div className="ml-64 p-4 min-h-screen bg-gray-100 overflow-y-auto">
       {/* Hero Section */}
@@ -48,7 +28,7 @@ export default function Kategori() {
       {/* Tombol Kembali (jika dalam mode barang) */}
       {mode === 'barang' && (
         <button
-          onClick={handleBackToKategori}
+          onClick={onBackToKategori}
           className="flex items-center justify-center w-full md:w-auto px-6 py-2 mb-6 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 transition duration-300 ease-in-out"
         >
           <svg
@@ -75,7 +55,7 @@ export default function Kategori() {
           {['pencahayaan', 'pendingin ruangan', 'kamera', 'handphone', 'laptop'].map((kategori) => (
             <div
               key={kategori}
-              onClick={() => handleKategoriClick(kategori)}
+              onClick={() => onKategoriClick(kategori)}
               className="p-4 rounded-lg shadow-sm border border-gray-200 bg-gray-50 cursor-pointer hover:bg-gray-100 transition duration-300"
             >
               <h3 className="text-lg font-semibold text-black">{kategori.charAt(0).toUpperCase() + kategori.slice(1)}</h3>
@@ -87,8 +67,8 @@ export default function Kategori() {
       {/* Tampilan Barang */}
       {mode === 'barang' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBarang.length > 0 ? (
-            filteredBarang.map((item) => (
+          {barang.length > 0 ? (
+            barang.map((item) => (
               <div
                 key={item.id}
                 className={`p-4 rounded-lg shadow-sm border border-gray-200 ${
@@ -115,4 +95,6 @@ export default function Kategori() {
       )}
     </div>
   );
-}
+};
+
+export default KategoriView;

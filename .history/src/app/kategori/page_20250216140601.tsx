@@ -38,7 +38,7 @@ export default function Kategori() {
   return (
     <div className="ml-64 p-4 min-h-screen bg-gray-100 overflow-y-auto">
       {/* Hero Section */}
-      <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt-10 mb-10">
+      <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt">
         <h1 className="text-3xl font-extrabold text-black">Selamat Datang di Halaman Kategori</h1>
         <p className="text-gray-700 mt-2">
           Temukan barang elektronik berdasarkan kategori favorit Anda.
