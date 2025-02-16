@@ -1,56 +1,95 @@
+// app/login/RegisterForm.tsx
 "use client";
-
-import { useState, useEffect } from "react";
-import { useKategoriGetQuery } from "@/state/api/dataApi";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/hooks";
-import { setKategori } from "@/state/api/data/kategoriSlice";
-
-const KategoriView = () => {
+import { useKategoriPostMutation } from "@/state/api/dataApi";
+export default function LoginForm() {
+  const [kategori_name, kategori_name] = useState("");
   const [error, setError] = useState("");
+
+  const [post_kategori, { isLoading }] = useKategoriPostMutation();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const { data: kategoriResponse, isLoading, isError } = useKategoriGetQuery();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
 
-  useEffect(() => {
-    if (kategoriResponse) {
-      dispatch(setKategori(kategoriResponse.data));
+    try {
+      const result = await useKategoriPostMutation({ email, password }).unwrap();
+      dispatch(setCredentials(result));
+      router.push("/admin");
+    } catch (err: any) {
+      setError(err?.data?.message || "Login failed. Please try again.");
     }
-  }, [kategoriResponse, dispatch]);
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        {[...Array(5)].map((_, i) => "Loading...")}
-      </div>
-    );
-  }
-
-  if (isError) {
-    return "Gagal memuat!";
-  }
-
-  const kategori = kategoriResponse?.data || [];
+  };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {kategori.map((item) => (
-        <div
-          key={item.id}
-          className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-indigo-500 transition-colors"
-        >
-          <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-        </div>
-      ))}
+    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+              Sign in to your account
+            </h2>
+          </div>
 
-      {kategori.length === 0 && (
-        <div className="col-span-full text-center py-8 text-gray-500">
-          No categories found.
-        </div>
-      )}
+          <div className="rounded-md shadow-sm space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                placeholder="Email address"
+              />
+            </div>
 
-      {error && <div>{error}</div>}
-    </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                placeholder="Password"
+              />
+            </div>
+          </div>
+
+          {error && <div className="text-red-600">{error}</div>}
+
+          <div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Sedang masuk.." : "Masuk"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   );
-};
-
-export default KategoriView;
+}
