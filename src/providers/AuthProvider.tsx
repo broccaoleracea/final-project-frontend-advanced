@@ -1,3 +1,4 @@
+'use client';
 import { FC, ReactNode, useEffect } from 'react';
 import {useRefreshMutation} from "@/state/api/authApi";
 import {logout, setCredentials} from "@/state/api/authSlice";
