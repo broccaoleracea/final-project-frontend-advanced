@@ -95,7 +95,7 @@ const AlatView = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className="py-6 px-8 text-center text-gray-500">
+                  <td colpan="5" className="py-6 px-8 text-center text-gray-500">
                     Tidak ada alat untuk ditampilkan.
                   </td>
                 </tr>

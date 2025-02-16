@@ -1,23 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAlatGetQuery, useKategoriGetQuery } from "@/state/api/dataApi";
+import { useAlatGetQuery } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
 import { setAlat } from "@/state/api/data/alatSlice";
 
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
-  const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
-  const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
-    useKategoriGetQuery();
+  const { data: alatResponse, isLoading, isError } = useAlatGetQuery();
 
   useEffect(() => {
     if (alatResponse) {
+      console.log(alatResponse.data);
       dispatch(setAlat(alatResponse.data));
     }
   }, [alatResponse, dispatch]);
 
-  if (isAlatLoading || isKategoriLoading) {
+  if (isLoading) {
     return (
       <div className="space-y-4">
         {[...Array(5)].map((_, i) => (
@@ -27,24 +26,17 @@ const AlatView = () => {
     );
   }
 
-  if (isAlatError || isKategoriError) {
+  if (isError) {
     return <div>Gagal memuat!</div>;
   }
 
   const alat = alatResponse?.data || [];
-  const kategori = kategoriResponse?.data || [];
-
-  const alatWithKategori = alat.map((item) => {
-    const kategoriData = kategori.find((kat) => kat.kategori_id === item.alat_kategori_id);
-    return {
-      ...item,
-      kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
-    };
-  });
 
   return (
     <div className="flex min-h-screen bg-gray-100">
+      {/* Content */}
       <div className="w-full p-8">
+        {/* Tabel */}
         <div className="overflow-hidden border border-gray-100 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
@@ -57,8 +49,8 @@ const AlatView = () => {
               </tr>
             </thead>
             <tbody>
-              {alatWithKategori.length > 0 ? (
-                alatWithKategori.map((item, index) => (
+              {alat.length > 0 ? (
+                alat.map((item, index) => (
                   <tr
                     key={item.alat_id}
                     className={`transition-all duration-300 ${
@@ -66,7 +58,7 @@ const AlatView = () => {
                     } hover:bg-indigo-50`}
                   >
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.kategori_nama || "-"}
+                      {item.alat_kategori_ || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-semibold">
                       {item.alat_nama}
