@@ -66,9 +66,9 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
 const endpoints = {
   alat: "alat",
   kategori: "kategori",
-  pelanggan_data: "pelanggan_data",
+  pelanggan_data: "pelanggan/data",
   pelanggan: "pelanggan",
-  penyewaan_detail: "penyewaan_detail",
+  penyewaan_detail: "penyewaan/detail",
   penyewaan: "penyewaan",
 };
 
@@ -76,13 +76,20 @@ const apiEndpoints = (builder) => {
   return Object.keys(endpoints).reduce((acc, key) => {
     const endpoint = endpoints[key];
     acc[`${key}Get`] = builder.query({
-      query: () => ({ url: `/${endpoint}`, method: "GET" }), // Removed 'id' parameter
+      query: () => ({ url: `/${endpoint}`, method: "GET", headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, }),
     });
     acc[`${key}Post`] = builder.mutation({
       query: (data) => ({
         url: `/${endpoint}`,
         method: "POST",
         body: data,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       }),
     });
     acc[`${key}Put`] = builder.mutation({
@@ -90,12 +97,20 @@ const apiEndpoints = (builder) => {
         url: `/${endpoint}/${id}`,
         method: "PUT",
         body: data,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       }),
     });
     acc[`${key}Delete`] = builder.mutation({
       query: (id) => ({
         url: `/${endpoint}/${id}`,
         method: "DELETE",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       }),
     });
     return acc;
