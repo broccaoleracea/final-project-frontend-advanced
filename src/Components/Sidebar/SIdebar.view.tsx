@@ -17,7 +17,7 @@ const Sidebar = () => {
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-bold whitespace-nowrap text-white">
-            Flowbite
+            Flowme
           </span>
         </a>
 
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href="/penyewaan"
               className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
             >
               <svg
