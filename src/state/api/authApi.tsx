@@ -29,6 +29,10 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
             {
                 url: '/auth/refresh',
                 method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 body: { refreshToken },
             },
             api,
@@ -62,6 +66,10 @@ export const authApi = createApi({
             query: (credentials) => ({
                 url: '/login',
                 method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 body: credentials,
             }),
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -84,6 +92,10 @@ export const authApi = createApi({
             // -kat
             query: (refreshToken) => ({
                 url: '/auth/refresh',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 method: 'POST',
                 body: refreshToken,
             }),
@@ -93,6 +105,10 @@ export const authApi = createApi({
             query: (userData) => ({
                 url: '/register',
                 method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 body: userData,
             }),
         }),

@@ -4,7 +4,7 @@ import KategoriView from "./kategori.view";
 export default function KategoriPage() {
   return (
     <div>
-      <KategoriView />
+      
     </div>
   );
 }
