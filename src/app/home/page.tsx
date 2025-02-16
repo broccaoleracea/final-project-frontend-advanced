@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = ({ title, price, description }) => {
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200 text-left flex items-center justify-between">
+    <div className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200 text-left flex items-center justify-between w-full">
       {/* Informasi Produk */}
       <div>
         <h3 className="font-bold">{title}</h3>
@@ -20,9 +20,9 @@ const Card = ({ title, price, description }) => {
 
 const Home = () => {
   return (
-    <div className="bg-gray-100 min-h-screen flex justify-center">
+    <div className=" ml-64 bg-gray-100 min-h-screen flex justify-center overflow-x-auto">
       {/* Main Content */}
-      <div className="p-8 text-left max-w-5xl w-full">
+      <div className="p-8 text-left w-full max-w-none flex flex-col items-center">
         {/* Hero Section */}
         <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg flex justify-between items-center">
           <div>
@@ -39,16 +39,16 @@ const Home = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-3 gap-6 mt-6">
-          <div className="bg-blue-100 p-4 rounded-lg shadow-md">
+        <div className="grid grid-cols-3 gap-6 mt-6 w-full">
+          <div className="bg-blue-100 p-6 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-bold">$623</h3>
             <p className="text-gray-600">Total Earning</p>
           </div>
-          <div className="bg-green-100 p-4 rounded-lg shadow-md">
+          <div className="bg-green-100 p-6 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-bold">13</h3>
             <p className="text-gray-600">Articles Request</p>
           </div>
-          <div className="bg-red-100 p-4 rounded-lg shadow-md">
+          <div className="bg-red-100 p-6 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-bold">03</h3>
             <p className="text-gray-600">Pending Articles</p>
           </div>
@@ -56,7 +56,7 @@ const Home = () => {
 
         {/* Top Articles Section */}
         <h2 className="font-bold text-2xl mt-8 mb-4">THE PRODUCT</h2>
-        <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+        <div className="grid grid-cols-2 gap-4 bg-white p-6 rounded-lg shadow-md w-full">
           <Card
             title="Disney’s motion principles"
             price="19.99"
@@ -71,6 +71,11 @@ const Home = () => {
             title="Tech innovations"
             price="30.00"
             description="Exploring the latest advancements in technology."
+          />
+          <Card
+            title="New AI Trends"
+            price="35.00"
+            description="A look into the future of artificial intelligence."
           />
         </div>
       </div>
