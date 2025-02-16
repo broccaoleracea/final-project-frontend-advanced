@@ -7,6 +7,7 @@ const RentalPage = () => {
       name: "Laptop ASUS ROG",
       category: "Elektronik",
       rentalPeriod: "10 Hari",
+      renter: "Andi Wijaya",
       status: "Sedang Disewa",
     },
     {
@@ -14,6 +15,7 @@ const RentalPage = () => {
       name: "Proyektor Epson",
       category: "Elektronik",
       rentalPeriod: "5 Hari",
+      renter: "Siti Rahma",
       status: "Dikembalikan",
     },
     {
@@ -21,57 +23,34 @@ const RentalPage = () => {
       name: "Kamera Canon EOS",
       category: "Fotografi",
       rentalPeriod: "7 Hari",
+      renter: "Budi Santoso",
       status: "Sedang Disewa",
     },
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-1/4 bg-white p-6 shadow-md">
-        <h2 className="text-xl font-bold mb-6">Menu</h2>
-        <nav>
-          <ul className="space-y-4">
-            <li className="hover:text-blue-500 cursor-pointer">Dashboard</li>
-            <li className="hover:text-blue-500 cursor-pointer">Penyewaan</li>
-            <li className="hover:text-blue-500 cursor-pointer">Riwayat</li>
-            <li className="hover:text-blue-500 cursor-pointer">Pengaturan</li>
-          </ul>
-        </nav>
-      </aside>
-
+    <div className="min-h-screen bg-gray-100 flex justify-center">
       {/* Content */}
-      <main className="flex-1 p-6">
-        <h1 className="text-2xl font-bold mb-6">Daftar Barang yang Disewa</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200 text-left">
-                <th className="p-3">Nama Barang</th>
-                <th className="p-3">Kategori</th>
-                <th className="p-3">Durasi Sewa</th>
-                <th className="p-3">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rentedItems.map((item) => (
-                <tr key={item.id} className="border-t">
-                  <td className="p-3">{item.name}</td>
-                  <td className="p-3">{item.category}</td>
-                  <td className="p-3">{item.rentalPeriod}</td>
-                  <td
-                    className={`p-3 ${
-                      item.status === "Sedang Disewa"
-                        ? "text-yellow-500"
-                        : "text-green-500"
-                    }`}
-                  >
-                    {item.status}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <main className="w-full max-w-screen-lg p-6">
+        <h1 className="text-3xl font-bold mb-6 text-gray-700">Barang yang Disewa</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {rentedItems.map((item) => (
+            <div key={item.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col">
+              <h2 className="text-xl font-semibold">{item.name}</h2>
+              <p className="text-gray-500">{item.category}</p>
+              <p className="text-gray-700 font-medium">Durasi: {item.rentalPeriod}</p>
+              <p className="text-gray-700 font-medium">Penyewa: {item.renter}</p>
+              <span
+                className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
+                  item.status === "Sedang Disewa"
+                    ? "bg-yellow-200 text-yellow-800"
+                    : "bg-green-200 text-green-800"
+                }`}
+              >
+                {item.status}
+              </span>
+            </div>
+          ))}
         </div>
       </main>
     </div>

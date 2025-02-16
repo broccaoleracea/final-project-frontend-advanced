@@ -15,9 +15,9 @@ const Page = () => {
         {/* Statistik */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           {data.map((item) => (
-            <div key={item.id} className="bg-green-50 shadow-md p-6 rounded-xl">
+            <div key={item.id} className="bg-white shadow-md p-6 rounded-xl">
               <div>
-                <h3 className="text-lg font-semibold ">{item.nama}</h3>
+                <h3 className="text-lg font-semibold">{item.nama}</h3>
                 <p className="text-gray-500">Stok: {item.stok}</p>
               </div>
             </div>
@@ -33,6 +33,7 @@ const Page = () => {
                 <th className="py-5 px-8 text-left font-semibold">Nama Barang</th>
                 <th className="py-5 px-8 text-left font-semibold">Stok</th>
                 <th className="py-5 px-8 text-left font-semibold">Deskripsi</th>
+                <th className="py-5 px-8 text-left font-semibold">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +42,7 @@ const Page = () => {
                   key={item.id}
                   className={`transition-all duration-300 ${
                     index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
-                  } hover:bg-indigo-50 hover:scale-105`}
+                  } hover:bg-indigo-50`}
                 >
                   <td className="py-6 px-8 border-b text-gray-700 font-medium">{item.kategori}</td>
                   <td className="py-6 px-8 border-b text-gray-700 font-semibold">{item.nama}</td>
@@ -53,10 +54,18 @@ const Page = () => {
                     </span>
                   </td>
                   <td className="py-6 px-8 border-b text-gray-600">{item.deskripsi}</td>
+                  <td className="py-6 px-8 border-b text-center">
+                    <button className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2">Edit</button>
+                    <button className="px-4 py-2 bg-red-500 text-white rounded-md">Hapus</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+        {/* Tambah Barang */}
+        <div className="mt-6">
+          <button className="px-6 py-3 bg-green-500 text-white font-semibold rounded-md">Tambah Barang</button>
         </div>
       </div>
     </div>
