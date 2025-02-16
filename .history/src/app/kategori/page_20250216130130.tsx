@@ -38,7 +38,7 @@ export default function Kategori() {
   return (
     <div className="ml-64 p-4 min-h-screen bg-gray-100 dark:bg-gray-900 overflow-y-auto">
       {/* Header */}
-      <p className="text-xl font-bold text-center text-gray-900 dark:text-white mt-10 mb-6">
+      <p className="text-xl font-bold text-center text-gray-900 dark:text-white mb-6">
         {mode === 'kategori' ? 'Halaman Kategori Barang Elektronik' : `Barang dalam Kategori: ${selectedKategori}`}
       </p>
 
@@ -46,22 +46,8 @@ export default function Kategori() {
       {mode === 'barang' && (
         <button
           onClick={handleBackToKategori}
-          className="flex items-center justify-center w-full md:w-auto px-6 py-2 mb-6 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
+          className="mb-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
           Kembali ke Kategori
         </button>
       )}

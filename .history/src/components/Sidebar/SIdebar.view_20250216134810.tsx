@@ -86,7 +86,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href=""
               className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
             >
               <svg
@@ -98,7 +98,7 @@ const Sidebar = () => {
               >
                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
               </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">PENYEWAAN</span>
+              <span className="flex-1 ml-3 whitespace-nowrap">ALAT</span>
             </a>
           </li>
         </ul>

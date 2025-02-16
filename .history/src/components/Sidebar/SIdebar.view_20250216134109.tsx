@@ -65,42 +65,26 @@ const Sidebar = () => {
           {/* Pemisah */}
           <hr className="my-4 border-gray-200 dark:border-gray-700" />
 
-          {/* Tombol ALAT */}
-          <li>
-            <a
-              href="/alat"
-              className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+          {/* Menu Lainnya */}
+          {Array.from({ length: 4 }).map((_, index) => (
+            <li key={index}>
+              <a
+                href="/alat"
+                className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
               >
-                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-              </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">ALAT</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-              </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">PENYEWAAN</span>
-            </a>
-          </li>
+                <svg
+                  aria-hidden="true"
+                  className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">ALAT</span>
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>
