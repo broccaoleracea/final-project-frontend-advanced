@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/providers/AuthProvider";
+import { Provider } from "react-redux";
+import { store } from "@/state/store";
+import {Providers} from "@/providers/Providers";
 import Sidebar from "@/Components/Sidebar";
 import Footer from "@/Components/Footer";
 

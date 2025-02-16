@@ -23,3 +23,18 @@ interface RefreshResponse {
     accessToken: string;
     refreshToken: string;
 }
+
+interface RegisterRequest {
+    name: string;
+    email: string;
+    password: string;
+}
+
+interface RegisterResponse {
+    user: {
+        name: string;
+        email: string;
+    };
+    accessToken: string;
+    refreshToken: string;
+}
