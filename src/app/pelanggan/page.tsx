@@ -5,7 +5,6 @@ const RentalForm = () => {
     <div className="ml-64 min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-6xl">
         <h2 className="text-3xl font-bold text-center mb-8">FORM PENYEWAAN</h2>
-
         {/* Account Section */}
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Penyewa</h3>
@@ -15,7 +14,6 @@ const RentalForm = () => {
             <input type="email" placeholder="Email" className="p-4 border rounded-lg w-full" />
           </div>
         </div>
-
         {/* Rental Details Section */}
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Detail Penyewaan</h3>
@@ -27,11 +25,24 @@ const RentalForm = () => {
               <option>Rumah</option>
             </select>
             <input type="number" placeholder="Jumlah Barang" className="p-4 border rounded-lg w-full" />
-            <input type="date" className="p-4 border rounded-lg w-full" />
-            <input type="date" className="p-4 border rounded-lg w-full" />
+            <div className="flex flex-col">
+              <label className="text-sm font-medium mb-2">Tanggal Sewa</label>
+              <input type="date" className="p-4 border rounded-lg w-full" />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium mb-2">Tanggal Kembali</label>
+              <input type="date" className="p-4 border rounded-lg w-full" />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium mb-2">Jumlah Harga (Rp)</label>
+              <input
+                type="number"
+                placeholder="Masukkan Jumlah Harga"
+                className="p-4 border rounded-lg w-full"
+              />
+            </div>
           </div>
         </div>
-
         {/* Address Section */}
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Alamat</h3>
@@ -42,16 +53,6 @@ const RentalForm = () => {
             <input type="text" placeholder="Kode Pos" className="p-4 border rounded-lg w-full" />
           </div>
         </div>
-
-        {/* Password Section */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-4">Keamanan</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input type="password" placeholder="Password" className="p-4 border rounded-lg w-full" />
-            <input type="password" placeholder="Konfirmasi Password" className="p-4 border rounded-lg w-full" />
-          </div>
-        </div>
-
         {/* Submit Button */}
         <div className="flex justify-between mt-6">
           <button className="text-gray-500 px-8 py-4 rounded-lg text-lg">CANCEL</button>
