@@ -7,6 +7,7 @@ import { store } from "@/state/store";
 import {Providers} from "@/providers/Providers";
 import Sidebar from "@/Components/Sidebar/Sidebar";
 import Footer from "@/Components/Footer/Footer";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +44,7 @@ export default function RootLayout({
           </div>
         </div>
       </body>
-      <script src="node_modules\flowbite\dist\flowbite.min.js"></script>
+      <Script src="node_modules\flowbite\dist\flowbite.min.js"></Script>
     </html>
   );
 }
