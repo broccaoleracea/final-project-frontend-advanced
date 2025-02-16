@@ -5,8 +5,8 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
 import {Providers} from "@/providers/Providers";
-import Sidebar from "@/Components/Sidebar";
-import Footer from "@/Components/Footer";
+import Sidebar from "@/Components/Sidebar/Sidebar";
+import Footer from "@/Components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
