@@ -5,6 +5,8 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
 import {Providers} from "@/providers/Providers";
+import Sidebar from "@/Components/Sidebar";
+import Footer from "@/Components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +31,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full w-full`}
       >
-      <Providers>{children}</Providers>
+        <div className="h-screen w-screen">
+          <div className="flex w-full h-full">
+            <Sidebar />
+            <div className="h-full w-full">
+              {children}
+              <Footer />
+            </div>
+          </div>
+        </div>
       </body>
+      <script src="node_modules\flowbite\dist\flowbite.min.js"></script>
     </html>
   );
 }
