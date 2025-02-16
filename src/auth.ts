@@ -2,7 +2,12 @@ import { cookies } from "next/headers";
 
 export async function getUser() {
   const cookieStore = cookies();
-  const token = cookieStore.get("token");
+  let token: string | undefined = undefined;
+  async function getToken() {
+    const cookie = await cookieStore.get("token");
+    token = cookie ? cookie.value : null;
+    return token;
+  }
 
   if (!token) {
     return null;
