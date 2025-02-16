@@ -1,5 +1,3 @@
-"use client"; // Directive untuk menandai Client Component
-
 import React, { useState } from 'react';
 
 export default function Kategori() {
