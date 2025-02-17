@@ -121,7 +121,7 @@ export default function RegisterForm() {
           {/* Link to Login */}
           <div className="text-sm text-center">
             Sudah punya akun?{' '}
-            <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link href="/admin/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               Masuk
             </Link>
           </div>

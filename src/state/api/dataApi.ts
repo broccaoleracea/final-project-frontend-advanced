@@ -75,12 +75,19 @@ const endpoints = {
 const apiEndpoints = (builder) => {
   return Object.keys(endpoints).reduce((acc, key) => {
     const endpoint = endpoints[key];
+    console.log(endpoint, key);
+
     acc[`${key}Get`] = builder.query({
-      query: () => ({ url: `/${endpoint}`, method: "GET", headers: {
+      query: (id) => ({
+        url: `/${endpoint}${id ? `/${id}` : ''}`,
+        method: "GET",
+        headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }, }),
+        },
+      }),
     });
+
     acc[`${key}Post`] = builder.mutation({
       query: (data) => ({
         url: `/${endpoint}`,
@@ -92,10 +99,11 @@ const apiEndpoints = (builder) => {
         },
       }),
     });
-    acc[`${key}Put`] = builder.mutation({
+
+    acc[`${key}Patch`] = builder.mutation({
       query: ({ id, data }) => ({
         url: `/${endpoint}/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
         headers: {
           'Accept': 'application/json',
@@ -103,6 +111,7 @@ const apiEndpoints = (builder) => {
         },
       }),
     });
+
     acc[`${key}Delete`] = builder.mutation({
       query: (id) => ({
         url: `/${endpoint}/${id}`,
@@ -113,9 +122,11 @@ const apiEndpoints = (builder) => {
         },
       }),
     });
+
     return acc;
   }, {});
 };
+
 
 export const api = createApi({
   reducerPath: "api",
@@ -126,26 +137,26 @@ export const api = createApi({
 export const {
   useAlatGetQuery,
   useAlatPostMutation,
-  useAlatPutMutation,
+  useAlatPatchMutation,
   useAlatDeleteMutation,
   useKategoriGetQuery,
   useKategoriPostMutation,
-  useKategoriPutMutation,
+  useKategoriPatchMutation,
   useKategoriDeleteMutation,
   usePelangganDataGetQuery,
   usePelangganDataPostMutation,
-  usePelangganDataPutMutation,
+  usePelangganDataPatchMutation,
   usePelangganDataDeleteMutation,
   usePelangganGetQuery,
   usePelangganPostMutation,
-  usePelangganPutMutation,
+  usePelangganPatchMutation,
   usePelangganDeleteMutation,
   usePenyewaanDetailGetQuery,
   usePenyewaanDetailPostMutation,
-  usePenyewaanDetailPutMutation,
+  usePenyewaanDetailPatchMutation,
   usePenyewaanDetailDeleteMutation,
   usePenyewaanGetQuery,
   usePenyewaanPostMutation,
-  usePenyewaanPutMutation,
+  usePenyewaanPatchMutation,
   usePenyewaanDeleteMutation,
 } = api;

@@ -41,7 +41,7 @@ const KategoriView = () => {
 
   // Filter barang berdasarkan kategori terpilih
   const filteredAlat = selectedKategori
-    ? alat.filter((item) => item.kategori_id === selectedKategori.id)
+    ? alat_nama.filter((item) => item.kategori_id === selectedKategori.id)
     : [];
 
   return (

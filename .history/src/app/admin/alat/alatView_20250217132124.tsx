@@ -1,72 +1,56 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useAlatGetQuery,
   useKategoriGetQuery,
-  useAlatDeleteMutation,
 } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
+import { setAlat } from "@/state/api/data/alatSlice";
 
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
-
-  // Query untuk mendapatkan data alat dan kategori
-  const {
-    data: alatResponse,
-    refetch: refetchAlat,
-    isLoading: isAlatLoading,
-    isError: isAlatError,
-  } = useAlatGetQuery();
-  const {
-    data: kategoriResponse,
-    isLoading: isKategoriLoading,
-    isError: isKategoriError,
-  } = useKategoriGetQuery();
-
-  // Mutation untuk menghapus alat
+  const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } =
+    useAlatGetQuery();
+  const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
+    useKategoriGetQuery();
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
+  useEffect(() => {
+    if (alatResponse) {
+      dispatch(setAlat(alatResponse.data));
+    }
+  }, [alatResponse, dispatch]);
+
   // Fungsi untuk menangani aksi hapus
-  const handleDelete = async (alat_id: number) => {
+  const handleDelete = async (alatId: number) => {
     try {
-      console.log("Menghapus alat dengan ID:", alat_id);
-      await deleteAlat(alat_id).unwrap(); // Panggil mutation untuk menghapus alat
-      await refetchAlat(); // Paksa refetch data alat untuk memastikan data terbaru
+      await deleteAlat(alatId).unwrap(); // Panggil mutation untuk menghapus alat
       console.log("Alat berhasil dihapus");
     } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
       setError(err?.data?.message || "Gagal menghapus alat.");
     }
   };
 
-  // Loading state
   if (isAlatLoading || isKategoriLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
+      <div className="space-y-4">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="bg-gray-200 animate-pulse h-10 rounded-lg" />
+        ))}
       </div>
     );
   }
 
-  // Error state
   if (isAlatError || isKategoriError) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">Gagal memuat data!</div>
-      </div>
-    );
+    return <div>Gagal memuat!</div>;
   }
 
-  // Data alat dan kategori
   const alat = alatResponse?.data || [];
   const kategori = kategoriResponse?.data || [];
 
-  // Gabungkan data alat dengan kategori
   const alatWithKategori = alat.map((item) => {
-    const kategoriData = kategori.find(
-      (kat) => kat.kategori_id === item.alat_kategori_id
-    );
+    const kategoriData = kategori.find((kat) => kat.kategori_id === item.alat_kategori_id);
     return {
       ...item,
       kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
@@ -76,19 +60,7 @@ const AlatView = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
-          <a
-            href="/admin/alat/tambah"
-            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
-          >
-            Tambah Alat
-          </a>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
+        <div className="overflow-hidden border border-gray-100 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
@@ -117,9 +89,7 @@ const AlatView = () => {
                     <td className="py-6 px-8 border-b text-center">
                       <span
                         className={`px-4 py-2 text-base font-semibold rounded-full shadow-md ${
-                          item.alat_stok > 10
-                            ? "bg-green-50 text-green-700"
-                            : "bg-red-50 text-red-700"
+                          item.alat_stok > 10 ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
                         }`}
                       >
                         {item.alat_stok || 0}
@@ -129,11 +99,16 @@ const AlatView = () => {
                       {item.alat_deskripsi || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-center">
-                      <button className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out">
+                      <button
+                        className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                        onClick={() => {
+                          // Handle edit (bisa ditambahkan logika edit di sini)
+                        }}
+                      >
                         Edit
                       </button>
                       <button
-                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                        className="px-4 py-2 bg-red-500 text-white rounded-md"
                         onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus
                         disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
                       >
