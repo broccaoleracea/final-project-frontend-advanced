@@ -42,10 +42,7 @@ const HomeView = () => {
   const alat = alatResponse?.data || [];
 
   const totalStok = alat.reduce((total, item) => total + (item.alat_stok || 0), 0);
-  const totalBarang = alat.length;
-
-
-  return (
+  const totalBarang = alat.
     <div className="p-8 text-left w-full max-w-none flex flex-col items-center">
       {/* Hero Section */}
       <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg flex justify-between items-center">
@@ -63,12 +60,12 @@ const HomeView = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-6 mt-6 mb-6 w-full">
-        <div className="bg-blue-200 p-6 rounded-lg shadow-md text-center">
+        <div className="bg-blue-100 p-6 rounded-lg shadow-md text-center">
           <h3 className="text-xl font-bold">{totalBarang}</h3>{" "}
           {/* Ganti dengan data dinamis jika ada */}
           <p className="text-gray-600">Total Barang</p>
         </div>
-        <div className="bg-green-200 p-6 rounded-lg shadow-md text-center">
+        <div className="bg-green-100 p-6 rounded-lg shadow-md text-center">
           <h3 className="text-xl font-bold">{totalStok}</h3>{" "}
           {/* Ganti dengan data dinamis jika ada */}
           <p className="text-gray-600">Total Stok</p>

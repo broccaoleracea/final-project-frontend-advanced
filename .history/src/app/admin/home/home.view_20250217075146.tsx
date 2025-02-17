@@ -68,7 +68,7 @@ const HomeView = () => {
           {/* Ganti dengan data dinamis jika ada */}
           <p className="text-gray-600">Total Barang</p>
         </div>
-        <div className="bg-green-200 p-6 rounded-lg shadow-md text-center">
+        <div className="bg-green-100 p-6 rounded-lg shadow-md text-center">
           <h3 className="text-xl font-bold">{totalStok}</h3>{" "}
           {/* Ganti dengan data dinamis jika ada */}
           <p className="text-gray-600">Total Stok</p>
