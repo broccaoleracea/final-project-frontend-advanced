@@ -26,7 +26,7 @@ const Sidebar = () => {
           {/* Dashboard */}
           <li>
             <a
-              href="/admin/home"
+              href="/home"
               className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900"
             >
               <svg
