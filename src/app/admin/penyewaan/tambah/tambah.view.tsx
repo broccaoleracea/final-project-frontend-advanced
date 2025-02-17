@@ -1,74 +1,62 @@
 import React from "react";
 
-const RentalForm = () => {
+const TambahForm = () => {
   return (
     <>
       {/* Title */}
       <h2 className="text-4xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-        FORM PELANGGANG
+        FORM PENYEWAAN
       </h2>
 
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-8">
         <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
           {/* Form */}
           <form>
-            {/* Penyewa Section */}
+            {/* Detail Penyewaan Section */}
             <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">Penyewa</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">Detail Penyewaan</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="relative">
+                  <select className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100">
+                    <option>Pilih Nama</option>
+                    <option>John Doe</option>
+                    <option>Jane Smith</option>
+                    <option>Michael Johnson</option>
+                  </select>
+                </div>
+                <div className="relative">
+                  <select className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100">
+                    <option>Pilih Barang</option>
+                    <option>Kamera</option>
+                    <option>Mobil</option>
+                    <option>Rumah</option>
+                  </select>
+                </div>
+                <div className="relative">
                   <input
-                    type="text"
-                    placeholder="Nama Lengkap"
+                    type="number"
+                    placeholder="Jumlah Barang"
+                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium mb-2 text-gray-600">Tanggal Sewa</label>
+                  <input
+                    type="date"
+                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium mb-2 text-gray-600">Tanggal Kembali</label>
+                  <input
+                    type="date"
                     className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
                   />
                 </div>
                 <div className="relative">
                   <input
-                    type="text"
-                    placeholder="Nomor Telepon"
-                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Alamat Section */}
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">Alamat</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Alamat Lengkap"
-                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Kota"
-                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Provinsi"
-                    className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Kode Pos"
+                    type="number"
+                    placeholder="Jumlah Harga (Rp)"
                     className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
                   />
                 </div>
@@ -97,4 +85,4 @@ const RentalForm = () => {
   );
 };
 
-export default RentalForm;
+export default TambahForm;

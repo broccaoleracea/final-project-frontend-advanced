@@ -1,10 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePenyewaanGetQuery } from "@/state/api/dataApi"; // Ganti dengan endpoint penyewaan
+import { useAppDispatch } from "@/hooks/hooks";
+import Link from "next/link"; // Import Link untuk navigasi
 
-const PenyewaanView = () => {
+const RentalPage = () => {
   const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
   const { data: penyewaanResponse, isLoading, isError } = usePenyewaanGetQuery();
+
+  useEffect(() => {
+    if (penyewaanResponse) {
+      // Jika perlu menyimpan data ke state global, gunakan dispatch di sini
+      // Contoh: dispatch(setPenyewaan(penyewaanResponse.data));
+    }
+  }, [penyewaanResponse, dispatch]);
 
   // Skeleton Loading Component
   const SkeletonLoader = () => (
@@ -33,15 +43,23 @@ const PenyewaanView = () => {
     <div className="min-h-screen bg-gray-100 flex justify-center">
       {/* Content */}
       <main className="w-full max-w-screen-lg p-6">
-        <h1 className="text-3xl font-bold mb-6 text-gray-700">Barang yang Disewa</h1>
+        {/* Header with "Tambah" Button */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-700">Barang yang Disewa</h1>
+          <Link href="/admin/penyewaan/tambah">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
+              Tambah
+            </button>
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rentedItems.map((item) => (
             <div key={item.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col">
               <h2 className="text-xl font-semibold">{item.name}</h2>
               <p className="text-gray-500">{item.category}</p>
-              <p className="text-gray-700 font-medium">Tgl Sewa: {item.penyewaan_tglSewa}</p>
-              <p className="text-gray-700 font-medium">Tgl Kembali: {item.penyewaan_tglKembali}</p>
-              <p className="text-gray-700 font-medium">Penyewa: {item.penyewaan_pelanggan_id}</p>
+              <p className="text-gray-700 font-medium">Durasi: {item.rentalPeriod}</p>
+              <p className="text-gray-700 font-medium">Penyewa: {item.renter}</p>
               <span
                 className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
                   item.status === "Sedang Disewa"
@@ -66,4 +84,4 @@ const PenyewaanView = () => {
   );
 };
 
-export default PenyewaanView;
+export default RentalPage;
