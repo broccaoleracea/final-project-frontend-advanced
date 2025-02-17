@@ -7,16 +7,22 @@ import { setAlat } from "@/state/api/data/alatSlice";
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
+
+  // Fetch data alat
   const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
+
+  // Fetch data kategori
   const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
     useKategoriGetQuery();
 
   useEffect(() => {
     if (alatResponse) {
+      console.log(alatResponse.data);
       dispatch(setAlat(alatResponse.data));
     }
   }, [alatResponse, dispatch]);
 
+  // Handle loading state
   if (isAlatLoading || isKategoriLoading) {
     return (
       <div className="space-y-4">
@@ -27,13 +33,16 @@ const AlatView = () => {
     );
   }
 
+  // Handle error state
   if (isAlatError || isKategoriError) {
     return <div>Gagal memuat!</div>;
   }
 
+  // Extract data
   const alat = alatResponse?.data || [];
   const kategori = kategoriResponse?.data || [];
 
+  // Map alat with kategori_nama
   const alatWithKategori = alat.map((item) => {
     const kategoriData = kategori.find((kat) => kat.kategori_id === item.alat_kategori_id);
     return {
@@ -44,7 +53,9 @@ const AlatView = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
+      {/* Content */}
       <div className="w-full p-8">
+        {/* Tabel */}
         <div className="overflow-hidden border border-gray-100 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
