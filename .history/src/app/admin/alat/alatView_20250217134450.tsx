@@ -1,33 +1,33 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   useAlatGetQuery,
   useKategoriGetQuery,
   useAlatDeleteMutation,
 } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
+import { setAlat } from "@/state/api/data/alatSlice";
 
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
-  // Query untuk mendapatkan data alat dan kategori
-  const { data: alatResponse, refetch: refetchAlat, isLoading: isAlatLoading, isError: isAlatError } =
+  const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } =
     useAlatGetQuery();
   const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
     useKategoriGetQuery();
 
-  // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
-  // Fungsi untuk menangani aksi hapus
   const handleDelete = async (alat_id: number) => {
     try {
       console.log("Menghapus alat dengan ID:", alat_id);
       await deleteAlat(alat_id).unwrap(); // Panggil mutation untuk menghapus alat
 
-      // Paksa refetch data alat untuk memastikan data terbaru
-      await refetchAlat();
+      if (alatResponse) {
+        const updatedAlat = alatResponse.data.filter((item) => item.alat_id !== alat_id);
+        dispatch(setAlat(updatedAlat));
+      }
 
       console.log("Alat berhasil dihapus");
     } catch (err: any) {
@@ -36,7 +36,6 @@ const AlatView = () => {
     }
   };
 
-  // Loading state
   if (isAlatLoading || isKategoriLoading) {
     return (
       <div className="space-y-4">

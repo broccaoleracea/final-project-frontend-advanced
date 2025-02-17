@@ -6,7 +6,6 @@ import {
   useAlatDeleteMutation,
 } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
-
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();

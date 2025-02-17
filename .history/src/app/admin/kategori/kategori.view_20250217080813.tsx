@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useKategoriGetQuery, useAlatGetQuery } from "@/state/api/dataApi";
+import { useAppDispatch } from "@/hooks/hooks";
 
 const KategoriView = () => {
+  const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
+
   // Fetch data kategori
   const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } = useKategoriGetQuery();
-
+  
   // Fetch data alat
   const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
 

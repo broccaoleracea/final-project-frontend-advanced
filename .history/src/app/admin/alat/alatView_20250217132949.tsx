@@ -1,42 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  useAlatGetQuery,
-  useKategoriGetQuery,
-  useAlatDeleteMutation,
-} from "@/state/api/dataApi";
+import { useAlatGetQuery, useKategoriGetQuery } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
-
+import { setAlat } from "@/state/api/data/alatSlice";
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
-
-  // Query untuk mendapatkan data alat dan kategori
-  const { data: alatResponse, refetch: refetchAlat, isLoading: isAlatLoading, isError: isAlatError } =
-    useAlatGetQuery();
+  const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
   const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
     useKategoriGetQuery();
-
-  // Mutation untuk menghapus alat
-  const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
-
-  // Fungsi untuk menangani aksi hapus
-  const handleDelete = async (alat_id: number) => {
-    try {
-      console.log("Menghapus alat dengan ID:", alat_id);
-      await deleteAlat(alat_id).unwrap(); // Panggil mutation untuk menghapus alat
-
-      // Paksa refetch data alat untuk memastikan data terbaru
-      await refetchAlat();
-
-      console.log("Alat berhasil dihapus");
-    } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
-      setError(err?.data?.message || "Gagal menghapus alat.");
+  useEffect(() => {
+    if (alatResponse) {
+      dispatch(setAlat(alatResponse.data));
     }
-  };
-
-  // Loading state
+  }, [alatResponse, dispatch]);
   if (isAlatLoading || isKategoriLoading) {
     return (
       <div className="space-y-4">
@@ -46,17 +23,11 @@ const AlatView = () => {
       </div>
     );
   }
-
-  // Error state
   if (isAlatError || isKategoriError) {
     return <div>Gagal memuat!</div>;
   }
-
-  // Data alat dan kategori
   const alat = alatResponse?.data || [];
   const kategori = kategoriResponse?.data || [];
-
-  // Gabungkan data alat dengan kategori
   const alatWithKategori = alat.map((item) => {
     const kategoriData = kategori.find((kat) => kat.kategori_id === item.alat_kategori_id);
     return {
@@ -64,7 +35,6 @@ const AlatView = () => {
       kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
     };
   });
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
@@ -110,12 +80,8 @@ const AlatView = () => {
                       <button className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2">
                         Edit
                       </button>
-                      <button
-                        className="px-4 py-2 bg-red-500 text-white rounded-md"
-                        onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus
-                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
-                      >
-                        {isDeleting ? "Menghapus..." : "Hapus"}
+                      <button className="px-4 py-2 bg-red-500 text-white rounded-md">
+                        Hapus
                       </button>
                     </td>
                   </tr>
@@ -134,5 +100,4 @@ const AlatView = () => {
     </div>
   );
 };
-
 export default AlatView;

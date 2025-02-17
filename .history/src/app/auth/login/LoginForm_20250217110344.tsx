@@ -1,31 +1,38 @@
-// app/register/RegisterForm.tsx
-'use client'
-import { useState } from 'react'
-import { useRegisterMutation } from '@/state/api/authApi'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { useAppDispatch } from '@/hooks/hooks'
+"use client";
+import React from "react"; // Tambahkan ini
+import { useState } from "react";
+import { useLoginMutation } from "@/state/api/authApi";
+import { setCredentials } from "@/state/api/authSlice";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/hooks/hooks";
 
-export default function RegisterForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [register, { isLoading }] = useRegisterMutation()
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+export default function LoginFormWrapper() {
+  return (
+    <ErrorB>
+      <LoginForm />
+    </ErrorB>
+  );
+}
+
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
     try {
-      const result = await register({ name, email, password }).unwrap()
-      router.push('/login')
-    } catch (err) {
-      // @ts-ignore
-      setError(err?.data?.message || 'Registration failed. Please try again.')
+      const result = await login({ email, password }).unwrap();
+      dispatch(setCredentials(result));
+      router.push("/admin");
+    } catch (err: any) {
+      setError(err?.data?.message || "Login failed. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
@@ -35,39 +42,19 @@ export default function RegisterForm() {
           {/* Header */}
           <div>
             <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900">
-              Create Your Account
+              Masuk
             </h2>
           </div>
 
           {/* Form */}
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Full Name Input */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-lg font-medium text-gray-700 mb-2"
-              >
-                Nama Lengkap
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
-                placeholder="John Doe"
-              />
-            </div>
-
             {/* Email Input */}
             <div>
               <label
                 htmlFor="email"
                 className="block text-lg font-medium text-gray-700 mb-2"
               >
-                Alamat Email
+                Email address
               </label>
               <input
                 id="email"
@@ -78,7 +65,7 @@ export default function RegisterForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
-                placeholder="you@example.com"
+                placeholder="Email address"
               />
             </div>
 
@@ -88,13 +75,13 @@ export default function RegisterForm() {
                 htmlFor="password"
                 className="block text-lg font-medium text-gray-700 mb-2"
               >
-                Kata Sandi
+                Password
               </label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password"
+                autoComplete="current-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -113,20 +100,12 @@ export default function RegisterForm() {
                 disabled={isLoading}
                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-400 py-3 px-6 text-lg font-medium text-black hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Membuat akun...' : 'Buat Akun'}
+                {isLoading ? "Sedang masuk.." : "Masuk"}
               </button>
             </div>
           </form>
-
-          {/* Link to Login */}
-          <div className="text-sm text-center">
-            Sudah punya akun?{' '}
-            <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Masuk
-            </Link>
-          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
