@@ -59,18 +59,14 @@ const RentalForm = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <label className="text-sm font-medium mb-2 text-gray-600">
-                  Tanggal Sewa
-                </label>
+                <label className="text-sm font-medium mb-2 text-gray-600">Tanggal Sewa</label>
                 <input
                   type="date"
                   className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300"
                 />
               </div>
               <div className="flex flex-col">
-                <label className="text-sm font-medium mb-2 text-gray-600">
-                  Tanggal Kembali
-                </label>
+                <label className="text-sm font-medium mb-2 text-gray-600">Tanggal Kembali</label>
                 <input
                   type="date"
                   className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300"

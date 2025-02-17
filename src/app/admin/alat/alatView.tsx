@@ -3,20 +3,17 @@ import { useState, useEffect } from "react";
 import { useAlatGetQuery, useKategoriGetQuery } from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
 import { setAlat } from "@/state/api/data/alatSlice";
-
 const AlatView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
   const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
   const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
     useKategoriGetQuery();
-
   useEffect(() => {
     if (alatResponse) {
       dispatch(setAlat(alatResponse.data));
     }
   }, [alatResponse, dispatch]);
-
   if (isAlatLoading || isKategoriLoading) {
     return (
       <div className="space-y-4">
@@ -26,14 +23,11 @@ const AlatView = () => {
       </div>
     );
   }
-
   if (isAlatError || isKategoriError) {
     return <div>Gagal memuat!</div>;
   }
-
   const alat = alatResponse?.data || [];
   const kategori = kategoriResponse?.data || [];
-
   const alatWithKategori = alat.map((item) => {
     const kategoriData = kategori.find((kat) => kat.kategori_id === item.alat_kategori_id);
     return {
@@ -41,7 +35,6 @@ const AlatView = () => {
       kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
     };
   });
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
@@ -107,5 +100,4 @@ const AlatView = () => {
     </div>
   );
 };
-
 export default AlatView;
