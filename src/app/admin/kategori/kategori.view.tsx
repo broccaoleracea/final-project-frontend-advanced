@@ -13,6 +13,7 @@ const KategoriView = () => {
   const {
     data: kategoriResponse,
     isLoading: isKategoriLoading,
+    refetch,
     isError: isKategoriError,
   } = useKategoriGetQuery();
 
