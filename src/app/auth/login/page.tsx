@@ -1,6 +1,6 @@
 // app/login/Redirect.tsx
 
-import LoginForm from "./LoginForm";
+import LoginForm from "./login.form";
 
 export default async function LoginPage() {
   return (

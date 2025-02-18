@@ -1,10 +1,9 @@
+import Link from "next/link";
 import React from "react";
 const HomeView = () => {
   return (
     <div className="flex justify-start mt-16">
-      {/* Container untuk konten dan gambar */}
-      <div className="flex max-w-[80%]">
-        {/* Kolom untuk teks */}
+      <div className="flex max-w-[80%] mx-auto">
         <div className="max-w-[50%] pr-8">
           <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-left">
             We invest in the world’s potential
@@ -19,13 +18,12 @@ const HomeView = () => {
           </p>
 
 
-          <a
-              href="/user/barang"
-              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200"
-          >
+          <Link
+              href="/alat"
+              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200">
             Learn more
             <svg
-              className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+              className="w-3.5 h-3.5 ms-2 rtl:rotate-180 ml-2"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -39,7 +37,7 @@ const HomeView = () => {
                 d="M1 5h12m0 0L9 1m4 4L9 9"
               />
             </svg>
-          </a>
+          </Link>
           
           
         </div>

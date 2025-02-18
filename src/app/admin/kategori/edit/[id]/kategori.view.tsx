@@ -1,4 +1,4 @@
-// app/login/RegisterForm.tsx
+// app/login/RegisterView.tsx
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

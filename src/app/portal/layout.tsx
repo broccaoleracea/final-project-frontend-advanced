@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { Providers } from "@/providers/Providers";
-import Footer from "@/Components/Footer/Footer";
-import Script from "next/script";
-import Navbar from "@/Components/Navbar/Navbar";
 
 const inter = Inter();
 
 export const metadata: Metadata = {
-    title: "GacorCihuy",
-    description: "Website peminjaman elektronik.",
+    title: "Auth - GacorCihuy",
+    description: "Authentication pages.",
 };
 
-export default function RootLayout({
+export default function AuthLayout({
                                        children,
                                    }: Readonly<{ children: React.ReactNode }>) {
     return (
@@ -22,16 +18,13 @@ export default function RootLayout({
         <div className="h-screen w-screen">
             <div className="flex w-full h-full">
                 <div className="h-full w-full">
-                <Navbar/>
                     <Providers>
-                        <div>{children}</div> {/* Default Layout */}
+                        <div>{children}</div>
                     </Providers>
-                    <Footer />
                 </div>
             </div>
         </div>
         </body>
-        <Script src="node_modules/flowbite/dist/flowbite.min.js"></Script>
         </html>
     );
 }

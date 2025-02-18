@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePenyewaanGetQuery } from "@/state/api/dataApi";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 const RentalPage = () => {
   const [error, setError] = useState("");
@@ -12,16 +13,9 @@ const RentalPage = () => {
     isError,
   } = usePenyewaanGetQuery();
   
-  const SkeletonLoader = () => (
-    <div className="space-y-4">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse"></div>
-      ))}
-    </div>
-  );
 
   if (isLoading) {
-    return <SkeletonLoader />;
+    return <FullPageSpinner />;
   }
 
   if (isError) {

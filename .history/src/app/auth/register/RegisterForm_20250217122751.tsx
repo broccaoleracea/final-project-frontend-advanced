@@ -1,4 +1,4 @@
-// app/register/RegisterForm.tsx
+// app/register/register.view.tsx
 'use client'
 import { useState } from 'react'
 import { useRegisterMutation } from '@/state/api/authApi'
