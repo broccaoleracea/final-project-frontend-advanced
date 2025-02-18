@@ -29,7 +29,7 @@ const TambahPelanggan = () => {
   const [addPelangganData, { isLoading: isAddingPelangganData }] =
     usePelangganDataPostMutation();
 
-  // Query untuk mendapatkan data jenis pelanggan
+  
   const {
     data: jenisPelangganResponse,
     isLoading: isJenisLoading,
@@ -56,8 +56,8 @@ const TambahPelanggan = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setError(""); // Reset error message
-      setSuccessMessage(""); // Reset success message
+      setError(""); 
+      setSuccessMessage(""); 
 
       // Validasi input
       if (
@@ -82,13 +82,14 @@ const TambahPelanggan = () => {
         throw new Error("Gagal mendapatkan ID pelanggan.");
       }
 
-      // Buat FormData untuk data tambahan
+
       const formDataWithFile = new FormData();
       formDataWithFile.append("pelanggan_data_pelanggan_id", pelangganId);
       formDataWithFile.append("pelanggan_data_jenis", selectedJenis);
       formDataWithFile.append("pelanggan_data_file", file);
+console.log(formDataWithFile)
+      debugger;
 
-      // Kirim data tambahan
       await addPelangganData(formDataWithFile).unwrap();
 
       // Tampilkan pesan sukses
@@ -196,13 +197,9 @@ const TambahPelanggan = () => {
           {/* Jenis Pelanggan (Dropdown) */}
           <div className="mb-6">
             <label htmlFor="pelanggan_data_jenis" className="text-sm font-medium text-gray-600">
-              Jenis Pelanggan
+              Jenis Data Pelanggan
             </label>
-            {isJenisLoading ? (
-              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
-            ) : isJenisError ? (
-              <div className="text-red-500">Gagal memuat data jenis pelanggan.</div>
-            ) : (
+         
               <select
                 id="pelanggan_data_jenis"
                 value={selectedJenis}
@@ -210,14 +207,17 @@ const TambahPelanggan = () => {
                 className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
                 required
               >
-                <option value="">Pilih Jenis Pelanggan</option>
-                {jenisPelangganResponse?.data?.map((jenis) => (
-                  <option key={jenis.id} value={jenis.id}>
-                    {jenis.nama}
+                <option disabled defaultValue value="">Pilih Jenis Pelanggan</option>
+              
+                  <option value="KTP">
+                    KTP
                   </option>
-                ))}
+                <option value="SIM">
+                  SIM
+                </option>
+    
               </select>
-            )}
+      
           </div>
 
           {/* File Upload */}
