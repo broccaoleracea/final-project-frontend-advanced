@@ -5,6 +5,7 @@ import { Providers } from "@/providers/Providers";
 import Footer from "@/Components/Footer/Footer";
 import Script from "next/script";
 import Navbar from "@/Components/Navbar/Navbar";
+import Sidebar from "@/Components/Sidebar/SIdebar.view";
 
 const inter = Inter();
 
@@ -23,6 +24,7 @@ export default function RootLayout({
             <div className="flex w-full h-full">
                 <div className="h-full w-full">
                 <Navbar/>
+                    <Sidebar />
                     <Providers>
                         <div>{children}</div> {/* Default Layout */}
                     </Providers>
