@@ -1,4 +1,4 @@
-// app/login/RegisterForm.tsx
+// app/login/RegisterView.tsx
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,6 @@ export default function LoginForm() {
 
     try {
       const result = await useKategoriPostMutation({ email, password }).unwrap();
-      dispatch(setCredentials(result));
       router.push("/admin");
     } catch (err: any) {
       setError(err?.data?.message || "Login failed. Please try again.");

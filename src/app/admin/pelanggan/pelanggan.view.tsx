@@ -1,30 +1,29 @@
 "use client";
+import { useState, useEffect } from "react";
+import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { Link } from "react-router-dom";
+import Popup from "@/app/portal/page";
+
 
 import { usePelangganPostMutation, usePelangganDataPostMutation } from "@/state/api/dataApi";
 import React, { useState } from "react";
 
-const Pelanggan = () => {
-  // State untuk form pertama
-  const [pelangganNama, setPelangganNama] = useState("");
-  const [pelangganAlamat, setPelangganAlamat] = useState("");
-  const [pelangganNotelp, setPelangganNotelp] = useState("");
-  const [pelangganEmail, setPelangganEmail] = useState("");
+  // Query untuk mendapatkan data pelanggan
+  const {
+    data: pelangganResponse,
+    isLoading: isPelangganLoading,
+    isError: isPelangganError,
+    refetch: refetchPelanggan,
+  } = usePelangganGetQuery();
+  
+  
 
-  // State untuk form kedua
-  const [pelangganDataJenis, setPelangganDataJenis] = useState("");
-  const [pelangganDataFile, setPelangganDataFile] = useState(null);
 
   // State untuk multi-step logic
   const [currentStep, setCurrentStep] = useState(1);
   const [pelangganId, setPelangganId] = useState(null); // Untuk menyimpan pelanggan_id dari langkah pertama
 
-  // Mutation hooks
-  const [postPelanggan, { isLoading: isPostingPelanggan }] = usePelangganPostMutation();
-  const [postPelangganData, { isLoading: isPostingPelangganData }] = usePelangganDataPostMutation();
-
-  // Handler untuk form pertama
-  const handleStep1Submit = async (e) => {
-    e.preventDefault();
+  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
 
     try {
       // Kirim data menggunakan mutation

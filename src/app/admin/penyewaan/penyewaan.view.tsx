@@ -1,33 +1,23 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link"; // Import Link untuk navigasi
-import { usePenyewaanGetQuery } from "@/state/api/dataApi"; // Ganti dengan endpoint penyewaan
+import Link from "next/link";
+import { usePenyewaanGetQuery } from "@/state/api/dataApi";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 const RentalPage = () => {
   const [error, setError] = useState("");
-
-  // Query untuk mendapatkan data penyewaan
+  
   const {
     data: penyewaanResponse,
     isLoading,
     isError,
   } = usePenyewaanGetQuery();
+  
 
-  // Skeleton Loading Component
-  const SkeletonLoader = () => (
-    <div className="space-y-4">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse"></div>
-      ))}
-    </div>
-  );
-
-  // Handle loading state
   if (isLoading) {
-    return <SkeletonLoader />;
+    return <FullPageSpinner />;
   }
 
-  // Handle error state
   if (isError) {
     return (
       <div className="text-red-600 text-center py-8">
@@ -36,7 +26,6 @@ const RentalPage = () => {
     );
   }
 
-  // Data penyewaan
   const rentedItems = penyewaanResponse?.data || [];
 
   return (
@@ -116,11 +105,11 @@ const RentalPage = () => {
       </div>
     </div>
   );
-
-  // Fungsi untuk menghapus data
+  
   const handleDelete = async (id: number) => {
     try {
       console.log("Menghapus barang dengan ID:", id);
+      // TODO : add delete mutation -kat
       // Implementasi mutation delete di sini jika diperlukan
       // Contoh: await deletePenyewaan(id).unwrap();
       console.log("Barang berhasil dihapus");

@@ -1,7 +1,3 @@
-interface User {
-    id: string;
-    email: string;
-}
 
 interface LoginRequest {
     email: string;
@@ -9,7 +5,7 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
-    user: User;
+    user: string;
     accessToken: string;
     refreshToken: string;
 }
@@ -19,7 +15,7 @@ interface RefreshTokenRequest {
 }
 
 interface RefreshResponse {
-    user: User;
+    user: string;
     accessToken: string;
     refreshToken: string;
 }

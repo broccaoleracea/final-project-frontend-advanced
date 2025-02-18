@@ -2,11 +2,12 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import {useKategoriPostMutation} from "@/state/api/dataApi";
+import {useKategoriPostMutation, usePelangganDataGetQuery, usePelangganDataPostMutation} from "@/state/api/dataApi";
 
 export default function KategoriForm() {
   const [kategoriNama, setKategoriNama] = useState("");
   const [error, setError] = useState("");
+  
   const [postKategori, { isLoading }] = useKategoriPostMutation();
   const router = useRouter();
 

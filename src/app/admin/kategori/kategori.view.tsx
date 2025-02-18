@@ -1,171 +1,97 @@
 "use client";
-import { useState } from "react";
-import {
-  useKategoriGetQuery,
-  useAlatGetQuery,
-  useAlatDeleteMutation,
-  useKategoriDeleteMutation,
-} from "@/state/api/dataApi";
+import { FC, useState } from "react";
+import  Popup  from "@/app/portal/page";
 
-const KategoriView = () => {
-  const [error, setError] = useState("");
-  // Fetch data kategori
-  const {
-    data: kategoriResponse,
-    isLoading: isKategoriLoading,
-    refetch,
-    isError: isKategoriError,
-  } = useKategoriGetQuery();
+interface KategoriViewProps {
+  kategori: any[];
+  isDeleting: boolean;
+  showPopup: boolean;
+  setShowPopup: (value: boolean) => void;
+  error: string;
+  handleDelete: () => void;
+  showConfirmationPopup: (id: number) => void;
+}
 
-  // Fetch data alat
-  const {
-    data: alatResponse,
-    isLoading: isAlatLoading,
-    isError: isAlatError,
-  } = useAlatGetQuery();
-
-  // State untuk menyimpan kategori terpilih
-  const [selectedKategori, setSelectedKategori] = useState(null);
-
-  const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();
-
-  const handleDelete = async (id: number) => {
-    try {
-      await del(id).unwrap();
-      await refetch();
-    } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
-      setError(err?.data?.message || "Gagal menghapus alat.");
-    }
-  };
-
-  // Skeleton Loading Component
-  const SkeletonLoader = () => (
-    <div className="space-y-4">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className="h-16 bg-gray-200 rounded-lg animate-pulse"
-        ></div>
-      ))}
-    </div>
-  );
-
-  // Handle loading state
-  if (isKategoriLoading || isAlatLoading) {
-    return <SkeletonLoader />;
-  }
-
-  // Handle error state
-  if (isKategoriError || isAlatError) {
-    return (
-      <div className="text-red-600 text-center py-8">
-        Gagal memuat data. Silakan coba lagi nanti.
-      </div>
-    );
-  }
-
-  // Extract data
-  const kategori = kategoriResponse?.data || [];
-  const alat = alatResponse?.data || [];
-
-  // Filter barang berdasarkan kategori terpilih
-  const filteredAlat = selectedKategori
-    ? alat.filter((item) => item.kategori_id === selectedKategori.id)
-    : [];
-
+const KategoriView: FC<KategoriViewProps> = ({
+                                               kategori,
+                                               isDeleting,
+                                               showPopup,
+                                               setShowPopup,
+                                               error,
+                                               handleDelete,
+                                               showConfirmationPopup,
+                                             }) => {
   return (
-    <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
-      {/* Hero Section */}
-      <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt-10">
-        <h1 className="text-3xl font-extrabold text-black">
-          Selamat Datang di Halaman Kategori
-        </h1>
-        <p className="text-gray-700 mt-2">
-          Temukan kategori barang elektronik favorit Anda.
-        </p>
-      </div>
+      <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
+        {/* Hero Section */}
+        <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt-10">
+          <h1 className="text-3xl font-extrabold text-black">
+            Selamat Datang di Halaman Kategori
+          </h1>
+          <p className="text-gray-700 mt-2">
+            Temukan kategori barang elektronik favorit Anda.
+          </p>
+        </div>
 
-      {/* Tombol Tambah Kategori */}
-      <div className="w-full px-6 mb-8">
-        <a
-          href="/admin/kategori/tambah"
-          className="w-full px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out text-center block"
-        >
-          Tambah Kategori
-        </a>
-      </div>
-
-      {/* Tampilan Kategori */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {kategori.map((item) => (
-          <div
-            key={item.id}
-            className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
+        {/* Tombol Tambah Kategori */}
+        <div className="w-full px-6 mb-8">
+          <a
+              href="/admin/kategori/tambah"
+              className="w-full px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out text-center block"
           >
-            {/* Tombol Edit */}
-            <a
-              href={`/admin/kategori/edit/${item.kategori_id}`} // Ganti dengan URL edit yang sesuai
-              className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
-            >
-              Edit
-            </a>
+            Tambah Kategori
+          </a>
+        </div>
 
-            {/* Konten Kategori */}
-            <h3 className="text-xl font-semibold text-gray-900">
-              {item.kategori_nama}
-            </h3>
-            <button
-              className="px-4 py-2 bg-red-500 disabled:bg-red-300 text-white rounded-md"
-              onClick={() => handleDelete(item.kategori_id)}
-              disabled={isDeleting}
-            >
-              Hapus
-            </button>
-          </div>
-        ))}
+        {/* Tampilan Kategori */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {kategori.map((item) => (
+              <div
+                  key={item.id}
+                  className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
+              >
+                {/* Tombol Edit dan Hapus */}
+                <div className="absolute top-4 right-4 flex gap-2">
+                  <a
+                      href={`/admin/kategori/edit/${item.kategori_id}`}
+                      className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
+                  >
+                    Edit
+                  </a>
+                  <button
+                      className="px-3 py-1 bg-red-500 disabled:bg-red-300 text-white rounded-md text-sm"
+                      onClick={() => showConfirmationPopup(item.kategori_id)}
+                      disabled={isDeleting}
+                  >
+                    {isDeleting ? "Menghapus..." : "Hapus"}
+                  </button>
+                </div>
+                {/* Konten Kategori */}
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {item.kategori_nama}
+                </h3>
+              </div>
+          ))}
+          {/* Empty State */}
+          {kategori.length === 0 && (
+              <div className="col-span-full text-center py-8 text-gray-500">
+                Tidak ada kategori yang tersedia.
+              </div>
+          )}
+        </div>
 
-        {/* Empty State */}
-        {kategori.length === 0 && (
-          <div className="col-span-full text-center py-8 text-gray-500">
-            Tidak ada kategori yang tersedia.
-          </div>
+        {/* Popup Konfirmasi */}
+        {showPopup && (
+            <Popup onClose={() => setShowPopup(false)} onDelete={handleDelete} />
+        )}
+
+        {/* Error Feedback */}
+        {error && (
+            <div className="text-red-600 text-center py-4">
+              {error}
+            </div>
         )}
       </div>
-
-      {/* Tampilan Barang Berdasarkan Kategori Terpilih */}
-      {selectedKategori && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Barang dalam Kategori: {selectedKategori.kategori_nama}
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredAlat.length > 0 ? (
-              filteredAlat.map((item) => (
-                <div
-                  key={item.id}
-                  className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {item.alat_nama}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-2">
-                    Rp {item.alat_hargaPerhari}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    {item.alat_deskripsi}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8 text-gray-500">
-                Tidak ada barang dalam kategori ini.
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
   );
 };
 
