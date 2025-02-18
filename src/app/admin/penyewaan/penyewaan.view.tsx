@@ -1,34 +1,33 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePenyewaanGetQuery } from "@/state/api/dataApi"; // Ganti dengan endpoint penyewaan
-import { useAppDispatch } from "@/hooks/hooks";
 import Link from "next/link"; // Import Link untuk navigasi
+import { usePenyewaanGetQuery } from "@/state/api/dataApi"; // Ganti dengan endpoint penyewaan
 
 const RentalPage = () => {
   const [error, setError] = useState("");
-  const dispatch = useAppDispatch();
-  const { data: penyewaanResponse, isLoading, isError } = usePenyewaanGetQuery();
 
-  useEffect(() => {
-    if (penyewaanResponse) {
-      // Jika perlu menyimpan data ke state global, gunakan dispatch di sini
-      // Contoh: dispatch(setPenyewaan(penyewaanResponse.data));
-    }
-  }, [penyewaanResponse, dispatch]);
+  // Query untuk mendapatkan data penyewaan
+  const {
+    data: penyewaanResponse,
+    isLoading,
+    isError,
+  } = usePenyewaanGetQuery();
 
   // Skeleton Loading Component
   const SkeletonLoader = () => (
     <div className="space-y-4">
       {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-32 bg-gray-200 rounded-lg animate-pulse"></div>
+        <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse"></div>
       ))}
     </div>
   );
 
+  // Handle loading state
   if (isLoading) {
     return <SkeletonLoader />;
   }
 
+  // Handle error state
   if (isError) {
     return (
       <div className="text-red-600 text-center py-8">
@@ -37,51 +36,99 @@ const RentalPage = () => {
     );
   }
 
+  // Data penyewaan
   const rentedItems = penyewaanResponse?.data || [];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center">
-      {/* Content */}
-      <main className="w-full max-w-screen-lg p-6">
-        {/* Header with "Tambah" Button */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-700">Barang yang Disewa</h1>
-          <Link href="/admin/penyewaan/tambah">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
-              Tambah
-            </button>
+    <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Barang yang Disewa</h1>
+        <Link
+            href="/admin/penyewaan/tambah" // Navigasi ke halaman tambah alat
+            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
+          >
+            Tambah Alat
           </Link>
-        </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rentedItems.map((item) => (
-            <div key={item.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col">
-              <h2 className="text-xl font-semibold">{item.name}</h2>
-              <p className="text-gray-500">{item.category}</p>
-              <p className="text-gray-700 font-medium">Durasi: {item.rentalPeriod}</p>
-              <p className="text-gray-700 font-medium">Penyewa: {item.renter}</p>
-              <span
-                className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
-                  item.status === "Sedang Disewa"
-                    ? "bg-yellow-200 text-yellow-800"
-                    : "bg-green-200 text-green-800"
-                }`}
-              >
-                {item.status}
-              </span>
-            </div>
-          ))}
-
-          {/* Empty State */}
-          {rentedItems.length === 0 && (
-            <div className="col-span-full text-center py-8 text-gray-500">
-              Tidak ada barang yang disewa saat ini.
-            </div>
-          )}
-        </div>
-      </main>
+      {/* Table */}
+      <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
+          <table className="w-full border-collapse text-lg">
+          {/* Table Header */}
+          <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
+            <tr>
+              <th>Nama Barang</th>
+              <th>Kategori</th>
+              <th>Durasi</th>
+              <th>Penyewa</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          {/* Table Body */}
+          <tbody>
+            {rentedItems.length > 0 ? (
+              rentedItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.category}</td>
+                  <td>{item.rentalPeriod}</td>
+                  <td>{item.renter}</td>
+                  <td
+                    className={`${
+                      item.status === "Dikembalikan"
+                        ? "bg-green-50 text-green-700"
+                        : "bg-yellow-50 text-yellow-700"
+                    }`}
+                  >
+                    {item.status}
+                  </td>
+                  <td>
+                    <div className="flex gap-2">
+                      {/* Tombol Edit */}
+                      <Link
+                        href={`/rental/edit/${item.id}`}
+                        className="btn btn-sm btn-secondary"
+                      >
+                        Edit
+                      </Link>
+                      {/* Tombol Hapus */}
+                      <button
+                        className="btn btn-sm btn-error"
+                        onClick={() => handleDelete(item.id)} // Panggil fungsi hapus
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center py-4">
+                  Tidak ada barang yang disewa saat ini.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
+
+  // Fungsi untuk menghapus data
+  const handleDelete = async (id: number) => {
+    try {
+      console.log("Menghapus barang dengan ID:", id);
+      // Implementasi mutation delete di sini jika diperlukan
+      // Contoh: await deletePenyewaan(id).unwrap();
+      console.log("Barang berhasil dihapus");
+    } catch (err: any) {
+      console.error("Error saat menghapus barang:", err);
+      setError(err?.data?.message || "Gagal menghapus barang.");
+    }
+  };
 };
 
 export default RentalPage;
