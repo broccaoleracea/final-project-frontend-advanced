@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import {
+  usePelangganDeleteMutation,
+  usePelangganGetQuery,
+} from "@/state/api/dataApi";
 import { Link } from "react-router-dom";
 import Popup from "@/app/portal/page";
 
-
-import { usePelangganPostMutation, usePelangganDataPostMutation } from "@/state/api/dataApi";
-import React, { useState } from "react";
+const PelangganView = () => {
+  const [error, setError] = useState("");
 
   // Query untuk mendapatkan data pelanggan
   const {
@@ -15,165 +17,144 @@ import React, { useState } from "react";
     isError: isPelangganError,
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
-  
-  
 
+  const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
+  const [pelangganIdToDelete, setPelangganIdToDelete] = useState<number | null>(
+    null
+  ); // Untuk menyimpan ID pelanggan yang akan dihapus
 
-  // State untuk multi-step logic
-  const [currentStep, setCurrentStep] = useState(1);
-  const [pelangganId, setPelangganId] = useState(null); // Untuk menyimpan pelanggan_id dari langkah pertama
+  const [deletePelanggan, { isLoading: isDeleting }] =
+    usePelangganDeleteMutation();
 
-  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
-
-    try {
-      // Kirim data menggunakan mutation
-      const response = await postPelanggan({
-        pelanggan_nama: pelangganNama,
-        pelanggan_alamat: pelangganAlamat,
-        pelanggan_notelp: pelangganNotelp,
-        pelanggan_email: pelangganEmail,
-      });
-
-      if (response.error) {
-        console.error("Error submitting form:", response.error);
-        alert("Gagal menambahkan pelanggan. Silakan coba lagi.");
-        return;
-      }
-
-      // Simpan pelanggan_id dari respons
-      const newPelangganId = response.data.pelanggan_id;
-      setPelangganId(newPelangganId);
-
-      // Pindah ke langkah kedua
-      setCurrentStep(2);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Terjadi kesalahan saat menambahkan pelanggan.");
-    }
-  };
-
-  // Handler untuk form kedua
-  const handleStep2Submit = async (e) => {
-    e.preventDefault();
-
-    if (!pelangganDataJenis || !pelangganDataFile) {
-      alert("Semua field wajib diisi.");
-      return;
-    }
-
-    // Membuat objek FormData untuk mengirim data termasuk file
-    const formData = new FormData();
-    formData.append("pelanggan_data_id", 4); // Default value sesuai permintaan
-    formData.append("pelanggan_data_pelanggan_id", pelangganId);
-    formData.append("pelanggan_data_jenis", pelangganDataJenis);
-    formData.append("pelanggan_data_file", pelangganDataFile);
+  const handleDelete = async () => {
+    if (pelangganIdToDelete === null) return;
 
     try {
-      // Kirim data menggunakan mutation
-      const response = await postPelangganData(formData);
-
-      if (response.error) {
-        console.error("Error submitting form:", response.error);
-        alert("Gagal menambahkan data pelanggan. Silakan coba lagi.");
-        return;
-      }
-
-      alert("Data berhasil dikirim!");
-      resetForm(); // Reset form setelah selesai
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Terjadi kesalahan saat menambahkan data pelanggan.");
+      console.log("Menghapus pelanggan dengan ID:", pelangganIdToDelete);
+      await deletePelanggan(pelangganIdToDelete).unwrap(); // Panggil mutation untuk menghapus pelanggan
+      await refetchPelanggan(); // Paksa refetch data pelanggan untuk memastikan data terbaru
+      console.log("Pelanggan berhasil dihapus");
+      setShowPopup(false); // Tutup popup setelah penghapusan berhasil
+    } catch (err: any) {
+      console.error("Error saat menghapus pelanggan:", err);
+      setError(err?.data?.message || "Gagal menghapus pelanggan.");
     }
   };
 
-  // Fungsi untuk mereset form
-  const resetForm = () => {
-    setPelangganNama("");
-    setPelangganAlamat("");
-    setPelangganNotelp("");
-    setPelangganEmail("");
-    setPelangganDataJenis("");
-    setPelangganDataFile(null);
-    setPelangganId(null);
-    setCurrentStep(1);
+  const showConfirmationPopup = (id: number) => {
+    setPelangganIdToDelete(id); // Simpan ID pelanggan yang akan dihapus
+    setShowPopup(true); // Tampilkan popup
   };
+
+  // Loading state
+  if (isPelangganLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (isPelangganError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="text-red-500 text-lg font-semibold">
+          Gagal memuat data pelanggan!
+        </div>
+      </div>
+    );
+  }
+
+  // Data pelanggan
+  const pelanggan = pelangganResponse?.data || [];
 
   return (
-    <div>
-      <h2>Form Tambah Pelanggan</h2>
+    <div className="flex min-h-screen bg-gray-100">
+      <div className="w-full p-8">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">Daftar Pelanggan</h1>
+          <a
+            href="/admin/pelanggan/tambah" // Navigasi ke halaman tambah pelanggan
+            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
+          >
+            Tambah Pelanggan
+          </a>
+        </div>
 
-      {/* Langkah 1 */}
-      {currentStep === 1 && (
-        <form onSubmit={handleStep1Submit}>
-          <div>
-            <label>Nama Pelanggan:</label>
-            <input
-              type="text"
-              value={pelangganNama}
-              onChange={(e) => setPelangganNama(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Alamat Pelanggan:</label>
-            <input
-              type="text"
-              value={pelangganAlamat}
-              onChange={(e) => setPelangganAlamat(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>No. Telepon:</label>
-            <input
-              type="text"
-              value={pelangganNotelp}
-              onChange={(e) => setPelangganNotelp(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              value={pelangganEmail}
-              onChange={(e) => setPelangganEmail(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" disabled={isPostingPelanggan}>
-            {isPostingPelanggan ? "Submitting..." : "Selanjutnya"}
-          </button>
-        </form>
-      )}
+        {/* Table */}
+        <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
+          <table className="w-full border-collapse text-lg">
+            <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
+              <tr>
+                <th className="py-5 px-8 text-left font-semibold">
+                  Nama Pelanggan
+                </th>
+                <th className="py-5 px-8 text-left font-semibold">Alamat</th>
+                <th className="py-5 px-8 text-left font-semibold">
+                  Nomor Telepon
+                </th>
+                <th className="py-5 px-8 text-left font-semibold">Email</th>
+                <th className="py-5 px-8 text-left font-semibold">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pelanggan.length > 0 ? (
+                pelanggan.map((item, index) => (
+                  <tr
+                    key={item.pelanggan_id}
+                    className={`transition-all duration-300 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                    } hover:bg-indigo-50`}
+                  >
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_nama || "-"}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_alamat || "-"}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_noTelp?.toString() || 0}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_email || "-"}
+                    </td>
+                    <td>
+                      <button
+                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                        onClick={() => showConfirmationPopup(item.pelanggan_id)} // Tampilkan popup
+                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
+                      >
+                        {isDeleting ? "Menghapus..." : "Hapus"}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="py-6 px-8 text-center text-gray-500"
+                  >
+                    Tidak ada pelanggan untuk ditampilkan.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Langkah 2 */}
-      {currentStep === 2 && (
-        <form onSubmit={handleStep2Submit}>
-          <div>
-            <label>Jenis Data:</label>
-            <input
-              type="text"
-              value={pelangganDataJenis}
-              onChange={(e) => setPelangganDataJenis(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>File:</label>
-            <input
-              type="file"
-              onChange={(e) => setPelangganDataFile(e.target.files[0])}
-              required
-            />
-          </div>
-          <button type="submit" disabled={isPostingPelangganData}>
-            {isPostingPelangganData ? "Submitting..." : "Submit"}
-          </button>
-        </form>
-      )}
+        {/* Popup Konfirmasi */}
+        {showPopup && (
+          <Popup
+            onClose={() => setShowPopup(false)} // Tutup popup
+            onDelete={handleDelete} // Panggil fungsi hapus
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-export default Pelanggan;
+export default PelangganView;

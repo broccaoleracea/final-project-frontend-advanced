@@ -29,7 +29,6 @@ const TambahPelanggan = () => {
   const [addPelangganData, { isLoading: isAddingPelangganData }] =
     usePelangganDataPostMutation();
 
-  
   const {
     data: jenisPelangganResponse,
     isLoading: isJenisLoading,
@@ -56,8 +55,8 @@ const TambahPelanggan = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setError(""); 
-      setSuccessMessage(""); 
+      setError("");
+      setSuccessMessage("");
 
       // Validasi input
       if (
@@ -82,13 +81,11 @@ const TambahPelanggan = () => {
         throw new Error("Gagal mendapatkan ID pelanggan.");
       }
 
-
       const formDataWithFile = new FormData();
       formDataWithFile.append("pelanggan_data_pelanggan_id", pelangganId);
       formDataWithFile.append("pelanggan_data_jenis", selectedJenis);
       formDataWithFile.append("pelanggan_data_file", file);
-console.log(formDataWithFile)
-      debugger;
+      console.log(formDataWithFile);
 
       await addPelangganData(formDataWithFile).unwrap();
 
@@ -133,7 +130,10 @@ console.log(formDataWithFile)
 
           {/* Nama Pelanggan */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_nama" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_nama"
+              className="text-sm font-medium text-gray-600"
+            >
               Nama Pelanggan
             </label>
             <input
@@ -149,7 +149,10 @@ console.log(formDataWithFile)
 
           {/* Alamat Pelanggan */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_alamat" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_alamat"
+              className="text-sm font-medium text-gray-600"
+            >
               Alamat
             </label>
             <textarea
@@ -164,7 +167,10 @@ console.log(formDataWithFile)
 
           {/* Nomor Telepon Pelanggan */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_noTelp" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_noTelp"
+              className="text-sm font-medium text-gray-600"
+            >
               Nomor Telepon
             </label>
             <input
@@ -180,7 +186,10 @@ console.log(formDataWithFile)
 
           {/* Email Pelanggan */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_email" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_email"
+              className="text-sm font-medium text-gray-600"
+            >
               Email
             </label>
             <input
@@ -196,33 +205,35 @@ console.log(formDataWithFile)
 
           {/* Jenis Pelanggan (Dropdown) */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_data_jenis" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_data_jenis"
+              className="text-sm font-medium text-gray-600"
+            >
               Jenis Data Pelanggan
             </label>
-         
-              <select
-                id="pelanggan_data_jenis"
-                value={selectedJenis}
-                onChange={(e) => setSelectedJenis(e.target.value)}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                required
-              >
-                <option disabled defaultValue value="">Pilih Jenis Pelanggan</option>
-              
-                  <option value="KTP">
-                    KTP
-                  </option>
-                <option value="SIM">
-                  SIM
-                </option>
-    
-              </select>
-      
+
+            <select
+              id="pelanggan_data_jenis"
+              value={selectedJenis}
+              onChange={(e) => setSelectedJenis(e.target.value)}
+              className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+              required
+            >
+              <option disabled defaultValue value="">
+                Pilih Jenis Pelanggan
+              </option>
+
+              <option value="KTP">KTP</option>
+              <option value="SIM">SIM</option>
+            </select>
           </div>
 
           {/* File Upload */}
           <div className="mb-6">
-            <label htmlFor="pelanggan_data_file" className="text-sm font-medium text-gray-600">
+            <label
+              htmlFor="pelanggan_data_file"
+              className="text-sm font-medium text-gray-600"
+            >
               Unggah File
             </label>
             <input
@@ -252,4 +263,4 @@ console.log(formDataWithFile)
   );
 };
 
-export default TambahPelanggan; 
+export default TambahPelanggan;

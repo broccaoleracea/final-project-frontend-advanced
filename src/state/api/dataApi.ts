@@ -14,9 +14,9 @@ const endpoints = {
 <<<<<<< HEAD
   alat: "alat",
   kategori: "kategori",
-  pelangganData: "data/pelanggan",
+  pelanggan_data: "/data/pelanggan",
   pelanggan: "pelanggan",
-  penyewaanDetail: "detail/penyewaan",
+  penyewaan_detail: "penyewaan/detail",
   penyewaan: "penyewaan",
 =======
     alat: "alat",
