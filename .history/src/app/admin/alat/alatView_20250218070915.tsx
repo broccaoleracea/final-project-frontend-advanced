@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link untuk navigasi
+import { useSearchParams } from "next/navigation"; // Untuk membaca query params
 import {
   useAlatGetQuery,
   useKategoriGetQuery,
@@ -9,6 +10,10 @@ import {
 
 const AlatView = () => {
   const [error, setError] = useState("");
+
+  // Membaca query params
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
 
   // Query untuk mendapatkan data alat dan kategori
   const {
@@ -26,6 +31,7 @@ const AlatView = () => {
   // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
+  // Fungsi untuk menangani aksi hapus
   const handleDelete = async (alat_id: number) => {
     try {
       console.log("Menghapus alat dengan ID:", alat_id);
@@ -51,9 +57,7 @@ const AlatView = () => {
   if (isAlatError || isKategoriError) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">
-          Gagal memuat data!
-        </div>
+        <div className="text-red-500 text-lg font-semibold">Gagal memuat data!</div>
       </div>
     );
   }
@@ -73,7 +77,6 @@ const AlatView = () => {
     };
   });
 
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
@@ -88,15 +91,20 @@ const AlatView = () => {
           </Link>
         </div>
 
+        {/* Notifikasi */}
+        {status === "success" && (
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-md mb-4">
+            Alat berhasil diperbarui!
+          </div>
+        )}
+
         {/* Table */}
         <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
                 <th className="py-5 px-8 text-left font-semibold">Kategori</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Barang
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nama Barang</th>
                 <th className="py-5 px-8 text-left font-semibold">Stok</th>
                 <th className="py-5 px-8 text-left font-semibold">Deskripsi</th>
                 <th className="py-5 px-8 text-left font-semibold">Aksi</th>
@@ -153,10 +161,7 @@ const AlatView = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="5"
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
+                  <td colSpan="5" className="py-6 px-8 text-center text-gray-500">
                     Tidak ada alat untuk ditampilkan.
                   </td>
                 </tr>

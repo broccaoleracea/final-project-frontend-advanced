@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link"; // Import Link untuk navigasi
+import { useState } from "react";
 import {
   useAlatGetQuery,
   useKategoriGetQuery,
   useAlatDeleteMutation,
 } from "@/state/api/dataApi";
+import { useAppDispatch } from "@/hooks/hooks";
 
 const AlatView = () => {
   const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
 
   // Query untuk mendapatkan data alat dan kategori
   const {
@@ -26,6 +27,7 @@ const AlatView = () => {
   // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
+  // Fungsi untuk menangani aksi hapus
   const handleDelete = async (alat_id: number) => {
     try {
       console.log("Menghapus alat dengan ID:", alat_id);
@@ -73,19 +75,18 @@ const AlatView = () => {
     };
   });
 
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
-          <Link
-            href="/admin/alat/tambah" // Navigasi ke halaman tambah alat
+          <a
+            href="/admin/alat/tambah"
             className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
           >
             Tambah Alat
-          </Link>
+          </a>
         </div>
 
         {/* Table */}
@@ -132,15 +133,12 @@ const AlatView = () => {
                       {item.alat_deskripsi || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-center">
-                      {/* Tombol Edit */}
                       <Link
-                        href={`/admin/alat/update/${item.alat_id}`} // Navigasi ke halaman update
+                        href={`/admin/alat/update/${item.alat_id}`} // Arahkan ke halaman update dengan ID alat
                         className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out"
                       >
                         Edit
                       </Link>
-
-                      {/* Tombol Hapus */}
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
                         onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus

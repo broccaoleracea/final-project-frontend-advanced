@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link"; // Import Link untuk navigasi
 import {
   useAlatGetQuery,
@@ -73,6 +73,7 @@ const AlatView = () => {
     };
   });
 
+  refetchAlatq  ();
 
   return (
     <div className="flex min-h-screen bg-gray-100">

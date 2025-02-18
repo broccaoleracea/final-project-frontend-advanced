@@ -73,6 +73,7 @@ const AlatView = () => {
     };
   });
 
+  useEffect(()=)
 
   return (
     <div className="flex min-h-screen bg-gray-100">

@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link"; // Import Link untuk navigasi
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   useAlatGetQuery,
   useKategoriGetQuery,
@@ -9,6 +10,8 @@ import {
 
 const AlatView = () => {
   const [error, setError] = useState("");
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
 
   // Query untuk mendapatkan data alat dan kategori
   const {
@@ -26,14 +29,18 @@ const AlatView = () => {
   // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
-  const handleDelete = async (alat_id: number) => {
+  // Refetch data jika ada query param status=success
+  useEffect(() => {
+    if (status === "success") {
+      refetchAlat(); // Muat ulang data alat
+    }
+  }, [status, refetchAlat]);
+
+  const handleDelete = async (alat_id) => {
     try {
-      console.log("Menghapus alat dengan ID:", alat_id);
-      await deleteAlat(alat_id).unwrap(); // Panggil mutation untuk menghapus alat
-      await refetchAlat(); // Paksa refetch data alat untuk memastikan data terbaru
-      console.log("Alat berhasil dihapus");
-    } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
+      await deleteAlat(alat_id).unwrap();
+      refetchAlat(); // Refetch setelah hapus
+    } catch (err) {
       setError(err?.data?.message || "Gagal menghapus alat.");
     }
   };
@@ -51,9 +58,7 @@ const AlatView = () => {
   if (isAlatError || isKategoriError) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">
-          Gagal memuat data!
-        </div>
+        <div className="text-red-500 text-lg font-semibold">Gagal memuat data!</div>
       </div>
     );
   }
@@ -61,8 +66,6 @@ const AlatView = () => {
   // Data alat dan kategori
   const alat = alatResponse?.data || [];
   const kategori = kategoriResponse?.data || [];
-
-  // Gabungkan data alat dengan kategori
   const alatWithKategori = alat.map((item) => {
     const kategoriData = kategori.find(
       (kat) => kat.kategori_id === item.alat_kategori_id
@@ -73,7 +76,6 @@ const AlatView = () => {
     };
   });
 
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
@@ -81,12 +83,19 @@ const AlatView = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
           <Link
-            href="/admin/alat/tambah" // Navigasi ke halaman tambah alat
+            href="/admin/alat/tambah"
             className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
           >
             Tambah Alat
           </Link>
         </div>
+
+        {/* Notifikasi */}
+        {status === "success" && (
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-md mb-4">
+            Alat berhasil diperbarui!
+          </div>
+        )}
 
         {/* Table */}
         <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
@@ -94,9 +103,7 @@ const AlatView = () => {
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
                 <th className="py-5 px-8 text-left font-semibold">Kategori</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Barang
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nama Barang</th>
                 <th className="py-5 px-8 text-left font-semibold">Stok</th>
                 <th className="py-5 px-8 text-left font-semibold">Deskripsi</th>
                 <th className="py-5 px-8 text-left font-semibold">Aksi</th>
@@ -132,19 +139,16 @@ const AlatView = () => {
                       {item.alat_deskripsi || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-center">
-                      {/* Tombol Edit */}
                       <Link
-                        href={`/admin/alat/update/${item.alat_id}`} // Navigasi ke halaman update
+                        href={`/admin/alat/update/${item.alat_id}`}
                         className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out"
                       >
                         Edit
                       </Link>
-
-                      {/* Tombol Hapus */}
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus
-                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
+                        onClick={() => handleDelete(item.alat_id)}
+                        disabled={isDeleting}
                       >
                         {isDeleting ? "Menghapus..." : "Hapus"}
                       </button>
@@ -153,10 +157,7 @@ const AlatView = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="5"
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
+                  <td colSpan="5" className="py-6 px-8 text-center text-gray-500">
                     Tidak ada alat untuk ditampilkan.
                   </td>
                 </tr>

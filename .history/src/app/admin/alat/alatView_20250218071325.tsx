@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link"; // Import Link untuk navigasi
 import {
   useAlatGetQuery,
@@ -26,6 +26,7 @@ const AlatView = () => {
   // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
+ 
   const handleDelete = async (alat_id: number) => {
     try {
       console.log("Menghapus alat dengan ID:", alat_id);
@@ -51,9 +52,7 @@ const AlatView = () => {
   if (isAlatError || isKategoriError) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">
-          Gagal memuat data!
-        </div>
+        <div className="text-red-500 text-lg font-semibold">Gagal memuat data!</div>
       </div>
     );
   }
@@ -72,7 +71,6 @@ const AlatView = () => {
       kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
     };
   });
-
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -94,9 +92,7 @@ const AlatView = () => {
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
                 <th className="py-5 px-8 text-left font-semibold">Kategori</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Barang
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nama Barang</th>
                 <th className="py-5 px-8 text-left font-semibold">Stok</th>
                 <th className="py-5 px-8 text-left font-semibold">Deskripsi</th>
                 <th className="py-5 px-8 text-left font-semibold">Aksi</th>
@@ -153,10 +149,7 @@ const AlatView = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="5"
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
+                  <td colSpan="5" className="py-6 px-8 text-center text-gray-500">
                     Tidak ada alat untuk ditampilkan.
                   </td>
                 </tr>
