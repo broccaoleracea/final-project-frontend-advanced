@@ -1,12 +1,19 @@
 "use client";
 import { useState } from "react";
-import { useKategoriGetQuery, useAlatGetQuery } from "@/state/api/dataApi";
+import {
+  useKategoriGetQuery,
+  useAlatGetQuery,
+  useAlatDeleteMutation,
+  useKategoriDeleteMutation,
+} from "@/state/api/dataApi";
 
 const KategoriView = () => {
+  const [error, setError] = useState("");
   // Fetch data kategori
   const {
     data: kategoriResponse,
     isLoading: isKategoriLoading,
+    refetch,
     isError: isKategoriError,
   } = useKategoriGetQuery();
 
@@ -19,6 +26,18 @@ const KategoriView = () => {
 
   // State untuk menyimpan kategori terpilih
   const [selectedKategori, setSelectedKategori] = useState(null);
+
+  const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();
+
+  const handleDelete = async (id: number) => {
+    try {
+      await del(id).unwrap();
+      await refetch();
+    } catch (err: any) {
+      console.error("Error saat menghapus alat:", err);
+      setError(err?.data?.message || "Gagal menghapus alat.");
+    }
+  };
 
   // Skeleton Loading Component
   const SkeletonLoader = () => (
@@ -96,9 +115,13 @@ const KategoriView = () => {
             <h3 className="text-xl font-semibold text-gray-900">
               {item.kategori_nama}
             </h3>
-            <p className="text-sm text-gray-600 mt-2">
-              Jelajahi barang-barang dalam kategori ini.
-            </p>
+            <button
+              className="px-4 py-2 bg-red-500 disabled:bg-red-300 text-white rounded-md"
+              onClick={() => handleDelete(item.kategori_id)}
+              disabled={isDeleting}
+            >
+              Hapus
+            </button>
           </div>
         ))}
 

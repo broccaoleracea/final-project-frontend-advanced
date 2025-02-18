@@ -6,10 +6,13 @@ import {
   useKategoriGetQuery,
   useAlatDeleteMutation,
 } from "@/state/api/dataApi";
+import Popup from "@/app/portal/page";
 
 const AlatView = () => {
   const [error, setError] = useState("");
 
+  const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
+  const [alatIdToDelete, setAlatIdToDelete] = useState<number | null>(null); // Untuk menyimpan ID alat yang akan dihapus
   // Query untuk mendapatkan data alat dan kategori
   const {
     data: alatResponse,
@@ -26,16 +29,24 @@ const AlatView = () => {
   // Mutation untuk menghapus alat
   const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
-  const handleDelete = async (alat_id: number) => {
+  const handleDelete = async () => {
+    if (alatIdToDelete === null) return;
+  
     try {
-      console.log("Menghapus alat dengan ID:", alat_id);
-      await deleteAlat(alat_id).unwrap(); // Panggil mutation untuk menghapus alat
+      console.log("Menghapus alat dengan ID:", alatIdToDelete);
+      await deleteAlat(alatIdToDelete).unwrap(); // Panggil mutation untuk menghapus alat
       await refetchAlat(); // Paksa refetch data alat untuk memastikan data terbaru
       console.log("Alat berhasil dihapus");
+      setShowPopup(false); // Tutup popup setelah penghapusan berhasil
     } catch (err: any) {
       console.error("Error saat menghapus alat:", err);
       setError(err?.data?.message || "Gagal menghapus alat.");
     }
+  };
+
+  const showConfirmationPopup = (id: number) => {
+    setAlatIdToDelete(id); // Simpan ID alat yang akan dihapus
+    setShowPopup(true); // Tampilkan popup
   };
 
   // Loading state
@@ -73,7 +84,6 @@ const AlatView = () => {
     };
   });
 
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <div className="w-full p-8">
@@ -87,7 +97,6 @@ const AlatView = () => {
             Tambah Alat
           </Link>
         </div>
-
         {/* Table */}
         <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
@@ -139,11 +148,10 @@ const AlatView = () => {
                       >
                         Edit
                       </Link>
-
                       {/* Tombol Hapus */}
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus
+                        onClick={() => showConfirmationPopup(item.alat_id)} // Tampilkan popup
                         disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
                       >
                         {isDeleting ? "Menghapus..." : "Hapus"}
@@ -154,7 +162,7 @@ const AlatView = () => {
               ) : (
                 <tr>
                   <td
-                    colSpan="5"
+                    colSpan={5}
                     className="py-6 px-8 text-center text-gray-500"
                   >
                     Tidak ada alat untuk ditampilkan.
@@ -164,6 +172,14 @@ const AlatView = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Popup Konfirmasi */}
+        {showPopup && (
+          <Popup
+            onClose={() => setShowPopup(false)} // Tutup popup
+            onDelete={handleDelete} // Panggil fungsi hapus
+          />
+        )}
       </div>
     </div>
   );

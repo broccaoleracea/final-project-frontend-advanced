@@ -1,9 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import {
   usePelangganDeleteMutation,
   usePelangganGetQuery,
 } from "@/state/api/dataApi";
+=======
+import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { Link } from "react-router-dom";
+import Popup from "@/app/portal/page";
+>>>>>>> 3dcb5e5751b23d1b94975f2fe26c47dbc133407c
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -16,19 +22,35 @@ const PelangganView = () => {
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
 
+<<<<<<< HEAD
   const [deletePelanggan, { isLoading: isDeleting }] =
     usePelangganDeleteMutation();
+=======
 
-  const handleDelete = async (pelanggan_id: number) => {
+  const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
+const [pelangganIdToDelete, setPelangganIdToDelete] = useState<number | null>(null); // Untuk menyimpan ID pelanggan yang akan dihapus
+
+  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
+>>>>>>> 3dcb5e5751b23d1b94975f2fe26c47dbc133407c
+
+  const handleDelete = async () => {
+    if (pelangganIdToDelete === null) return;
+  
     try {
-      console.log("Menghapus pelanggan dengan ID:", pelanggan_id);
-      await deletePelanggan(pelanggan_id).unwrap(); // Panggil mutation untuk menghapus pelanggan
+      console.log("Menghapus pelanggan dengan ID:", pelangganIdToDelete);
+      await deletePelanggan(pelangganIdToDelete).unwrap(); // Panggil mutation untuk menghapus pelanggan
       await refetchPelanggan(); // Paksa refetch data pelanggan untuk memastikan data terbaru
-      console.log("pelanggan berhasil dihapus");
+      console.log("Pelanggan berhasil dihapus");
+      setShowPopup(false); // Tutup popup setelah penghapusan berhasil
     } catch (err: any) {
       console.error("Error saat menghapus pelanggan:", err);
       setError(err?.data?.message || "Gagal menghapus pelanggan.");
     }
+  };
+
+  const showConfirmationPopup = (id: number) => {
+    setPelangganIdToDelete(id); // Simpan ID pelanggan yang akan dihapus
+    setShowPopup(true); // Tampilkan popup
   };
 
   // Loading state
@@ -60,20 +82,22 @@ const PelangganView = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Daftar Pelanggan</h1>
+          <a
+            href="/admin/pelanggan/tambah" // Navigasi ke halaman tambah pelanggan
+            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
+          >
+            Tambah Pelanggan
+          </a>
         </div>
-
+  
         {/* Table */}
         <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Pelanggan
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nama Pelanggan</th>
                 <th className="py-5 px-8 text-left font-semibold">Alamat</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nomor Telepon
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nomor Telepon</th>
                 <th className="py-5 px-8 text-left font-semibold">Email</th>
                 <th className="py-5 px-8 text-left font-semibold">Aksi</th>
               </tr>
@@ -102,7 +126,7 @@ const PelangganView = () => {
                     <td>
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => handleDelete(item.pelanggan_id)} // Panggil fungsi hapus
+                        onClick={() => showConfirmationPopup(item.pelanggan_id)} // Tampilkan popup
                         disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
                       >
                         {isDeleting ? "Menghapus..." : "Hapus"}
@@ -112,10 +136,7 @@ const PelangganView = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="4"
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
+                  <td colSpan={5} className="py-6 px-8 text-center text-gray-500">
                     Tidak ada pelanggan untuk ditampilkan.
                   </td>
                 </tr>
@@ -123,6 +144,14 @@ const PelangganView = () => {
             </tbody>
           </table>
         </div>
+  
+        {/* Popup Konfirmasi */}
+        {showPopup && (
+          <Popup
+            onClose={() => setShowPopup(false)} // Tutup popup
+            onDelete={handleDelete} // Panggil fungsi hapus
+          />
+        )}
       </div>
     </div>
   );
