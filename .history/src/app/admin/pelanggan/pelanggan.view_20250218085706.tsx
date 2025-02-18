@@ -88,7 +88,7 @@ const PelangganView = () => {
                     } hover:bg-indigo-50`}
                   >
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.pelanggan_nama || "-"} 
+                      {item.pelanggan_nama || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
                       {item.pelanggan_alamat || "-"}

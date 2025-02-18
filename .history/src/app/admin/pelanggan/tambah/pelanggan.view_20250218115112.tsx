@@ -252,4 +252,4 @@ const TambahPelanggan = () => {
   );
 };
 
-export default TambahPelanggan; 
+export default TambahPelanggan;

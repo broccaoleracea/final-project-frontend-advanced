@@ -66,7 +66,7 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
 const endpoints = {
   alat: "alat",
   kategori: "kategori",
-  pelanggan_data: "/data/pelanggan",
+  pelanggan_data: "pelanggan/",
   pelanggan: "pelanggan",
   penyewaan_detail: "penyewaan/detail",
   penyewaan: "penyewaan",
@@ -148,7 +148,7 @@ export const {
   usePelangganDataPatchMutation,
   usePelangganDataDeleteMutation,
   usePelangganGetQuery,
-  usePelangganPostMutation,
+  qusePelangganPostMutation,
   usePelangganPatchMutation,
   usePelangganDeleteMutation,
   usePenyewaanDetailGetQuery,

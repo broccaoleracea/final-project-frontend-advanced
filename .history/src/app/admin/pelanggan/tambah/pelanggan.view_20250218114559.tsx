@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   usePelangganPostMutation,
   usePelangganDataPostMutation,
-  usePelangganDataGetQuery,
 } from "@/state/api/dataApi";
 
 const TambahPelanggan = () => {
@@ -28,13 +27,6 @@ const TambahPelanggan = () => {
   // Mutation untuk menambahkan data tambahan
   const [addPelangganData, { isLoading: isAddingPelangganData }] =
     usePelangganDataPostMutation();
-
-  // Query untuk mendapatkan data jenis pelanggan
-  const {
-    data: jenisPelangganResponse,
-    isLoading: isJenisLoading,
-    isError: isJenisError,
-  } = usePelangganDataGetQuery();
 
   // Handle input changes untuk form utama
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,31 +185,21 @@ const TambahPelanggan = () => {
             />
           </div>
 
-          {/* Jenis Pelanggan (Dropdown) */}
+          {/* Jenis Pelanggan */}
           <div className="mb-6">
             <label htmlFor="pelanggan_data_jenis" className="text-sm font-medium text-gray-600">
               Jenis Pelanggan
             </label>
-            {isJenisLoading ? (
-              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
-            ) : isJenisError ? (
-              <div className="text-red-500">Gagal memuat data jenis pelanggan.</div>
-            ) : (
-              <select
-                id="pelanggan_data_jenis"
-                value={selectedJenis}
-                onChange={(e) => setSelectedJenis(e.target.value)}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                required
-              >
-                <option value="">Pilih Jenis Pelanggan</option>
-                {jenisPelangganResponse?.data?.map((jenis) => (
-                  <option key={jenis.id} value={jenis.id}>
-                    {jenis.nama}
-                  </option>
-                ))}
-              </select>
-            )}
+            <select
+              id="pelanggan_data_jenis"
+              value={selectedJenis}
+              onChange={(e) => setSelectedJenis(e.target.value)}
+              className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+              required
+            >
+              <option value="">Pilih Jenis Pelanggan</option>
+          
+            </select>
           </div>
 
           {/* File Upload */}
@@ -252,4 +234,4 @@ const TambahPelanggan = () => {
   );
 };
 
-export default TambahPelanggan; 
+export default TambahPelanggan;

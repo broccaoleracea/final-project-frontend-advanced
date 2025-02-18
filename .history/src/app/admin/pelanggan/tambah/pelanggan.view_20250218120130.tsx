@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   usePelangganPostMutation,
   usePelangganDataPostMutation,
-  usePelangganDataGetQuery,
+  // usePelangganDataGetQuery,
 } from "@/state/api/dataApi";
 
 const TambahPelanggan = () => {
@@ -25,16 +25,16 @@ const TambahPelanggan = () => {
   const [addPelanggan, { isLoading: isAddingPelanggan }] =
     usePelangganPostMutation();
 
-  // Mutation untuk menambahkan data tambahan
-  const [addPelangganData, { isLoading: isAddingPelangganData }] =
-    usePelangganDataPostMutation();
+  // // Mutation untuk menambahkan data tambahan
+  // const [addPelangganData, { isLoading: isAddingPelangganData }] =
+  //   usePelangganDataPostMutation();
 
   // Query untuk mendapatkan data jenis pelanggan
-  const {
-    data: jenisPelangganResponse,
-    isLoading: isJenisLoading,
-    isError: isJenisError,
-  } = usePelangganDataGetQuery();
+  // const {
+  //   data: jenisPelangganResponse,
+  //   isLoading: isJenisLoading,
+  //   isError: isJenisError,
+  // } = usePelangganDataGetQuery();
 
   // Handle input changes untuk form utama
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +89,7 @@ const TambahPelanggan = () => {
       formDataWithFile.append("pelanggan_data_file", file);
 
       // Kirim data tambahan
-      await addPelangganData(formDataWithFile).unwrap();
+      // await addPelangganData(formDataWithFile).unwrap();
 
       // Tampilkan pesan sukses
       setSuccessMessage("Pelanggan berhasil ditambahkan!");

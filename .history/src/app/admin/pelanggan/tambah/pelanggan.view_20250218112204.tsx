@@ -1,33 +1,17 @@
 "use client";
 import { useState } from "react";
-import {
-  usePelangganPostMutation,
-  usePelangganDataPostMutation,
-  usePelangganDataGetQuery,
-} from "@/state/api/dataApi";
+import { usePelangganPostMutation, usePelangganDataGetQuery } from "@/state/api/dataApi";
 
-const TambahPelanggan = () => {
-  // State untuk data pelanggan utama
+const RentalForm = () => {
   const [formData, setFormData] = useState({
     pelanggan_nama: "",
     pelanggan_alamat: "",
     pelanggan_noTelp: "",
     pelanggan_email: "",
+    pelanggan_data_jenis: "",
   });
-
-  // State untuk data tambahan
-  const [selectedJenis, setSelectedJenis] = useState(""); // Jenis pelanggan
-  const [file, setFile] = useState<File | null>(null); // File upload
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  // Mutation untuk menambahkan pelanggan utama
-  const [addPelanggan, { isLoading: isAddingPelanggan }] =
-    usePelangganPostMutation();
-
-  // Mutation untuk menambahkan data tambahan
-  const [addPelangganData, { isLoading: isAddingPelangganData }] =
-    usePelangganDataPostMutation();
 
   // Query untuk mendapatkan data jenis pelanggan
   const {
@@ -36,78 +20,8 @@ const TambahPelanggan = () => {
     isError: isJenisError,
   } = usePelangganDataGetQuery();
 
-  // Handle input changes untuk form utama
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Handle file upload
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setError(""); // Reset error message
-      setSuccessMessage(""); // Reset success message
-
-      // Validasi input
-      if (
-        !formData.pelanggan_nama ||
-        !formData.pelanggan_alamat ||
-        !formData.pelanggan_noTelp ||
-        !formData.pelanggan_email ||
-        !selectedJenis ||
-        !file
-      ) {
-        setError("Semua field harus diisi.");
-        return;
-      }
-
-      // Kirim data pelanggan utama
-      const pelangganResponse = await addPelanggan(formData).unwrap();
-
-      // Ambil ID pelanggan dari respons
-      const pelangganId = pelangganResponse?.data?.pelanggan_id;
-
-      if (!pelangganId) {
-        throw new Error("Gagal mendapatkan ID pelanggan.");
-      }
-
-      // Buat FormData untuk data tambahan
-      const formDataWithFile = new FormData();
-      formDataWithFile.append("pelanggan_data_pelanggan_id", pelangganId);
-      formDataWithFile.append("pelanggan_data_jenis", selectedJenis);
-      formDataWithFile.append("pelanggan_data_file", file);
-
-      // Kirim data tambahan
-      await addPelangganData(formDataWithFile).unwrap();
-
-      // Tampilkan pesan sukses
-      setSuccessMessage("Pelanggan berhasil ditambahkan!");
-
-      // Reset form setelah berhasil
-      setFormData({
-        pelanggan_nama: "",
-        pelanggan_alamat: "",
-        pelanggan_noTelp: "",
-        pelanggan_email: "",
-      });
-      setSelectedJenis("");
-      setFile(null);
-    } catch (err: any) {
-      console.error("Error saat menambahkan pelanggan:", err);
-      setError(err?.data?.message || "Gagal menambahkan pelanggan.");
-    }
-  };
+  // Mutation untuk menambahkan pelanggan baru
+  const [createPelanggan, { isLoading: isCreating }] = usePelangganPostMutation();
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
@@ -127,7 +41,7 @@ const TambahPelanggan = () => {
         <form onSubmit={handleSubmit}>
           {/* Header Section */}
           <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">
-            Data Pelanggan
+            Tambah Data Pelanggan
           </h3>
 
           {/* Nama Pelanggan */}
@@ -157,7 +71,6 @@ const TambahPelanggan = () => {
               value={formData.pelanggan_alamat}
               onChange={handleChange}
               className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-              required
             />
           </div>
 
@@ -205,8 +118,9 @@ const TambahPelanggan = () => {
             ) : (
               <select
                 id="pelanggan_data_jenis"
-                value={selectedJenis}
-                onChange={(e) => setSelectedJenis(e.target.value)}
+                name="pelanggan_data_jenis"
+                value={formData.pelanggan_data_jenis}
+                onChange={handleChange}
                 className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
                 required
               >
@@ -220,30 +134,20 @@ const TambahPelanggan = () => {
             )}
           </div>
 
-          {/* File Upload */}
-          <div className="mb-6">
-            <label htmlFor="pelanggan_data_file" className="text-sm font-medium text-gray-600">
-              Unggah File
-            </label>
-            <input
-              type="file"
-              id="pelanggan_data_file"
-              onChange={handleFileChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-
           {/* Submit Button */}
           <div className="flex justify-end mt-6">
             <button
+              type="button"
+              className="px-8 py-4 rounded-lg text-lg font-medium bg-gray-300 hover:bg-gray-400 transition duration-300 mr-4 shadow-md"
+            >
+              CANCEL
+            </button>
+            <button
               type="submit"
-              disabled={isAddingPelanggan || isAddingPelangganData}
+              disabled={isCreating}
               className="px-8 py-4 rounded-lg text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-blue-600 transition duration-300 shadow-md"
             >
-              {isAddingPelanggan || isAddingPelangganData
-                ? "Menambahkan..."
-                : "Tambah Pelanggan"}
+              {isCreating ? "Menambahkan..." : "Tambah Pelanggan"}
             </button>
           </div>
         </form>
@@ -252,4 +156,4 @@ const TambahPelanggan = () => {
   );
 };
 
-export default TambahPelanggan; 
+export default RentalForm;

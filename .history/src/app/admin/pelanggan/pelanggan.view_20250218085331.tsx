@@ -1,9 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  usePelangganDeleteMutation,
-  usePelangganGetQuery,
-} from "@/state/api/dataApi";
+import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -16,8 +13,8 @@ const PelangganView = () => {
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
 
-  const [deletePelanggan, { isLoading: isDeleting }] =
-    usePelangganDeleteMutation();
+
+  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
 
   const handleDelete = async (pelanggan_id: number) => {
     try {
@@ -88,14 +85,14 @@ const PelangganView = () => {
                     } hover:bg-indigo-50`}
                   >
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.pelanggan_nama || "-"} 
+                      {item.pelanggan_nama || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
                       {item.pelanggan_alamat || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.pelanggan_noTelp?.toString() || 0}
-                    </td>
+  {item.pelanggan_noTelp?.toString() || "-"}
+</td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
                       {item.pelanggan_email || "-"}
                     </td>
