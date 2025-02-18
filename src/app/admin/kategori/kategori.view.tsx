@@ -4,10 +4,18 @@ import { useKategoriGetQuery, useAlatGetQuery } from "@/state/api/dataApi";
 
 const KategoriView = () => {
   // Fetch data kategori
-  const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } = useKategoriGetQuery();
+  const {
+    data: kategoriResponse,
+    isLoading: isKategoriLoading,
+    isError: isKategoriError,
+  } = useKategoriGetQuery();
 
   // Fetch data alat
-  const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
+  const {
+    data: alatResponse,
+    isLoading: isAlatLoading,
+    isError: isAlatError,
+  } = useAlatGetQuery();
 
   // State untuk menyimpan kategori terpilih
   const [selectedKategori, setSelectedKategori] = useState(null);
@@ -16,7 +24,10 @@ const KategoriView = () => {
   const SkeletonLoader = () => (
     <div className="space-y-4">
       {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse"></div>
+        <div
+          key={i}
+          className="h-16 bg-gray-200 rounded-lg animate-pulse"
+        ></div>
       ))}
     </div>
   );
@@ -48,10 +59,22 @@ const KategoriView = () => {
     <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
       {/* Hero Section */}
       <div className="bg-yellow-400 w-full py-10 px-6 rounded-xl shadow-lg mb-8 text-center mt-10">
-        <h1 className="text-3xl font-extrabold text-black">Selamat Datang di Halaman Kategori</h1>
+        <h1 className="text-3xl font-extrabold text-black">
+          Selamat Datang di Halaman Kategori
+        </h1>
         <p className="text-gray-700 mt-2">
           Temukan kategori barang elektronik favorit Anda.
         </p>
+      </div>
+
+      {/* Tombol Tambah Kategori */}
+      <div className="w-full px-6 mb-8">
+        <a
+          href="/admin/kategori/tambah"
+          className="w-full px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out text-center block"
+        >
+          Tambah Kategori
+        </a>
       </div>
 
       {/* Tampilan Kategori */}
@@ -59,10 +82,20 @@ const KategoriView = () => {
         {kategori.map((item) => (
           <div
             key={item.id}
-            className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
-            onClick={() => setSelectedKategori(item)} // Set kategori terpilih saat card ditekan
+            className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
           >
-            <h3 className="text-xl font-semibold text-gray-900">{item.kategori_nama}</h3>
+            {/* Tombol Edit */}
+            <a
+              href={`/admin/kategori/edit/${item.kategori_id}`} // Ganti dengan URL edit yang sesuai
+              className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
+            >
+              Edit
+            </a>
+
+            {/* Konten Kategori */}
+            <h3 className="text-xl font-semibold text-gray-900">
+              {item.kategori_nama}
+            </h3>
             <p className="text-sm text-gray-600 mt-2">
               Jelajahi barang-barang dalam kategori ini.
             </p>
@@ -90,11 +123,15 @@ const KategoriView = () => {
                   key={item.id}
                   className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
                 >
-                  <h3 className="text-xl font-semibold text-gray-900">{item.alat_nama}</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {item.alat_nama}
+                  </h3>
                   <p className="text-sm text-gray-600 mt-2">
                     Rp {item.alat_hargaPerhari}
                   </p>
-                  <p className="text-sm text-gray-600 mt-2">{item.alat_deskripsi}</p>
+                  <p className="text-sm text-gray-600 mt-2">
+                    {item.alat_deskripsi}
+                  </p>
                 </div>
               ))
             ) : (
