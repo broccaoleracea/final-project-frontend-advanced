@@ -12,10 +12,16 @@ const HomeView = () => {
           <p className="mb-6 text-lg font-normal text-left text-gray-500 lg:text-xl dark:text-gray-400">
             Here at Flowbite we focus on markets where technology, innovation, and
             capital can unlock long-term value and drive economic growth.
+            <br/>
+            <a href="https://www.flaticon.com/free-icons/rent" title="rent icons">Rent icons created by SBTS2018 -
+              Flaticon</a>
+
           </p>
+
+
           <a
-            href="/user/barang"
-            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200"
+              href="/user/barang"
+              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200"
           >
             Learn more
             <svg
@@ -34,6 +40,8 @@ const HomeView = () => {
               />
             </svg>
           </a>
+          
+          
         </div>
 
         {/* Kolom untuk gambar */}

@@ -8,9 +8,9 @@ const NavbarView = () => {
           {/* Logo */}
           <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="/logo/key-lineal-color.png"
               className="h-8"
-              alt="Flowbite Logo"
+              alt="GacorCihuy logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
               GacorCihuy
