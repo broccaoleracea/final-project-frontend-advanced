@@ -1,4 +1,4 @@
-// app/register/page.tsx
+// app/register/Redirect.tsx
 import RegisterForm from './RegisterForm'
 
 export default function RegisterPage() {

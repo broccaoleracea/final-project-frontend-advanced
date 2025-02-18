@@ -5,71 +5,18 @@ import {
   BaseQueryFn,
 } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
-import { logout, setCredentials } from "@/state/api/authSlice";
+import {logout, setCredentials} from "@/state/api/authSlice";
+import {baseQueryWithReauth} from "@/state/api/authApi";
 
 type RootState = ReturnType<typeof import("../store").store.getState>;
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
-    const token =
-      Cookies.get("token") || (getState() as RootState).auth.access_token;
-
-    if (token) {
-      headers.set("authorization", `Bearer ${token}`);
-    }
-    return headers;
-  },
-});
-
-const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
-
-  if (result.error && result.error.status === 401) {
-    const refreshToken = (api.getState() as RootState).auth.refresh_token;
-
-    const refreshResult = (await baseQuery(
-      {
-        url: "/auth/refresh",
-        method: "POST",
-        body: { refreshToken },
-      },
-      api,
-      extraOptions
-    )) as { data: RefreshResponse };
-
-    if (refreshResult.data) {
-      api.dispatch(
-        setCredentials({
-          user: refreshResult.data.user,
-          accessToken: refreshResult.data.access_token,
-          refreshToken: refreshResult.data.refresh_token,
-        })
-      );
-
-      Cookies.set("token", refreshResult.data.refresh_token, {
-        expires: 7,
-        secure: true,
-        sameSite: "strict",
-      });
-
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      api.dispatch(logout());
-      Cookies.remove("token");
-    }
-  }
-
-  return result;
-};
-
 const endpoints = {
-  alat: "alat",
-  kategori: "kategori",
-  pelanggan_data: "/data/pelanggan",
-  pelanggan: "pelanggan",
-  penyewaan_detail: "penyewaan/detail",
-  penyewaan: "penyewaan",
+    alat: "alat",
+    kategori: "kategori",
+    pelangganData: "data/pelanggan",
+    pelanggan: "pelanggan",
+    penyewaanDetail: "detail/penyewaan",
+    penyewaan: "penyewaan",
 };
 
 const apiEndpoints = (builder) => {

@@ -20,13 +20,7 @@ const KategoriView = () => {
     isError: isKategoriError,
     refetch: refetchKategori,
   } = useKategoriGetQuery();
-
-  // Fetch data alat
-  const {
-    data: alatResponse,
-    isLoading: isAlatLoading,
-    isError: isAlatError,
-  } = useAlatGetQuery();
+  
 
   // Mutation untuk menghapus kategori
   const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();

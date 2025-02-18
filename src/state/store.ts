@@ -1,7 +1,9 @@
+// store.ts
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../state/api/authApi";
 import { api } from "@/state/api/dataApi";
+import authReducer from "./api/authSlice"
 import alatReducer from "./api/data/alatSlice";
 import kategoriReducer from "./api/data/kategoriSlice";
 import pelangganDataReducer from "./api/data/pelanggan.dataSlice";
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   pelanggan: pelangganReducer,
   penyewaanDetail: penyewaanDetailReducer,
   penyewaan: penyewaanReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({
@@ -25,7 +28,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, api.middleware  ),
+      getDefaultMiddleware().concat(authApi.middleware, api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

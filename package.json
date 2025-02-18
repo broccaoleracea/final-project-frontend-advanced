@@ -18,7 +18,8 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

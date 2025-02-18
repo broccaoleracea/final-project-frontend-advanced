@@ -18,7 +18,6 @@ export default function LoginForm() {
 
     try {
       const result = await useKategoriPostMutation({ email, password }).unwrap();
-      dispatch(setCredentials(result));
       router.push("/admin");
     } catch (err: any) {
       setError(err?.data?.message || "Login failed. Please try again.");

@@ -8,6 +8,7 @@ import {Providers} from "@/providers/Providers";
 import Sidebar from "@/Components/Sidebar/Sidebar";
 import Footer from "@/Components/Footer/Footer";
 import Script from "next/script";
+import Redirect from "@/Redirect";
 
 
 const geistSans = Geist({
@@ -40,7 +41,9 @@ export default function RootLayout({
           <div className="flex w-full h-full">
             {/* <Sidebar /> */}
             <div className="h-full w-full">
-              <Providers>{children}</Providers>
+              <Providers>
+                {children}
+              </Providers>
               <Footer />
             </div>
           </div>

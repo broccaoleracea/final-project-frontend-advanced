@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAlatGetQuery } from "@/state/api/dataApi";
+import {useAlatGetQuery, usePelangganDataGetQuery} from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
 import { setAlat } from "@/state/api/data/alatSlice";
 
@@ -8,6 +8,7 @@ const HomeView = () => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
   const { data: alatResponse, isLoading, isError } = useAlatGetQuery();
+  const { data: pelanggan } = usePelangganDataGetQuery();
 
   useEffect(() => {
     if (alatResponse) {
