@@ -120,12 +120,12 @@ const HomeView = () => {
       </div>
 
     {/* Tampilan Alat */}
-<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 w-full bg-white rounded-3xl shadow-lg p-8">
+<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 w-full bg-white rounded-3xl">
   {alat.length > 0 ? (
     alat.map((item) => (
       <div
         key={item.id}
-        className="relative p-6 bg-gray-50 rounded-3xl shadow-md border border-gray-300 overflow-hidden hover:border-indigo-500 hover:shadow-xl transition-all duration-300 cursor-pointer min-w-[300px]"
+        className="relative bg-gray-50 rounded-3xl shadow-md border border-gray-300 overflow-hidden hover:border-indigo-500 hover:shadow-xl transition-all duration-300 cursor-pointer min-w-[300px]"
       >
         {/* Informasi Alat */}
         <div className="p-6 bg-white rounded-2xl shadow-lg transition-shadow duration-300 hover:shadow-xl">
@@ -135,7 +135,7 @@ const HomeView = () => {
           </h3>
           {/* Harga Per Hari */}
           <p className="text-lg font-semibold text-indigo-600 mb-2">
-            Rp {item.alat_hargaPerhari}/hari
+            Rp {item.alat_hargaPerhari.toLocaleString()}/hari
           </p>
           {/* Deskripsi Alat */}
           <p className="text-sm text-gray-600 mb-4 line-clamp-3">
@@ -143,7 +143,7 @@ const HomeView = () => {
           </p>
         </div>
         {/* Efek Hover Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-indigo-500 to-transparent opacity-0 hover:opacity-30 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-indigo-100 to-transparent opacity-0 hover:opacity-30 transition-opacity duration-300"></div>
       </div>
     ))
   ) : (

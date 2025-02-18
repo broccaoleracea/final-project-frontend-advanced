@@ -6,6 +6,7 @@ import {
   useKategoriDeleteMutation,
 } from "@/state/api/dataApi";
 import Popup from "@/app/portal/page";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 const KategoriView = () => {
   const [error, setError] = useState("");
@@ -45,7 +46,7 @@ const KategoriView = () => {
   };
 
   if (isKategoriLoading || isAlatLoading) {
-    return <SkeletonLoader />;
+    return <FullPageSpinner />;
   }
 
   if (isKategoriError || isAlatError) {
@@ -135,16 +136,5 @@ const KategoriView = () => {
     </div>
   );
 };
-
-// Skeleton Loading Component
-const SkeletonLoader = () => (
-  <div className="space-y-4">
-    {[...Array(6)].map((_, i) => (
-      <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse">
-        <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto mt-4"></div>
-      </div>
-    ))}
-  </div>
-);
 
 export default KategoriView;

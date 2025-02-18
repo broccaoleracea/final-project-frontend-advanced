@@ -1,4 +1,4 @@
-// app/register/RegisterForm.tsx
+// app/register/RegisterView.tsx
 'use client'
 
 import { useState } from 'react'

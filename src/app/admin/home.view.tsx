@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {useAlatGetQuery, usePelangganDataGetQuery} from "@/state/api/dataApi";
 import { useAppDispatch } from "@/hooks/hooks";
 import { setAlat } from "@/state/api/data/alatSlice";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 const HomeView = () => {
   const [error, setError] = useState("");
@@ -15,21 +16,10 @@ const HomeView = () => {
       dispatch(setAlat(alatResponse.data));
     }
   }, [alatResponse, dispatch]);
-
-  // Skeleton Loading Component
-  const SkeletonLoader = () => (
-    <div className="space-y-4">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className="h-16 bg-gray-200 rounded-lg animate-pulse"
-        ></div>
-      ))}
-    </div>
-  );
+  
 
   if (isLoading) {
-    return <SkeletonLoader />;
+    return <FullPageSpinner />;
   }
 
   if (isError) {

@@ -1,5 +1,5 @@
 // app/register/Redirect.tsx
-import RegisterForm from './RegisterForm'
+import RegisterForm from './RegisterView'
 
 export default function RegisterPage() {
   return (
