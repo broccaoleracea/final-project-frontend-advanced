@@ -19,7 +19,6 @@ export default function LoginForm() {
     setError("");
     try {
       const result = await login({ email, password }).unwrap();
-      dispatch(setCredentials(result));
       router.push("/admin");
     } catch (err: any) {
       setError(err?.data?.message || "Login failed. Please try again.");

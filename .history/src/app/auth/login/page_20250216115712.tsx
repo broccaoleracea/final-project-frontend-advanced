@@ -1,4 +1,4 @@
-// app/login/page.tsx
+// app/login/Redirect.tsx
 
 import LoginForm from "./LoginForm";
 

@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import {
   useKategoriGetQuery,
@@ -9,26 +8,14 @@ import {
 
 const KategoriView = () => {
   const [error, setError] = useState("");
-  // Fetch data kategori
   const { data: kategoriResponse,refetch, isLoading: isKategoriLoading, isError: isKategoriError } = useKategoriGetQuery();
-
-  // Fetch data alat
+  
   const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
 
   // State untuk menyimpan kategori terpilih
   const [selectedKategori, setSelectedKategori] = useState(null);
+    
 
-  const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();
-  
-  const handleDelete = async (id: number) => {
-    try {
-      await del(id).unwrap();
-      await refetch();
-    } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
-      setError(err?.data?.message || "Gagal menghapus alat.");
-    }
-  };
 
   // Skeleton Loading Component
   const SkeletonLoader = () => (
