@@ -148,7 +148,7 @@ export const {
   usePelangganDataPatchMutation,
   usePelangganDataDeleteMutation,
   usePelangganGetQuery,
-  usePelangganPostMutation,
+  qusePelangganPostMutation,
   usePelangganPatchMutation,
   usePelangganDeleteMutation,
   usePenyewaanDetailGetQuery,

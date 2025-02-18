@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   usePelangganPostMutation,
   usePelangganDataPostMutation,
-  usePelangganDataGetQuery,
+  // usePelangganDataGetQuery,
 } from "@/state/api/dataApi";
 
 const TambahPelanggan = () => {
@@ -25,9 +25,9 @@ const TambahPelanggan = () => {
   const [addPelanggan, { isLoading: isAddingPelanggan }] =
     usePelangganPostMutation();
 
-  // Mutation untuk menambahkan data tambahan
-  const [addPelangganData, { isLoading: isAddingPelangganData }] =
-    usePelangganDataPostMutation();
+  // // Mutation untuk menambahkan data tambahan
+  // const [addPelangganData, { isLoading: isAddingPelangganData }] =
+  //   usePelangganDataPostMutation();
 
   // Query untuk mendapatkan data jenis pelanggan
   const {
