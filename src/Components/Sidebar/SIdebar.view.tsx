@@ -17,7 +17,7 @@ const Sidebar = () => {
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-bold whitespace-nowrap text-white">
-            Flowme
+            GacorCihuy
           </span>
         </a>
         {/* Menu Items */}

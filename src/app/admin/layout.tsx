@@ -5,7 +5,6 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
 import Sidebar from "@/Components/Sidebar/SIdebar.view";
-import NavbarView from "@/Components/Navbar/Navbar.view";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +27,7 @@ export default function NoSidebarLayout({
 }>) {
   return (
     <>
-      <NavbarView />
+      <Sidebar />
       {children}
     </>
   );

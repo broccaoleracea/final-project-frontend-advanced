@@ -38,7 +38,7 @@ export default function RootLayout({
       >
         <div className="h-screen w-screen">
           <div className="flex w-full h-full">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="h-full w-full">
               <Providers>{children}</Providers>
               <Footer />
