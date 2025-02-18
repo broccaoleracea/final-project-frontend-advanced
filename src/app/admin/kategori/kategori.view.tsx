@@ -3,17 +3,21 @@ import { useState } from "react";
 import {
   useKategoriGetQuery,
   useAlatGetQuery,
-  useAlatDeleteMutation,
   useKategoriDeleteMutation,
 } from "@/state/api/dataApi";
+import Popup from "@/app/portal/page";
 
 const KategoriView = () => {
   const [error, setError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [kategoriIdToDelete, setKategoriIdToDelete] = useState<number | null>(null);
+
   // Fetch data kategori
   const {
     data: kategoriResponse,
     isLoading: isKategoriLoading,
     isError: isKategoriError,
+    refetch: refetchKategori,
   } = useKategoriGetQuery();
 
   // Fetch data alat
@@ -23,39 +27,32 @@ const KategoriView = () => {
     isError: isAlatError,
   } = useAlatGetQuery();
 
-  // State untuk menyimpan kategori terpilih
-  const [selectedKategori, setSelectedKategori] = useState(null);
-
+  // Mutation untuk menghapus kategori
   const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async () => {
+    if (kategoriIdToDelete === null) return;
     try {
-      await del(id).unwrap();
-      await refetch();
+      console.log("Menghapus kategori dengan ID:", kategoriIdToDelete);
+      await del(kategoriIdToDelete).unwrap();
+      await refetchKategori();
+      console.log("Kategori berhasil dihapus");
+      setShowPopup(false);
     } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
-      setError(err?.data?.message || "Gagal menghapus alat.");
+      console.error("Error saat menghapus kategori:", err);
+      setError(err?.data?.message || "Gagal menghapus kategori.");
     }
   };
 
-  // Skeleton Loading Component
-  const SkeletonLoader = () => (
-    <div className="space-y-4">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className="h-16 bg-gray-200 rounded-lg animate-pulse"
-        ></div>
-      ))}
-    </div>
-  );
+  const showConfirmationPopup = (id: number) => {
+    setKategoriIdToDelete(id);
+    setShowPopup(true);
+  };
 
-  // Handle loading state
   if (isKategoriLoading || isAlatLoading) {
     return <SkeletonLoader />;
   }
 
-  // Handle error state
   if (isKategoriError || isAlatError) {
     return (
       <div className="text-red-600 text-center py-8">
@@ -64,14 +61,8 @@ const KategoriView = () => {
     );
   }
 
-  // Extract data
   const kategori = kategoriResponse?.data || [];
   const alat = alatResponse?.data || [];
-
-  // Filter barang berdasarkan kategori terpilih
-  const filteredAlat = selectedKategori
-    ? alat.filter((item) => item.kategori_id === selectedKategori.id)
-    : [];
 
   return (
     <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
@@ -102,28 +93,28 @@ const KategoriView = () => {
             key={item.id}
             className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
           >
-            {/* Tombol Edit */}
-            <a
-              href={`/admin/kategori/edit/${item.kategori_id}`} // Ganti dengan URL edit yang sesuai
-              className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
-            >
-              Edit
-            </a>
-
+            {/* Tombol Edit dan Hapus */}
+            <div className="absolute top-4 right-4 flex gap-2">
+              <a
+                href={`/admin/kategori/edit/${item.kategori_id}`}
+                className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
+              >
+                Edit
+              </a>
+              <button
+                className="px-3 py-1 bg-red-500 disabled:bg-red-300 text-white rounded-md text-sm"
+                onClick={() => showConfirmationPopup(item.kategori_id)}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Menghapus..." : "Hapus"}
+              </button>
+            </div>
             {/* Konten Kategori */}
             <h3 className="text-xl font-semibold text-gray-900">
               {item.kategori_nama}
             </h3>
-            <button
-              className="px-4 py-2 bg-red-500 disabled:bg-red-300 text-white rounded-md"
-              onClick={() => handleDelete(item.kategori_id)}
-              disabled={isDeleting}
-            >
-              Hapus
-            </button>
           </div>
         ))}
-
         {/* Empty State */}
         {kategori.length === 0 && (
           <div className="col-span-full text-center py-8 text-gray-500">
@@ -132,40 +123,33 @@ const KategoriView = () => {
         )}
       </div>
 
-      {/* Tampilan Barang Berdasarkan Kategori Terpilih */}
-      {selectedKategori && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Barang dalam Kategori: {selectedKategori.kategori_nama}
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredAlat.length > 0 ? (
-              filteredAlat.map((item) => (
-                <div
-                  key={item.id}
-                  className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {item.alat_nama}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-2">
-                    Rp {item.alat_hargaPerhari}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    {item.alat_deskripsi}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8 text-gray-500">
-                Tidak ada barang dalam kategori ini.
-              </div>
-            )}
-          </div>
+      {/* Popup Konfirmasi */}
+      {showPopup && (
+        <Popup
+          onClose={() => setShowPopup(false)}
+          onDelete={handleDelete}
+        />
+      )}
+
+      {/* Error Feedback */}
+      {error && (
+        <div className="text-red-600 text-center py-4">
+          {error}
         </div>
       )}
     </div>
   );
 };
+
+// Skeleton Loading Component
+const SkeletonLoader = () => (
+  <div className="space-y-4">
+    {[...Array(6)].map((_, i) => (
+      <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse">
+        <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto mt-4"></div>
+      </div>
+    ))}
+  </div>
+);
 
 export default KategoriView;
