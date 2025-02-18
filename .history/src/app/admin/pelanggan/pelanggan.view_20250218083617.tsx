@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { usePelangganGetQuery } from "@/state/api/dataApi";
+import Link from "next/link";
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -14,7 +15,7 @@ const PelangganView = () => {
   } = usePelangganGetQuery();
 
 
-  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
+  const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
 
   const handleDelete = async (pelanggan_id: number) => {
     try {

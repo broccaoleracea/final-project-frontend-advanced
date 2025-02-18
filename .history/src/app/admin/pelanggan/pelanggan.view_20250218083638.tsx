@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import Link from "next/link";
 
 const PelangganView = () => {
   const [error, setError] = useState("");

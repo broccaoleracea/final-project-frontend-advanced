@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { usePelangganGetQuery } from "@/state/api/dataApi";
+import Link from "next/link";
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -12,21 +13,6 @@ const PelangganView = () => {
     isError: isPelangganError,
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
-
-
-  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
-
-  const handleDelete = async (pelanggan_id: number) => {
-    try {
-      console.log("Menghapus pelanggan dengan ID:", pelanggan_id);
-      await deletePelanggan(pelanggan_id).unwrap(); // Panggil mutation untuk menghapus pelanggan
-      await refetchPelanggan(); // Paksa refetch data pelanggan untuk memastikan data terbaru
-      console.log("pelanggan berhasil dihapus");
-    } catch (err: any) {
-      console.error("Error saat menghapus pelanggan:", err);
-      setError(err?.data?.message || "Gagal menghapus pelanggan.");
-    }
-  };
 
   // Loading state
   if (isPelangganLoading) {
@@ -99,7 +85,7 @@ const PelangganView = () => {
                     <td>
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => handleDelete(item.pelanggan_id)} // Panggil fungsi hapus
+                        onClick={() => handleDelete(item.alat_id)} // Panggil fungsi hapus
                         disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
                       >
                         {isDeleting ? "Menghapus..." : "Hapus"}

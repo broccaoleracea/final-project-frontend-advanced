@@ -6,7 +6,7 @@ const RentalForm = () => {
   const [formData, setFormData] = useState({
     pelanggan_nama: "",
     pelanggan_alamat: "",
-    pelanggan_noTelp: "",
+    pelanggan_noTelp: 0,
     pelanggan_email: "",
   });
   const [error, setError] = useState("");
@@ -71,8 +71,8 @@ const RentalForm = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
-        <h2 className="text-4xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <h2 className="text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
           TAMBAH PELANGGAN
         </h2>
 
@@ -84,61 +84,55 @@ const RentalForm = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
-          {/* Penyewa Section */}
-          <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">
-            Data Pelanggan
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* Nama Pelanggan */}
-            <div className="relative">
-              <label className="text-sm font-medium text-gray-600">Nama</label>
-              <input
-                type="text"
-                name="pelanggan_nama"
-                value={formData.pelanggan_nama}
-                onChange={handleChange}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                required
-              />
-            </div>
+          {/* Nama Pelanggan */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Nama</label>
+            <input
+              type="text"
+              name="pelanggan_nama"
+              value={formData.pelanggan_nama}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
 
-            {/* Nomor Telepon Pelanggan */}
-            <div className="relative">
-              <label className="text-sm font-medium text-gray-600">Nomor Telepon</label>
-              <input
-                type="text"
-                name="pelanggan_noTelp"
-                value={formData.pelanggan_noTelp}
-                onChange={handleChange}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                required
-              />
-            </div>
+          {/* Alamat Pelanggan */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Alamat</label>
+            <input
+              type="text"
+              name="pelanggan_alamat"
+              value={formData.pelanggan_alamat}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
 
-            {/* Email Pelanggan */}
-            <div className="relative">
-              <label className="text-sm font-medium text-gray-600">Email</label>
-              <input
-                type="email"
-                name="pelanggan_email"
-                value={formData.pelanggan_email}
-                onChange={handleChange}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-                required
-              />
-            </div>
+          {/* Nomor Telepon Pelanggan */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Nomor Telepon</label>
+            <input
+              type="text"
+              name="pelanggan_noTelp"
+              value={formData.pelanggan_noTelp}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
 
-            {/* Alamat Pelanggan */}
-            <div className="relative">
-              <label className="text-sm font-medium text-gray-600">Alamat</label>
-              <input
-                type="text"
-                name="pelanggan_alamat"
-                value={formData.pelanggan_alamat}
-                onChange={handleChange}
-                className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
-              />
-            </div>
+          {/* Email Pelanggan */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Email</label>
+            <input
+              type="email"
+              name="pelanggan_email"
+              value={formData.pelanggan_email}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
           </div>
 
           {/* Submit Button */}
@@ -146,7 +140,7 @@ const RentalForm = () => {
             <button
               type="submit"
               disabled={isAdding}
-              className="px-8 py-4 rounded-lg text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-blue-600 transition duration-300 shadow-md"
+              className="px-6 py-3 rounded-lg text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-blue-600 transition duration-300 shadow-md"
             >
               {isAdding ? "Menambahkan..." : "SIMPAN"}
             </button>

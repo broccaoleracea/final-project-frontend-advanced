@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { usePelangganGetQuery } from "@/state/api/dataApi";
+import Link from "next/link";
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -12,21 +13,6 @@ const PelangganView = () => {
     isError: isPelangganError,
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
-
-
-  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
-
-  const handleDelete = async (pelanggan_id: number) => {
-    try {
-      console.log("Menghapus pelanggan dengan ID:", pelanggan_id);
-      await deletePelanggan(pelanggan_id).unwrap(); // Panggil mutation untuk menghapus pelanggan
-      await refetchPelanggan(); // Paksa refetch data pelanggan untuk memastikan data terbaru
-      console.log("pelanggan berhasil dihapus");
-    } catch (err: any) {
-      console.error("Error saat menghapus pelanggan:", err);
-      setError(err?.data?.message || "Gagal menghapus pelanggan.");
-    }
-  };
 
   // Loading state
   if (isPelangganLoading) {
@@ -41,9 +27,7 @@ const PelangganView = () => {
   if (isPelangganError) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">
-          Gagal memuat data pelanggan!
-        </div>
+        <div className="text-red-500 text-lg font-semibold">Gagal memuat data pelanggan!</div>
       </div>
     );
   }
@@ -59,20 +43,22 @@ const PelangganView = () => {
           <h1 className="text-3xl font-bold text-gray-800">Daftar Pelanggan</h1>
         </div>
 
+        <Link
+            href="/admin/pelanggan/tambah" // Navigasi ke halaman tambah alat
+            className="px-6 py-3 mb-10 pbg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
+          >
+            Tambah Pelanggan
+          </Link>
+
         {/* Table */}
         <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
             <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
               <tr>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Pelanggan
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nama Pelanggan</th>
                 <th className="py-5 px-8 text-left font-semibold">Alamat</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nomor Telepon
-                </th>
+                <th className="py-5 px-8 text-left font-semibold">Nomor Telepon</th>
                 <th className="py-5 px-8 text-left font-semibold">Email</th>
-                <th className="py-5 px-8 text-left font-semibold">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -96,23 +82,11 @@ const PelangganView = () => {
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
                       {item.pelanggan_email || "-"}
                     </td>
-                    <td>
-                      <button
-                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => handleDelete(item.pelanggan_id)} // Panggil fungsi hapus
-                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
-                      >
-                        {isDeleting ? "Menghapus..." : "Hapus"}
-                      </button>
-                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="4"
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
+                  <td colSpan="4" className="py-6 px-8 text-center text-gray-500">
                     Tidak ada pelanggan untuk ditampilkan.
                   </td>
                 </tr>

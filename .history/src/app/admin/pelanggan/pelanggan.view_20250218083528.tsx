@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
+import { usePelangganGetQuery } from "@/state/api/dataApi";
+import Link from "next/link";
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -14,17 +15,16 @@ const PelangganView = () => {
   } = usePelangganGetQuery();
 
 
-  const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
 
-  const handleDelete = async (pelanggan_id: number) => {
+  const handleDelete = async (pelanggan_: number) => {
     try {
-      console.log("Menghapus pelanggan dengan ID:", pelanggan_id);
-      await deletePelanggan(pelanggan_id).unwrap(); // Panggil mutation untuk menghapus pelanggan
-      await refetchPelanggan(); // Paksa refetch data pelanggan untuk memastikan data terbaru
-      console.log("pelanggan berhasil dihapus");
+      console.log("Menghapus alat dengan ID:", pelanggan_);
+      await deletePelanggan(pelanggan_).unwrap(); // Panggil mutation untuk menghapus alat
+      await refetchAlat(); // Paksa refetch data alat untuk memastikan data terbaru
+      console.log("Alat berhasil dihapus");
     } catch (err: any) {
-      console.error("Error saat menghapus pelanggan:", err);
-      setError(err?.data?.message || "Gagal menghapus pelanggan.");
+      console.error("Error saat menghapus alat:", err);
+      setError(err?.data?.message || "Gagal menghapus alat.");
     }
   };
 
