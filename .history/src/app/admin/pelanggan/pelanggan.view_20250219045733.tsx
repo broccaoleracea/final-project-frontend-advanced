@@ -3,7 +3,7 @@
 import { usePelangganPostMutation, usePelangganDataPostMutation } from "@/state/api/dataApi";
 import React, { useState } from "react";
 
-const Pelanggan = () => {
+const PelangganV = () => {
   // State untuk form pertama
   const [pelangganNama, setPelangganNama] = useState("");
   const [pelangganAlamat, setPelangganAlamat] = useState("");
@@ -177,4 +177,4 @@ const Pelanggan = () => {
   );
 };
 
-export default Pelanggan;
+export default PelangganV;
