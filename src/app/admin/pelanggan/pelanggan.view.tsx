@@ -1,15 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-import {
-  usePelangganDeleteMutation,
-  usePelangganGetQuery,
-} from "@/state/api/dataApi";
-=======
 import { usePelangganDeleteMutation, usePelangganGetQuery } from "@/state/api/dataApi";
 import { Link } from "react-router-dom";
 import Popup from "@/app/portal/page";
->>>>>>> 3dcb5e5751b23d1b94975f2fe26c47dbc133407c
+
 
 const PelangganView = () => {
   const [error, setError] = useState("");
@@ -21,17 +15,14 @@ const PelangganView = () => {
     isError: isPelangganError,
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
+  
+  
 
-<<<<<<< HEAD
-  const [deletePelanggan, { isLoading: isDeleting }] =
-    usePelangganDeleteMutation();
-=======
 
   const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
 const [pelangganIdToDelete, setPelangganIdToDelete] = useState<number | null>(null); // Untuk menyimpan ID pelanggan yang akan dihapus
 
   const [deletePelanggan, { isLoading: isDeleting }] = usePelangganDeleteMutation();
->>>>>>> 3dcb5e5751b23d1b94975f2fe26c47dbc133407c
 
   const handleDelete = async () => {
     if (pelangganIdToDelete === null) return;
