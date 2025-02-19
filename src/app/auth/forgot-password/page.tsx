@@ -1,15 +1,22 @@
-"use client"
+"use client";
 import React, { useState } from "react";
+
 import ForgotPassView from "@/app/auth/forgot-password/forgotPass.view";
+import {useForgotPasswordMutation} from "@/state/api/authApi";
 
-const ResetPassword: React.FC = () => {
-    
+const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState<string>("");
-    
+    const [forgotPassword, { data, isLoading, isError }] = useForgotPasswordMutation();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // TODO: Call API to reset password
+
+        try {
+            const response = await forgotPassword(email ).unwrap();
+            console.log("Forgot password response:", response);
+        } catch (error) {
+            console.error("Forgot password request failed:", error);
+        }
     };
 
     return (
@@ -17,8 +24,10 @@ const ResetPassword: React.FC = () => {
             email={email}
             setEmail={setEmail}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
+            isError={isError}
         />
     );
 };
 
-export default ResetPassword;
+export default ForgotPassword;
