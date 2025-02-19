@@ -6,15 +6,7 @@ import {
   usePelangganDeleteMutation,
   usePelangganGetQuery,
 } from "@/state/api/dataApi";
-
-// Define TypeScript interfaces for better type safety
-interface Pelanggan {
-  pelanggan_id: number;
-  pelanggan_nama: string;
-  pelanggan_alamat: string;
-  pelanggan_notelp: string;
-  pelanggan_email: string;
-}
+import Popup from "@/app/portal/page";
 
 const PelangganView = () => {
   const [error, setError] = useState<string>("");
@@ -105,44 +97,36 @@ const PelangganView = () => {
             </thead>
             <tbody>
               {pelanggan.length > 0 ? (
-                pelanggan.map((item, index) => {
-                  return (
-                    <tr
-                      key={item.pelanggan_id}
-                      className={`transition-all duration-300 ${
-                        index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
-                      } hover:bg-indigo-50`}
-                    >
-                      <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                        {item.pelanggan_nama || "-"}
-                      </td>
-                      <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                        {item.pelanggan_alamat || "-"}
-                      </td>
-                      <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                        {item.pelanggan_notelp || "-"}
-                      </td>
-                      <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                        {item.pelanggan_email || "-"}
-                      </td>
-                      <td>
-                        <Link
-                          href={`/admin/pelanggan/update/${item.pelanggan_id}`}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                          onClick={() => showConfirmationPopup(item.pelanggan_id)}
-                          disabled={isDeleting}
-                        >
-                          {isDeleting ? "Deleting..." : "Delete"}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                pelanggan.map((item, index) => (
+                  <tr
+                    key={item.pelanggan_id}
+                    className={`transition-all duration-300 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                    } hover:bg-indigo-50`}
+                  >
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_nama || "-"}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_alamat || "-"}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_notelp?.toString() || 0}
+                    </td>
+                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
+                      {item.pelanggan_email || "-"}
+                    </td>
+                    <td>
+                      <button
+                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                        onClick={() => showConfirmationPopup(item.pelanggan_id)} // Tampilkan popup
+                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
+                      >
+                        {isDeleting ? "Menghapus..." : "Hapus"}
+                      </button>
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <tr>
                   <td colSpan={5} className="py-6 px-8 text-center text-gray-500">
