@@ -18,7 +18,7 @@ const ResetPassword: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // TODO: Call API to reset password :D
+        // TODO: Call API to reset password >:(
         console.log({ email, token, password });
     };
 
