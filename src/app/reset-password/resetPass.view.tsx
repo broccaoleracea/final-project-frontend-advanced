@@ -31,10 +31,11 @@ const ResetPassView: React.FC<ResetPassProps> = ({ email, setEmail, token, passw
                             required
                         />
                     </div>
-                    <div>
+                    <div className="hidden">
                         <label htmlFor="token" className="block text-sm font-medium text-gray-700">
                             Token
                         </label>
+                        
                         <input
                             type="text"
                             id="token"

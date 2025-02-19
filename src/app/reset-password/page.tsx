@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import ResetPassView from "@/app/reset-password/resetPass.view";
+import { useResetPasswordMutation } from "@/state/api/authApi";
 
 const ResetPassword: React.FC = () => {
     const searchParams = useSearchParams();
     const [email, setEmail] = useState<string>("");
-    const [token, setToken] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [token, setToken] = useState<string>("");
+    const [resetPassword, { data, isLoading, isError }] = useResetPasswordMutation();
 
     useEffect(() => {
         const tokenFromUrl = searchParams.get("token");
@@ -16,19 +18,24 @@ const ResetPassword: React.FC = () => {
         }
     }, [searchParams]);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // TODO: Call API to reset password
-        console.log({ email, token, password });
+
+        try {
+            const response = await resetPassword({ email, token, password,"password_confirmation": password }).unwrap();
+            console.log("Password reset response:", response);
+        } catch (error) {
+            console.error("Password reset failed:", error);
+        }
     };
 
     return (
         <ResetPassView
             email={email}
             setEmail={setEmail}
-            token={token}
             password={password}
             setPassword={setPassword}
+            token={token}
             handleSubmit={handleSubmit}
         />
     );
