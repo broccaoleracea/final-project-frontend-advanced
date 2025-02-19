@@ -36,26 +36,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased h-full w-full`}>
+              <Providers>
         <div className="h-screen w-screen flex">
-          {/* Sidebar tetap di sisi kiri */}
           <Sidebar />
-
-          {/* Kontainer utama */}
+            
           <div className="flex flex-col flex-1 h-full w-full">
             <Navbar />
-
-            {/* ✅ Perbaikan ErrorBoundary */}
+              
             <ErrorBoundary fallbackRender={({ error, resetErrorBoundary }) => (
               <ErrorFallback error={error} resetErrorBoundary={resetErrorBoundary} />
             )}>
-              <Providers>
                 <main className="flex-1 p-4 overflow-y-auto">{children}</main>
-              </Providers>
             </ErrorBoundary>
 
             <Footer />
           </div>
         </div>
+              </Providers>
       </body>
 
       {/* ✅ Flowbite hanya perlu di-load sekali di `_app.tsx` atau di `layout.tsx` */}

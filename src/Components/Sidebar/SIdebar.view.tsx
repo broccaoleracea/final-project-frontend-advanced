@@ -1,7 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import { logoutUser } from "@/app/auth/logout";
+import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    logoutUser(dispatch);
+  };
+
   return (
       <aside
           id="logo-sidebar"
@@ -108,7 +115,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <button >
+              <button onClick={handleLogout}>
               <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out bg-red-500 hover:bg-red-300 ">
                 <svg
                     aria-hidden="true"
