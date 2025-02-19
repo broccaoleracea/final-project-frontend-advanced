@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useMemo } from "react";
+import {useRouter} from "next/navigation"
 
 import {
     usePelangganPostMutation,
@@ -7,9 +8,10 @@ import {
     usePelangganDataGetQuery,
 } from "@/state/api/dataApi";
 import TambahPelanggan from "@/app/admin/pelanggan/tambah/tambah.pelanggan.view";
+import {toast} from "react-toastify";
 
 export default function KategoriPage() {
-    // State untuk data pelanggan utama
+    const router=useRouter()
     const [formData, setFormData] = useState({
         pelanggan_nama: "",
         pelanggan_alamat: "",
@@ -67,12 +69,13 @@ export default function KategoriPage() {
 
             await addPelangganData(formDataWithFile).unwrap();
 
-            setSuccessMessage("Pelanggan berhasil ditambahkan!");
             setFormData({ pelanggan_nama: "", pelanggan_alamat: "", pelanggan_noTelp: "", pelanggan_email: "" });
             setSelectedJenis("");
             setFile(null);
+            toast.success("Pelanggan berhasil ditambah!");
+            router.push("/admin/pelanggan");
         } catch (err: any) {
-            setError(err?.data?.message || "Gagal menambahkan pelanggan.");
+            toast.error(err?.data?.message || "Gagal menambahkan pelanggan.");
         }
     };
 

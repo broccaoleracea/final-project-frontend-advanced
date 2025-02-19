@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { useKategoriGetQuery, useKategoriPatchMutation } from "@/state/api/dataApi";
 import { setKategori } from "@/state/api/data/kategoriSlice";
 import EditKategoriForm from "./edit.kategori.view";
+import {toast} from "react-toastify";
 
 export default function EditKategoriPage() {
     const { id } = useParams();
@@ -33,9 +34,10 @@ export default function EditKategoriPage() {
             const payload = { id, data: { kategori_nama: kategoriNama } };
             try {
                 await updateKategori(payload).unwrap();
+                toast.success("Penambahan kategori berhasil.");
                 router.push("/admin/kategori");
             } catch (error: any) {
-                console.error("Update failed:", error?.data?.message || "Terjadi kesalahan.");
+                toast.error("Edit data gagal.Error :", error?.data?.message || "Terjadi kesalahan.");
             }
         },
         [id, kategoriNama, updateKategori, router]

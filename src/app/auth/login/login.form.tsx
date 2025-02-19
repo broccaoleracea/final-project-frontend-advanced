@@ -4,6 +4,7 @@ import { useLoginMutation } from "@/state/api/authApi";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/hooks";
 import Link from "next/link";
+import {toast} from "react-toastify";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -17,10 +18,15 @@ export default function LoginForm() {
     e.preventDefault();
     setError("");
     try {
-      await login({ email, password }).unwrap();
-      router.push("/admin");
-    } catch (err: any) {
-      setError(err?.data?.message || "Login failed. Please try again.");
+      const loginResponse = await login({ email, password }).unwrap();
+
+      toast.success("Login successful!");
+
+      setTimeout(() => {
+        router.push("/admin");
+      }, 2000);
+    } catch (error) {
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 

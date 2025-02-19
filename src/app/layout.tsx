@@ -8,6 +8,7 @@ import Script from "next/script";
 import Navbar from "@/Components/Navbar/Navbar";
 import Sidebar from "@/Components/Sidebar/Sidebar";
 import { ErrorBoundary } from "react-error-boundary";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,26 +37,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased h-full w-full`}>
-              <Providers>
-        <div className="h-screen w-screen flex">
-          <Sidebar />
-            
-          <div className="flex flex-col flex-1 h-full w-full">
-            <Navbar />
-              
             <ErrorBoundary fallbackRender={({ error, resetErrorBoundary }) => (
               <ErrorFallback error={error} resetErrorBoundary={resetErrorBoundary} />
             )}>
+              <Providers>
+        <div className="h-screen w-screen flex">
+          <Sidebar />
+          <div className="flex flex-col flex-1 h-full w-full">
+            <Navbar />
                 <main className="flex-1 p-4 overflow-y-auto">{children}</main>
-            </ErrorBoundary>
-
+                <ToastContainer position="top-right" autoClose={3000} />
             <Footer />
           </div>
         </div>
               </Providers>
+            </ErrorBoundary>
       </body>
-
-      {/* ✅ Flowbite hanya perlu di-load sekali di `_app.tsx` atau di `layout.tsx` */}
+      
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js" strategy="lazyOnload" />
     </html>
   );

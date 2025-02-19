@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { usePenyewaanGetQuery, usePenyewaanPatchMutation } from "@/state/api/dataApi";
-import { useParams } from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import UpdateView from "@/app/admin/penyewaan/update/[id]/update.view";
+import {toast} from "react-toastify";
 
 
 const UpdatePenyewaanPage = () => {
@@ -51,10 +52,11 @@ const UpdatePenyewaanPage = () => {
             e.preventDefault();
             try {
                 await updatePenyewaan({ id, data: formData }).unwrap();
-                alert("Data berhasil diperbarui!");
+                toast.success("Penyewaan berhasil diubah!");
+                useRouter().push("/admin/kategori");
             } catch (err: any) {
                 console.error("Full error details:", err);
-                setError(err?.data?.message || "Gagal memperbarui data.");
+                toast.error(err?.data?.message || "Gagal memperbarui data.");
             }
         },
         [formData, id, updatePenyewaan]

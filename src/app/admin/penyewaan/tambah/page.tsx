@@ -9,6 +9,7 @@ import {
     usePelangganGetQuery, useAlatPatchMutation,
 } from "@/state/api/dataApi";
 import TambahPenyewaanView from "./tambah.view";
+import {toast} from "react-toastify";
 
 export default function PenyewaanPage() {
     const [formData, setFormData] = useState({
@@ -89,10 +90,10 @@ export default function PenyewaanPage() {
             }
 
 
-            setSuccessMessage("Penyewaan berhasil ditambahkan!");
-            router.push("/admin/penyewaan");
+            toast.success("Penyewaan berhasil ditambah!");
+            useRouter().push("/admin/kategori");
         } catch (err: any) {
-            setError(err?.data?.message || "Gagal menambahkan penyewaan.");
+            toast.error(err?.data?.message || "Gagal menambahkan penyewaan.");
         }
     };
 

@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import ResetPassView from "@/app/reset-password/resetPass.view";
 import { useResetPasswordMutation } from "@/state/api/authApi";
+import {toast} from "react-toastify";
 
 const ResetPassword: React.FC = () => {
     const searchParams = useSearchParams();
@@ -29,9 +30,10 @@ const ResetPassword: React.FC = () => {
 
         try {
             await resetPassword({ email, token, password, password_confirmation: passwordConfirm }).unwrap();
-            console.log("Password reset successful");
+            toast.success("Perubahan password berhasil. Anda dapat login dengan password baru");
+            useRouter().push("/auth/login");
         } catch (error) {
-            console.error("Password reset failed:", error);
+            toast.error("Password reset failed:"+ error);
         }
     };
 

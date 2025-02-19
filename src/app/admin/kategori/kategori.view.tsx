@@ -1,6 +1,6 @@
 "use client";
 import { FC, useState } from "react";
-import Popup from "@/app/portal/page";
+import DeletePopup from "@/app/portal/page";
 
 interface KategoriViewProps {
   kategori: any[];
@@ -82,7 +82,7 @@ const KategoriView: FC<KategoriViewProps> = ({
 
       {/* Popup Konfirmasi */}
       {showPopup && (
-        <Popup onClose={() => setShowPopup(false)} onDelete={handleDelete} />
+        <DeletePopup onClose={() => setShowPopup(false)} onDelete={handleDelete} />
       )}
 
       {/* Error Feedback */}

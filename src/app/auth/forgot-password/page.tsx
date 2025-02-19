@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import ForgotPassView from "@/app/auth/forgot-password/forgotPass.view";
 import {useForgotPasswordMutation} from "@/state/api/authApi";
+import {toast} from "react-toastify";
 
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -13,9 +14,9 @@ const ForgotPassword: React.FC = () => {
 
         try {
             const response = await forgotPassword({email} ).unwrap();
-            console.log("Forgot password response:", response);
+            toast.success("Mohon cek email anda.");
         } catch (error) {
-            console.error("Forgot password request failed:", error);
+            toast.error("Forgot password request failed:", error);
         }
     };
 
