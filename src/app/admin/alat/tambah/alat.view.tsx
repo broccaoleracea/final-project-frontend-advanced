@@ -27,72 +27,82 @@ const TambahAlat: React.FC<TambahAlatProps> = ({
                                                }) => {
   return (
       <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
-          <h2 className="text-4xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-            FORM TAMBAH ALAT
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl border border-gray-300">
+          <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+            Tambah Alat
           </h2>
-          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
-          {successMessage && (
-              <div className="text-green-500 text-sm mb-4">{successMessage}</div>
-          )}
+          {error && <div className="text-sm text-red-500 mb-4">{error}</div>}
+          {successMessage && <div className="text-sm text-green-500 mb-4">{successMessage}</div>}
+
           <form onSubmit={onSubmit} className="text-gray-700">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-700 border-b-2 pb-2 border-indigo-500">
-              Tambah List Alat
-            </h3>
-            <div className="mb-6">
-              <label htmlFor="alat_nama" className="text-sm font-medium text-gray-600">Nama Alat</label>
+            <div className="mb-4">
+              <label htmlFor="alat_nama" className="block text-sm font-medium text-gray-700">
+                Nama Alat
+              </label>
               <input
                   type="text"
                   id="alat_nama"
                   name="alat_nama"
                   value={formData.alat_nama}
                   onChange={onChange}
-                  className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 placeholder-gray-400 text-sm"
                   required
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="alat_deskripsi" className="text-sm font-medium text-gray-600">Deskripsi</label>
+
+            <div className="mb-4">
+              <label htmlFor="alat_deskripsi" className="block text-sm font-medium text-gray-700">
+                Deskripsi
+              </label>
               <textarea
                   id="alat_deskripsi"
                   name="alat_deskripsi"
                   value={formData.alat_deskripsi}
                   onChange={onChange}
-                  className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 placeholder-gray-400 text-sm"
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="alat_hargaPerhari" className="text-sm font-medium text-gray-600">Harga Per Hari</label>
+
+            <div className="mb-4">
+              <label htmlFor="alat_hargaPerhari" className="block text-sm font-medium text-gray-700">
+                Harga Per Hari
+              </label>
               <input
                   type="number"
                   id="alat_hargaPerhari"
                   name="alat_hargaPerhari"
                   value={formData.alat_hargaPerhari}
                   onChange={onChange}
-                  className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 placeholder-gray-400 text-sm"
                   required
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="alat_stok" className="text-sm font-medium text-gray-600">Stok</label>
+
+            <div className="mb-4">
+              <label htmlFor="alat_stok" className="block text-sm font-medium text-gray-700">
+                Stok
+              </label>
               <input
                   type="number"
                   id="alat_stok"
                   name="alat_stok"
                   value={formData.alat_stok}
                   onChange={onChange}
-                  className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 placeholder-gray-400 text-sm"
                   required
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="alat_kategori_id" className="text-sm font-medium text-gray-600">Kategori</label>
+
+            <div className="mb-4">
+              <label htmlFor="alat_kategori_id" className="block text-sm font-medium text-gray-700">
+                Kategori
+              </label>
               <select
                   id="alat_kategori_id"
                   name="alat_kategori_id"
                   value={formData.alat_kategori_id}
                   onChange={onChange}
-                  className="p-4 border rounded-lg w-full focus:ring-2 focus:ring-indigo-500 transition duration-300 bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 text-sm"
                   required
               >
                 <option value="">Pilih Kategori</option>
@@ -103,17 +113,18 @@ const TambahAlat: React.FC<TambahAlatProps> = ({
                 ))}
               </select>
             </div>
+
             <div className="flex justify-end mt-6">
               <button
                   type="button"
-                  className="px-8 py-4 rounded-lg text-lg font-medium bg-gray-300 hover:bg-gray-400 transition duration-300 mr-4 shadow-md"
+                  className="px-4 py-2 rounded text-sm font-medium text-gray-600 border border-gray-300 hover:bg-gray-100 transition"
               >
-                CANCEL
+                Batal
               </button>
               <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-8 py-4 rounded-lg text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-blue-600 transition duration-300 shadow-md"
+                  className="ml-4 px-4 py-2 rounded text-sm font-medium bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-400 text-white transition disabled:opacity-50"
               >
                 {isCreating ? "Menambahkan..." : "Tambah Alat"}
               </button>
