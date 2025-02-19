@@ -88,6 +88,7 @@ export default function LoginForm() {
             <div>
               <button
                 type="submit"
+                name="submit"
                 disabled={isLoading}
                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-400 py-3 px-6 text-lg font-medium text-black hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >

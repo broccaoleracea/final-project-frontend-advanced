@@ -36,6 +36,11 @@ const RentalPage = () => {
 
   // Handle penghapusan data penyewaan
   const handleDelete = async (id: number) => {
+    if (!id) {
+      setError("ID penyewaan tidak valid.");
+      return;
+    }
+
     try {
       console.log("Menghapus penyewaan dengan ID:", id);
       await deletePenyewaan(id).unwrap();
@@ -60,15 +65,19 @@ const RentalPage = () => {
   if (isPenyewaanError || isPelangganError || isAlatError) {
     return (
       <div className="min-h-screen bg-gray-100 flex justify-center items-center">
-        <div className="text-red-600 text-lg font-semibold">Gagal memuat data!</div>
+        <div className="text-red-600 text-lg font-semibold">
+          Gagal memuat data! Silakan coba lagi.
+        </div>
       </div>
     );
   }
 
   // Data penyewaan, pelanggan, dan alat
   const rentedItems = penyewaanResponse?.data || [];
-  const pelangganMap = new Map(pelangganResponse?.data?.map(p => [p.pelanggan_id, p]));
-  const alatMap = new Map(alatResponse?.data?.map(a => [a.alat_id, a]));
+  const pelangganMap = new Map(
+    pelangganResponse?.data?.map((p) => [p.pelanggan_id, p]) || []
+  );
+  const alatMap = new Map(alatResponse?.data?.map((a) => [a.alat_id, a]) || []);
 
   // Fungsi untuk menghitung jumlah harga
   const calculateTotalPrice = (
@@ -95,16 +104,12 @@ const RentalPage = () => {
           Tambah Penyewaan
         </Link>
       </div>
+      
       {/* Table */}
       <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
-<<<<<<< HEAD
-          <table className="w-full border-collapse text-lg">
-            <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
-=======
         <table className="w-full border-collapse text-lg">
           {/* Table Header */}
           <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
->>>>>>> 7319400c25d08d8e1983086b1b9681a84debfa63
             <tr>
               <th className="py-4 px-6 text-left font-semibold">Nama Barang</th>
               <th className="py-4 px-6 text-left font-semibold">Penyewa</th>
@@ -116,6 +121,7 @@ const RentalPage = () => {
               <th className="py-4 px-6 text-left font-semibold">Aksi</th>
             </tr>
           </thead>
+
           {/* Table Body */}
           <tbody>
             {rentedItems.map((item) => {
@@ -137,65 +143,23 @@ const RentalPage = () => {
                       : "bg-yellow-50 hover:bg-yellow-100"
                   }`}
                 >
-                  {/* Nama Barang */}
                   <td className="py-4 px-6 border-b text-gray-700 font-medium">
                     {alat?.alat_nama || "-"}
                   </td>
-                  {/* Penyewa */}
                   <td className="py-4 px-6 border-b text-gray-700 font-medium">
                     {pelanggan?.pelanggan_nama || "-"}
                   </td>
-                  {/* Status Pembayaran */}
-                  <td
-                    className={`py-4 px-6 border-b font-medium ${
-                      item.status_pembayaran === "Lunas"
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}
-                  >
+                  <td className={`py-4 px-6 border-b font-medium ${item.status_pembayaran === "Lunas" ? "text-green-700" : "text-red-700"}`}>
                     {item.status_pembayaran || "-"}
                   </td>
-                  {/* Tanggal Pinjam */}
                   <td className="py-4 px-6 border-b text-gray-700 font-medium">
                     {new Date(item.penyewaan_tglSewa).toLocaleDateString() || "-"}
                   </td>
-                  {/* Tanggal Kembali */}
                   <td className="py-4 px-6 border-b text-gray-700 font-medium">
                     {new Date(item.penyewaan_tglKembali).toLocaleDateString() || "-"}
                   </td>
-                  {/* Jumlah Harga */}
                   <td className="py-4 px-6 border-b text-gray-700 font-medium">
                     Rp {totalHarga.toLocaleString()}
-                  </td>
-                  {/* Status Pengembalian */}
-                  <td
-                    className={`py-4 px-6 border-b font-medium ${
-                      item.status_pengembalian === "Dikembalikan"
-                        ? "text-green-700"
-                        : "text-yellow-700"
-                    }`}
-                  >
-                    {item.status_pengembalian || "-"}
-                  </td>
-                  {/* Aksi */}
-                  <td className="py-4 px-6 border-b text-gray-700 font-medium">
-                    <div className="flex gap-2">
-                      {/* Tombol Edit */}
-                      <Link
-                        href={`/admin/penyewaan/update/${item.penyewaan_id}`}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
-                      >
-                        Edit
-                      </Link>
-                      {/* Tombol Hapus */}
-                      <button
-                        onClick={() => handleDelete(item.penyewaan_id)}
-                        disabled={isDeleting}
-                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                      >
-                        {isDeleting ? "Menghapus..." : "Hapus"}
-                      </button>
-                    </div>
                   </td>
                 </tr>
               );

@@ -37,6 +37,7 @@ const KategoriView: FC<KategoriViewProps> = ({
         <div className="w-full px-6 mb-8">
           <a
               href="/admin/kategori/tambah"
+              name="tambahkat"
               className="w-full px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out text-center block"
           >
             Tambah Kategori

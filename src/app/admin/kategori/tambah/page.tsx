@@ -28,7 +28,7 @@ export default function KategoriForm() {
           <h2 className="text-center text-4xl font-bold text-gray-900">Tambah Kategori</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="kategoriNama" className="block text-lg font-medium text-gray-700 mb-2">
+              <label name="namakat" htmlFor="kategoriNama" className="block text-lg font-medium text-gray-700 mb-2">
                 Nama Kategori
               </label>
               <input

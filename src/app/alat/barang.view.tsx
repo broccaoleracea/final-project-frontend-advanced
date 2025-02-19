@@ -88,7 +88,7 @@ const HomeView = () => {
       {/* Statistik */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 mb-12 w-full">
         {/* Total Barang */}
-        <div className="relative bg-gradient-to-br from-gray-700 to-gray-900 p-8 rounded-3xl shadow-lg text-center transform transition-transform duration-300 hover:scale-105">
+        <div id='conten' className="relative bg-gradient-to-br from-gray-700 to-gray-900 p-8 rounded-3xl shadow-lg text-center transform transition-transform duration-300 hover:scale-105">
           <h3 className="text-4xl font-bold text-white">{totalBarang}</h3>
           <p className="text-gray-300 text-lg mt-2">Total Barang</p>
           <div className="absolute top-4 right-4 w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center shadow-md">

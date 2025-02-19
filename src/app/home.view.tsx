@@ -9,18 +9,22 @@ const HomeView = () => {
             We invest in the world’s potential
           </h1>
           <p className="mb-6 text-lg font-normal text-left text-gray-500 lg:text-xl dark:text-gray-400">
-            Here at Flowbite we focus on markets where technology, innovation, and
-            capital can unlock long-term value and drive economic growth.
-            <br/>
-            <a href="https://www.flaticon.com/free-icons/rent" title="rent icons">Rent icons created by SBTS2018 -
-              Flaticon</a>
-
+            Here at Flowbite we focus on markets where technology, innovation,
+            and capital can unlock long-term value and drive economic growth.
+            <br />
+            <a
+              href="https://www.flaticon.com/free-icons/rent"
+              title="rent icons"
+            >
+              Rent icons created by SBTS2018 - Flaticon
+            </a>
           </p>
 
-
           <Link
-              href="/alat"
-              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200">
+            href="/alat"
+            name="user"
+            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-yellow-400 rounded-lg hover:bg-yellow-200"
+          >
             Learn more
             <svg
               className="w-3.5 h-3.5 ms-2 rtl:rotate-180 ml-2"
@@ -38,8 +42,6 @@ const HomeView = () => {
               />
             </svg>
           </Link>
-          
-          
         </div>
 
         {/* Kolom untuk gambar */}

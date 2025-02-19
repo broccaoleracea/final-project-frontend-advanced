@@ -91,7 +91,8 @@ const AlatView = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
           <Link
-            href="/admin/alat/tambah" // Navigasi ke halaman tambah alat
+            href="/admin/alat/tambah"
+            name="tambahalt" // Navigasi ke halaman tambah alat
             className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
           >
             Tambah Alat
