@@ -1,27 +1,27 @@
 // app/login/login.form.tsx
 "use client";
 import { useState } from "react";
-import { useLoginMutation } from "@/state/api/authApi";
+import {useLoginMutation, useResetpassMutation} from "@/state/api/authApi";
 import { setCredentials } from "@/state/api/authSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/hooks";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useAppDispatch();
+  const [reset, { isLoading }] = useResetpassMutation();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
-      const result = await login({ email, password }).unwrap();
-      router.push("/admin");
+      const result = await reset({ email }).unwrap();
+      router.push("/");
     } catch (err: any) {
-      setError(err?.data?.message || "Login failed. Please try again.");
+      setError(err?.data?.message || "Reset pass failed. Please try again.");
     }
   };
 
@@ -95,6 +95,15 @@ export default function LoginForm() {
               </button>
             </div>
           </form>
+          <div className="text-sm text-center">
+            <Link href="/auth/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+              Lupa password?
+            </Link>
+            <div className="min-w-full"></div>
+            <Link href="/auth/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+              Daftar akun
+            </Link>
+          </div>
         </div>
       </div>
     </div>
