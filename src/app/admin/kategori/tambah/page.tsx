@@ -1,28 +1,40 @@
-"use client";
-import { useState } from "react";
-
+/// page.tsx
+"use client"
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import {useKategoriPostMutation, usePelangganDataGetQuery, usePelangganDataPostMutation} from "@/state/api/dataApi";
+import { useKategoriPostMutation } from "@/state/api/dataApi";
+import KategoriForm from "@/app/admin/kategori/tambah/tambah.kategori";
+import {toast} from "react-toastify";
 
-export default function KategoriForm() {
+
+export default function TambahKategoriPage() {
   const [kategoriNama, setKategoriNama] = useState("");
   const [error, setError] = useState("");
-  
   const [postKategori, { isLoading }] = useKategoriPostMutation();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await postKategori({ kategori_nama: kategoriNama }).unwrap();
-      router.push("/admin/kategori");
-    } catch (err: any) {
-      setError(err?.data?.message || "Gagal menambahkan kategori.");
-    }
-  };
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setKategoriNama(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback(
+      async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+
+        try {
+          await postKategori({ kategori_nama: kategoriNama }).unwrap();
+            toast.success("Penambahan kategori berhasil.");
+          router.push("/admin/kategori");
+        } catch (err: any) {
+          toast.error(err?.data?.message || "Gagal menambahkan kategori.");
+        }
+      },
+      [kategoriNama, postKategori, router]
+  );
 
   return (
+<<<<<<< HEAD
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-6 bg-white p-8 rounded-lg shadow-md border border-gray-200">
           <h2 className="text-center text-4xl font-bold text-gray-900">Tambah Kategori</h2>
@@ -54,6 +66,17 @@ export default function KategoriForm() {
             </div>
           </form>
         </div>
+=======
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <KategoriForm
+            kategoriNama={kategoriNama}
+            error={error}
+            isLoading={isLoading}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+        />
+>>>>>>> 5ca844feb509b5fa1853ada8c571546455895ef8
       </div>
   );
 }
+
