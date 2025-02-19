@@ -1,56 +1,95 @@
-/// page.tsx
 "use client"
-import PenyewaanView from "./penyewaan.view";
-import { useMemo } from "react";
+import {useCallback, useMemo, useState} from "react";
+import RentalView from "./penyewaan.view";
+import Popup from "@/app/portal/page";
 import {
     usePenyewaanGetQuery,
     usePenyewaanDeleteMutation,
     usePelangganGetQuery,
     useAlatGetQuery,
+    usePenyewaanDetailGetQuery,
 } from "@/state/api/dataApi";
-import {toast} from "react-toastify";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
-export default function PenyewaanPage() {
+const RentalPage = () => {
+    const [error, setError] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
+    const [penyewaanIdToDelete, setPenyewaanIdToDelete] = useState<number | null>(null);
+
     // Fetch data
-    const { data: penyewaanResponse, isLoading: isPenyewaanLoading, isError: isPenyewaanError, refetch } = usePenyewaanGetQuery();
+    const { data: penyewaanResponse, isLoading: isPenyewaanLoading, isError: isPenyewaanError, refetch: refetchPenyewaan } = usePenyewaanGetQuery();
     const { data: pelangganResponse, isLoading: isPelangganLoading, isError: isPelangganError } = usePelangganGetQuery();
     const { data: alatResponse, isLoading: isAlatLoading, isError: isAlatError } = useAlatGetQuery();
+    const { data: penyewaanDetailResponse } = usePenyewaanDetailGetQuery();
     const [deletePenyewaan, { isLoading: isDeleting }] = usePenyewaanDeleteMutation();
 
-    // Memoized maps for lookups
-    const pelangganMap = useMemo(() => new Map(pelangganResponse?.data?.map(p => [p.pelanggan_id, p])), [pelangganResponse]);
-    const alatMap = useMemo(() => new Map(alatResponse?.data?.map(a => [a.alat_id, a])), [alatResponse]);
-
     // Handle deletion
-    const handleDelete = async (id: number) => {
+    const handleDelete = async () => {
+        if (penyewaanIdToDelete === null) return;
+
         try {
-            await deletePenyewaan(id).unwrap();
-            toast.success("Penyewaan berhasil dihapus!");
-            refetch();
-        } catch (error) {
-            toast.error("Error deleting penyewaan:"+ error);
+            await deletePenyewaan(penyewaanIdToDelete).unwrap();
+            refetchPenyewaan();
+            setShowPopup(false);
+        } catch (err: any) {
+            setError(err?.data?.message || "Gagal menghapus penyewaan.");
         }
     };
+    const showConfirmationPopup = useCallback((id: number) => {
+        setPenyewaanIdToDelete(id);
+        setShowPopup(true);
+    }, []);
+    // Group penyewaan details by penyewaan_id
+    const penyewaanDetailMap = useMemo(() => {
+        if (!penyewaanDetailResponse?.data) return new Map(); // Handle undefined case
 
-    // Calculate total price
-    const calculateTotalPrice = (hargaPerHari: number, tglPinjam: string, tglKembali: string): number => {
-        const startDate = new Date(tglPinjam);
-        const endDate = new Date(tglKembali);
-        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 0;
-        const dayDifference = Math.max(1, Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
-        return hargaPerHari * dayDifference;
-    };
+        const map = new Map();
+        penyewaanDetailResponse.data.forEach((detail) => {
+            const key = Number(detail.penyewaan_detail_penyewaan_id); // Use the correct key
+            if (!map.has(key)) {
+                map.set(key, []);
+            }
+            map.get(key).push(detail);
+        });
+
+        console.log("penyewaanDetailMap:", map); // Debugging log
+        return map;
+    }, [penyewaanDetailResponse]);
+
+
+    // Convert fetched data to maps for quick lookup
+    const pelangganMap = useMemo(
+        () => new Map(pelangganResponse?.data?.map((p) => [p.pelanggan_id, p])),
+        [pelangganResponse]
+    );
+
+    const alatMap = useMemo(
+        () => new Map(alatResponse?.data?.map((a) => [a.alat_id, a])),
+        [alatResponse]
+    );
+
+    // Derived data for table display
+    const rentedItems = penyewaanResponse?.data || [];
+
+    // Error and Loading states
+    if (isPenyewaanLoading || isPelangganLoading || isAlatLoading) return <FullPageSpinner />;
+    if (isPenyewaanError || isPelangganError || isAlatError) {
+        return <div className="min-h-screen bg-gray-100 flex justify-center items-center"><div className="text-red-600 text-lg font-semibold">Gagal memuat data!</div></div>;
+    }   
+  
 
     return (
-        <PenyewaanView
-            isLoading={isPenyewaanLoading || isPelangganLoading || isAlatLoading}
-            isError={isPenyewaanError || isPelangganError || isAlatError}
-            rentedItems={penyewaanResponse?.data || []}
+        <RentalView
+            rentedItems={rentedItems}
             pelangganMap={pelangganMap}
             alatMap={alatMap}
-            calculateTotalPrice={calculateTotalPrice}
+            penyewaanDetailMap={penyewaanDetailMap}
+            showPopup={showPopup}
+            setShowPopup={setShowPopup}
+            showConfirmationPopup={showConfirmationPopup}
             handleDelete={handleDelete}
-            isDeleting={isDeleting}
         />
     );
-}
+};
+
+export default RentalPage;
