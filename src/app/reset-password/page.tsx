@@ -8,8 +8,9 @@ const ResetPassword: React.FC = () => {
     const searchParams = useSearchParams();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [passwordConfirm, setPasswordConfirm] = useState<string>(""); // Added
     const [token, setToken] = useState<string>("");
-    const [resetPassword, { data, isLoading, isError }] = useResetPasswordMutation();
+    const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
     useEffect(() => {
         const tokenFromUrl = searchParams.get("token");
@@ -21,9 +22,14 @@ const ResetPassword: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        if (password !== passwordConfirm) {
+            console.error("Passwords do not match");
+            return;
+        }
+
         try {
-            const response = await resetPassword({ email, token, password,"password_confirmation": password }).unwrap();
-            console.log("Password reset response:", response);
+            await resetPassword({ email, token, password, password_confirmation: passwordConfirm }).unwrap();
+            console.log("Password reset successful");
         } catch (error) {
             console.error("Password reset failed:", error);
         }
@@ -35,7 +41,8 @@ const ResetPassword: React.FC = () => {
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
-            token={token}
+            passwordConfirm={passwordConfirm}
+            setPasswordConfirm={setPasswordConfirm} // Added
             handleSubmit={handleSubmit}
         />
     );

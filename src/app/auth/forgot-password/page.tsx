@@ -12,7 +12,7 @@ const ForgotPassword: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await forgotPassword(email ).unwrap();
+            const response = await forgotPassword({email} ).unwrap();
             console.log("Forgot password response:", response);
         } catch (error) {
             console.error("Forgot password request failed:", error);
