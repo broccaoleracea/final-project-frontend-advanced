@@ -33,14 +33,6 @@ const KategoriView: FC<KategoriViewProps> = ({
         </p>
       </div>
 
-<<<<<<< HEAD
-        {/* Tombol Tambah Kategori */}
-        <div className="w-full px-6 mb-8">
-          <a
-              href="/admin/kategori/tambah"
-              name="tambahkat"
-              className="w-full px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out text-center block"
-=======
       {/* Tombol Tambah Kategori */}
       <div className="w-full px-6 mb-8">
         <a
@@ -57,7 +49,6 @@ const KategoriView: FC<KategoriViewProps> = ({
           <div
             key={item.kategori_id}
             className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
->>>>>>> 5ca844feb509b5fa1853ada8c571546455895ef8
           >
             {/* Tombol Edit dan Hapus */}
             <div className="absolute top-4 right-4 flex gap-2">
@@ -91,7 +82,10 @@ const KategoriView: FC<KategoriViewProps> = ({
 
       {/* Popup Konfirmasi */}
       {showPopup && (
-        <DeletePopup onClose={() => setShowPopup(false)} onDelete={handleDelete} />
+        <DeletePopup
+          onClose={() => setShowPopup(false)}
+          onDelete={handleDelete}
+        />
       )}
 
       {/* Error Feedback */}
