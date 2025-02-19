@@ -6,7 +6,8 @@ import {
     useKategoriGetQuery,
     useAlatDeleteMutation,
 } from "@/state/api/dataApi";
-import Popup from "@/app/portal/page";
+import DeletePopup from "@/app/portal/page";
+import {toast} from "react-toastify";
 
 export default function Alat() {
     const [showPopup, setShowPopup] = useState(false);
@@ -31,10 +32,11 @@ export default function Alat() {
         if (alatIdToDelete === null) return;
         try {
             await deleteAlat(alatIdToDelete).unwrap();
+            toast.success("Penghapusan alat berhasil.");
             await refetchAlat();
             setShowPopup(false);
         } catch (err: any) {
-            setError(err?.data?.message || "Gagal menghapus alat.");
+            toast.error("Penghapusan gagal. Error : " + err?.data?.message || "Gagal menghapus alat.");
         }
     }, [alatIdToDelete, deleteAlat, refetchAlat]);
 
@@ -69,7 +71,7 @@ export default function Alat() {
                 setShowPopup={setShowPopup}
                 handleDelete={handleDelete}
             />
-            {showPopup && <Popup onClose={() => setShowPopup(false)} onDelete={handleDelete} />}
+            {showPopup && <DeletePopup onClose={() => setShowPopup(false)} onDelete={handleDelete} />}
         </div>
     );
 }

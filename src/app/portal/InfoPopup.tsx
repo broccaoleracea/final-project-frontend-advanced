@@ -76,7 +76,6 @@ const DeletePopup = ({onClose, onDelete}: { onClose: () => void; onDelete: () =>
                         gap: "15px",
                     }}
                 >
-                    {/* Tombol Hapus */}
                     <button
                         style={{
                             padding: "12px 24px",
@@ -89,11 +88,10 @@ const DeletePopup = ({onClose, onDelete}: { onClose: () => void; onDelete: () =>
                             fontWeight: "bold",
                             transition: "background-color 0.3s ease",
                         }}
-                        onClick={onDelete} // Panggil fungsi hapus
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#ff7875")}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#ff4d4f")}
                     >
-                        Delete
+                        Ok
                     </button>
 
                     {/* Tombol Batal */}

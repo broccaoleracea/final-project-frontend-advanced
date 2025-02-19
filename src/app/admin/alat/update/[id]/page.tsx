@@ -5,10 +5,12 @@ import {useParams, useRouter} from "next/navigation";
 import { useAlatGetQuery, useKategoriGetQuery, useAlatPatchMutation } from "@/state/api/dataApi";
 import UpdateAlatView from "./update.view";
 import {FormDataType, UpdateAlatProps} from "@/app/admin/alat/update/[id]/update.type";
+import { toast } from "react-toastify";
 
 
 const UpdateAlatContainer = () => {
   const {id}=useParams()
+  const router = useRouter();
   const [formData, setFormData] = useState<FormDataType>({
     alat_nama: "",
     alat_deskripsi: "",
@@ -18,8 +20,7 @@ const UpdateAlatContainer = () => {
   });
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  const router = useRouter();
+  
 
   const { data: alatDetailResponse, isLoading: isAlatLoading, isError: isAlatError } =
       useAlatGetQuery(id);
@@ -60,10 +61,11 @@ const UpdateAlatContainer = () => {
 
     try {
       await updateAlat({ id: id, data: formData }).unwrap();
-      setSuccessMessage("Alat berhasil diperbarui!");
-      setTimeout(() => router.push("/admin/alat"), 1000);
+
+      toast.success("Alat berhasil ditambah!");
+      router.push("/admin/alat");
     } catch (err: any) {
-      setError(err?.data?.message || "Gagal memperbarui alat.");
+      toast.error("Gagal menamnbahkan alat. Error : " +err?.data?.message || "Gagal memperbarui alat.");
     }
   };
 

@@ -8,6 +8,7 @@ import {
     usePelangganGetQuery,
     useAlatGetQuery,
 } from "@/state/api/dataApi";
+import {toast} from "react-toastify";
 
 export default function PenyewaanPage() {
     // Fetch data
@@ -24,9 +25,10 @@ export default function PenyewaanPage() {
     const handleDelete = async (id: number) => {
         try {
             await deletePenyewaan(id).unwrap();
+            toast.success("Penyewaan berhasil dihapus!");
             refetch();
         } catch (error) {
-            console.error("Error deleting penyewaan:", error);
+            toast.error("Error deleting penyewaan:"+ error);
         }
     };
 

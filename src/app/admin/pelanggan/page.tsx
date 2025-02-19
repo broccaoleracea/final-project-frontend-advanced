@@ -6,6 +6,8 @@ import {
     usePelangganDeleteMutation,
     usePelangganGetQuery,
 } from "@/state/api/dataApi";
+import {toast} from "react-toastify";
+import {useRouter} from "next/navigation";
 
 export default function PenyewaanPage() {
     const [error, setError] = useState<string>("");
@@ -32,9 +34,10 @@ export default function PenyewaanPage() {
         try {
             await deletePelanggan(pelangganIdToDelete).unwrap();
             await refetchPelanggan();
+            toast.success("Pelanggan berhasil dihapus!");
             setShowPopup(false);
         } catch (err: any) {
-            setError(err?.data?.message || "Failed to delete customer.");
+            toast.error(err?.data?.message || "Failed to delete customer.");
         }
     }, [pelangganIdToDelete, deletePelanggan, refetchPelanggan]);
 

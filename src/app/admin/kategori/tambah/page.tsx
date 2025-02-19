@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useKategoriPostMutation } from "@/state/api/dataApi";
 import KategoriForm from "@/app/admin/kategori/tambah/tambah.kategori";
+import {toast} from "react-toastify";
 
 
 export default function TambahKategoriPage() {
@@ -23,9 +24,10 @@ export default function TambahKategoriPage() {
 
         try {
           await postKategori({ kategori_nama: kategoriNama }).unwrap();
+            toast.success("Penambahan kategori berhasil.");
           router.push("/admin/kategori");
         } catch (err: any) {
-          setError(err?.data?.message || "Gagal menambahkan kategori.");
+          toast.error(err?.data?.message || "Gagal menambahkan kategori.");
         }
       },
       [kategoriNama, postKategori, router]
