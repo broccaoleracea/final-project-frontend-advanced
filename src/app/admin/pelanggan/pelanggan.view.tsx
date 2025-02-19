@@ -115,7 +115,7 @@ const PelangganView = () => {
                       {item.pelanggan_alamat || "-"}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.pelanggan_noTelp?.toString() || 0}
+                      {item.pelanggan_notelp?.toString() || 0}
                     </td>
                     <td className="py-6 px-8 border-b text-gray-700 font-medium">
                       {item.pelanggan_email || "-"}
