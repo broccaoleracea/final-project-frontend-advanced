@@ -18,7 +18,7 @@ const PelangganView = () => {
     refetch: refetchPelanggan,
   } = usePelangganGetQuery();
 
-  const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
+  const [showPopup, setShowPopup] = useState( false); // Untuk mengontrol tampilan popup
   const [pelangganIdToDelete, setPelangganIdToDelete] = useState<number | null>(
     null
   ); // Untuk menyimpan ID pelanggan yang akan dihapus
@@ -121,6 +121,14 @@ const PelangganView = () => {
                       {item.pelanggan_email || "-"}
                     </td>
                     <td>
+
+                    <a
+                        href={`/admin/pelanggan/update/${item.pelanggan_id}`} // Navigasi ke halaman update
+                        className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out"
+                      >
+                        Edit
+                      </a>
+
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
                         onClick={() => showConfirmationPopup(item.pelanggan_id)} // Tampilkan popup
