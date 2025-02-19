@@ -9,7 +9,7 @@ const Sidebar = () => {
           aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4">
-          <a href="#" className="flex items-center pl-2.5 mb-5">
+          <a href="#" className="flex it  ems-center pl-2.5 mb-5">
             <img
                 src="https://flowbite.com/docs/images/logo.svg"
                 className="h-8 mr-3"

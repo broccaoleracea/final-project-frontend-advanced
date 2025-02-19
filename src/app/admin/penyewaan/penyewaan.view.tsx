@@ -44,8 +44,7 @@ const RentalPage = () => {
       {/* Table */}
       <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
           <table className="w-full border-collapse text-lg">
-          {/* Table Header */}
-          <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
+            <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
             <tr>
               <th>Nama Barang</th>
               <th>Kategori</th>
