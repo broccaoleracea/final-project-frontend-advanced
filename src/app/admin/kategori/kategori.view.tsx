@@ -47,7 +47,7 @@ const KategoriView: FC<KategoriViewProps> = ({
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {kategori.map((item) => (
               <div
-                  key={item.id}
+                  key={item.kategori_id}
                   className="p-6 bg-white rounded-lg shadow-md border border-gray-200 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative"
               >
                 {/* Tombol Edit dan Hapus */}
