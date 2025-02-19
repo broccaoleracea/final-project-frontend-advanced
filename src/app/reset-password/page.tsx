@@ -2,12 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import ResetPassView from "@/app/reset-password/resetPass.view";
+import {useKategoriGetQuery} from "@/state/api/dataApi";
+import {useResetpassMutation} from "@/state/api/authApi";
 
 const ResetPassword: React.FC = () => {
     const searchParams = useSearchParams();
     const [email, setEmail] = useState<string>("");
-    const [token, setToken] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const {
+        data,
+        isLoading,
+        isError,
+        
+    } = useResetpassMutation();
 
     useEffect(() => {
         const tokenFromUrl = searchParams.get("token");
@@ -19,16 +25,14 @@ const ResetPassword: React.FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // TODO: Call API to reset password
-        console.log({ email, token, password });
+        console.log({ email });
     };
 
     return (
         <ResetPassView
             email={email}
             setEmail={setEmail}
-            token={token}
-            password={password}
-            setPassword={setPassword}
+            
             handleSubmit={handleSubmit}
         />
     );
