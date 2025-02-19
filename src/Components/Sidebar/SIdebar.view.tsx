@@ -11,7 +11,7 @@ const Sidebar = () => {
         <div className="h-full px-3 py-4">
           <a href="#" className="flex it  ems-center pl-2.5 mb-5">
             <img
-                src="https://flowbite.com/docs/images/logo.svg"
+                src="/logo/key-lineal-color.png"
                 className="h-8 mr-3"
                 alt="Flowbite Logo"
             />
@@ -22,10 +22,10 @@ const Sidebar = () => {
           <ul className="space-y-2">
             <li>
               <Link href="/admin">
-              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900">
+              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-slate-600 ">
                 <svg
                     aria-hidden="true"
-                    className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900 mr-3"
+                    className="w-6 h-6 text-white transition duration-300 group- mr-3"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,10 +39,10 @@ const Sidebar = () => {
             </li>
             <li>
               <Link href="/admin/kategori">
-              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900">
+              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-slate-600 ">
                 <svg
                     aria-hidden="true"
-                    className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900 mr-3"
+                    className="w-6 h-6 text-white transition duration-300 group- mr-3"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -55,10 +55,10 @@ const Sidebar = () => {
             </li>
             <li>
               <Link href="/admin/alat">
-              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900">
+              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-slate-600 ">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900 mr-3"
+                    className="w-6 h-6 text-white transition duration-300 group- mr-3"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -76,10 +76,10 @@ const Sidebar = () => {
             </li>
             <li>
               <Link href="/admin/penyewaan">
-              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900">
+              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-slate-600 ">
                 <svg
                     aria-hidden="true"
-                    className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900 mr-3"
+                    className="w-6 h-6 text-white transition duration-300 group- mr-3"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -93,10 +93,10 @@ const Sidebar = () => {
             </li>
             <li>
               <Link href="/admin/pelanggan">
-              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-gray-900">
+              <span className="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-300 ease-in-out hover:bg-slate-600 ">
                 <svg
                     aria-hidden="true"
-                    className="w-6 h-6 text-white transition duration-300 group-hover:text-gray-900 mr-3"
+                    className="w-6 h-6 text-white transition duration-300 group- mr-3"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"

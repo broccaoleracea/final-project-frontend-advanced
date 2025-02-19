@@ -85,7 +85,7 @@ const AlatView = () => {
   });
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 ">
       <div className="w-full p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
