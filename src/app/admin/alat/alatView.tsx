@@ -110,11 +110,13 @@ const AlatView: React.FC<AlatViewProps> = ({
                         <td className="py-3 px-4 border-b flex gap-2">
                           <Link
                               href={`/admin/alat/update/${item.alat_id}`}
+                              id="update"
                               className="px-3 py-1 bg-yellow-400 text-white rounded-md hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-400 text-sm"
                           >
                             <FaPencil size={16} />
                           </Link>
                           <button
+
                               className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-400 text-sm"
                               onClick={() => showConfirmationPopup(item.alat_id)}
                               disabled={isDeleting}

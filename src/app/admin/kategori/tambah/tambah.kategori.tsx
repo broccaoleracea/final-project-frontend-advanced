@@ -42,6 +42,7 @@ export default function KategoriForm({
                 {error && <div className="text-red-600 text-base">{error}</div>}
                 <div>
                     <button
+                    id="submit"
                         type="submit"
                         disabled={isLoading}
                         className="w-full rounded-md border border-transparent bg-yellow-400 py-3 px-6 text-lg font-medium text-black hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"

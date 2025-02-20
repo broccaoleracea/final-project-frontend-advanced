@@ -122,6 +122,7 @@ const TambahAlat: React.FC<TambahAlatProps> = ({
                 Batal
               </button>
               <button
+              name="tambah"
                   type="submit"
                   disabled={isCreating}
                   className="ml-4 px-4 py-2 rounded text-sm font-medium bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-400 text-white transition disabled:opacity-50"

@@ -51,6 +51,7 @@ export default function EditKategoriForm({
           </div>
 
           <button
+          name="update"
               type="submit"
               disabled={isUpdating}
               className="w-full bg-yellow-400 text-black py-2 px-4 rounded-lg hover:bg-yellow-500 transition disabled:opacity-50"
