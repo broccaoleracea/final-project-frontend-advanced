@@ -1,6 +1,8 @@
 "use client";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import DeletePopup from "@/app/portal/page";
+import {FaTrash} from "react-icons/fa";
+import {FaPencil} from "react-icons/fa6";
 
 interface KategoriViewProps {
   kategori: any[];
@@ -56,14 +58,14 @@ const KategoriView: FC<KategoriViewProps> = ({
                 href={`/admin/kategori/edit/${item.kategori_id}`}
                 className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition duration-300"
               >
-                Edit
+                <FaPencil size={16} />
               </a>
               <button
                 className="px-3 py-1 bg-red-500 disabled:bg-red-300 text-white rounded-md text-sm"
                 onClick={() => showConfirmationPopup(item.kategori_id)}
                 disabled={isDeleting}
               >
-                {isDeleting ? "Menghapus..." : "Hapus"}
+                <FaTrash size={16} />
               </button>
             </div>
             {/* Konten Kategori */}

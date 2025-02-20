@@ -41,7 +41,7 @@ const UpdateView: React.FC<UpdateViewProps> = ({
         <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
           {/* Title */}
           <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-            Form Tambah Penyewaan
+            Form Update Penyewaan
           </h2>
 
           {/* Error Message */}

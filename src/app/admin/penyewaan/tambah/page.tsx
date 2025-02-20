@@ -92,8 +92,8 @@ export default function PenyewaanPage() {
 
             toast.success("Penyewaan berhasil ditambah!");
             useRouter().push("/admin/kategori");
-        } catch (err: any) {
-            toast.error(err?.data?.message || "Gagal menambahkan penyewaan.");
+        } catch (error) {
+            
         }
     };
 
