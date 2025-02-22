@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import {FaPlus, FaTrash} from "react-icons/fa";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 import {throws} from "node:assert";
 
 interface Pelanggan {

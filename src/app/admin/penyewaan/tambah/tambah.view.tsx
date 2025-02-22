@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 
 interface TambahPenyewaanViewProps {
   formData: any;

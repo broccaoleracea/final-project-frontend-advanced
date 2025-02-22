@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import {FaPlus, FaTrash} from "react-icons/fa";
 import {FaPencil} from "react-icons/fa6";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 
 type AlatViewProps = {
     alatWithKategori: {

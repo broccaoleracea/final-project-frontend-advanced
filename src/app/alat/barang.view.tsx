@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo } from "react";
 import { useAlatGetQuery, useKategoriGetQuery } from "@/state/api/dataApi";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 import { Alat, Kategori } from "@/types/dataTypes";
 
 const BarangView: React.FC = () => {

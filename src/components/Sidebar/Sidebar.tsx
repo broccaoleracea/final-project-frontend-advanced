@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import SIdebarView from "@/Components/Sidebar/SIdebar.view";
+import SIdebarView from "@/components/Sidebar/SIdebar.view";
 
 export default function Sidebar() {
   const pathname = usePathname();

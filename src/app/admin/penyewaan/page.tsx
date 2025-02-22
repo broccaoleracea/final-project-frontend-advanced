@@ -9,7 +9,7 @@ import {
     useAlatGetQuery,
     usePenyewaanDetailGetQuery,
 } from "@/state/api/dataApi";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 
 const RentalPage = () => {
     const [error, setError] = useState("");

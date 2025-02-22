@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 
-import NavbarView from "@/Components/Navbar/Navbar.view";
+import NavbarView from "@/components/Navbar/Navbar.view";
 
 
 

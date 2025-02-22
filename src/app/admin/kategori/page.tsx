@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import KategoriView from "./kategori.view";
 import {useKategoriDeleteMutation, useKategoriGetQuery} from "@/state/api/dataApi";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 import {toast} from "react-toastify";
 
 export default function KategoriPage() {

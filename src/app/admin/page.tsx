@@ -3,7 +3,7 @@
 import React from "react";
 import AdminView from "./adminView";
 import { useAlatGetQuery, useKategoriGetQuery, usePelangganDataGetQuery } from "@/state/api/dataApi";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 
 export default function Pelanggan() {
     const { data: kategoriResponse } = useKategoriGetQuery();

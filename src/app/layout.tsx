@@ -2,10 +2,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers/Providers";
-import Footer from "@/Components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 import Script from "next/script";
-import Navbar from "@/Components/Navbar/Navbar";
-import Sidebar from "@/Components/Sidebar/Sidebar";
+import Navbar from "@/components/Navbar/Navbar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { ErrorBoundary } from "react-error-boundary";
 import { ToastContainer } from "react-toastify";
 

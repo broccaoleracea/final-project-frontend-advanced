@@ -10,7 +10,7 @@ import {
 import UpdateAlatView from "./update.view";
 import { FormDataType } from "@/app/admin/alat/update/[id]/update.type";
 import { toast } from "react-toastify";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import FullPageSpinner from "@/components/Spinner/FullPageSpinner";
 
 const UpdateAlatContainer: React.FC = () => {
   const { id } = useParams();

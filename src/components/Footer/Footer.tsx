@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import FooterView from "@/Components/Footer/Footer.view";
+import FooterView from "@/components/Footer/Footer.view";
 
 
 export default function Navbar() {
