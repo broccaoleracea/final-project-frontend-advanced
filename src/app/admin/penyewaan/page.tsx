@@ -1,7 +1,7 @@
 "use client"
 import {useCallback, useMemo, useState} from "react";
 import RentalView from "./penyewaan.view";
-import Popup from "@/app/portal/page";
+import Popup from "@/portal/page";
 import {
     usePenyewaanGetQuery,
     usePenyewaanDeleteMutation,

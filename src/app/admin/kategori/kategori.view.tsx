@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useState } from "react";
-import DeletePopup from "@/app/portal/page";
+import DeletePopup from "@/portal/page";
 import {FaTrash} from "react-icons/fa";
 import {FaPencil} from "react-icons/fa6";
 

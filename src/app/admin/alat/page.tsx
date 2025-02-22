@@ -6,7 +6,7 @@ import {
     useKategoriGetQuery,
     useAlatDeleteMutation,
 } from "@/state/api/dataApi";
-import DeletePopup from "@/app/portal/page";
+import DeletePopup from "@/portal/page";
 import {toast} from "react-toastify";
 
 export default function Alat() {

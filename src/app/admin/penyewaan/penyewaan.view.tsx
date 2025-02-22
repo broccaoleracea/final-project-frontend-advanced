@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import {FaPlus, FaTrash} from "react-icons/fa"; // Import Trash Icon
-import Popup from "@/app/portal/page";
+import Popup from "@/portal/page";
 import React from "react";
 import {FaPencil} from "react-icons/fa6";
 
