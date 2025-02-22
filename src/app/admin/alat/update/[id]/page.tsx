@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {useParams, useRouter} from "next/navigation";
-import { useAlatGetQuery, useKategoriGetQuery, useAlatPatchMutation } from "@/state/api/dataApi";
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams, useRouter } from "next/navigation";
+import {
+  useAlatGetQuery,
+  useKategoriGetQuery,
+  useAlatPatchMutation,
+} from "@/state/api/dataApi";
 import UpdateAlatView from "./update.view";
-import {FormDataType, UpdateAlatProps} from "@/app/admin/alat/update/[id]/update.type";
+import { FormDataType } from "@/app/admin/alat/update/[id]/update.type";
 import { toast } from "react-toastify";
 
-
-const UpdateAlatContainer = () => {
-  const {id}=useParams()
+const UpdateAlatContainer: React.FC = () => {
+  const { id } = useParams();
   const router = useRouter();
+
   const [formData, setFormData] = useState<FormDataType>({
     alat_nama: "",
     alat_deskripsi: "",
@@ -18,19 +22,32 @@ const UpdateAlatContainer = () => {
     alat_stok: 0,
     alat_kategori_id: "",
   });
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  
 
-  const { data: alatDetailResponse, isLoading: isAlatLoading, isError: isAlatError } =
-      useAlatGetQuery(id);
-  const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
-      useKategoriGetQuery();
+  const [error, setError] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  
+  const {
+    data: alatDetailResponse,
+    isLoading: isAlatLoading,
+    isError: isAlatError,
+  } = useAlatGetQuery(Number(id));
+  
+  const {
+    data: kategoriResponse,
+    isLoading: isKategoriLoading,
+    isError: isKategoriError,
+  } = useKategoriGetQuery();
+  
   const [updateAlat, { isLoading: isUpdating }] = useAlatPatchMutation();
 
   useEffect(() => {
     if (alatDetailResponse?.data) {
-      const alatData = alatDetailResponse.data;
+      let alatData;
+      if (Array.isArray(alatDetailResponse.data)) {
+        alatData = alatDetailResponse.data[0];
+      } else {
+        alatData = alatDetailResponse.data;
+      }
       setFormData({
         alat_nama: alatData.alat_nama || "",
         alat_deskripsi: alatData.alat_deskripsi || "",
@@ -41,60 +58,76 @@ const UpdateAlatContainer = () => {
     }
   }, [alatDetailResponse]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccessMessage("");
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-    if (!formData.alat_nama || !formData.alat_kategori_id) {
-      setError("Nama alat dan kategori harus diisi.");
-      return;
-    }
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setError("");
+      setSuccessMessage("");
 
-    try {
-      await updateAlat({ id: id, data: formData }).unwrap();
+      if (!formData.alat_nama || !formData.alat_kategori_id) {
+        setError("Nama alat dan kategori harus diisi.");
+        return;
+      }
+      
+      const payload = {
+        ...formData,
+        alat_kategori_id: Number(formData.alat_kategori_id),
+      };
 
-      toast.success("Alat berhasil ditambah!");
-      router.push("/admin/alat");
-    } catch (err: any) {
-      toast.error("Gagal menamnbahkan alat. Error : " +err?.data?.message || "Gagal memperbarui alat.");
-    }
-  };
+      try {
+        await updateAlat({ id: Number(id), data: payload }).unwrap();
+        toast.success("Alat berhasil diperbarui!");
+        router.push("/admin/alat");
+      } catch (err: any) {
+        toast.error(
+          "Gagal memperbarui alat. Error: " +
+            (err?.data?.message || "Terjadi kesalahan.")
+        );
+      }
+    },
+    [formData, updateAlat, id, router]
+  );
 
   if (isAlatLoading || isKategoriLoading) {
     return (
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
-        </div>
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
+      </div>
     );
   }
 
   if (isAlatError || isKategoriError || !alatDetailResponse?.data) {
     return (
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="text-red-600 text-lg font-semibold">Gagal memuat data!</div>
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="text-red-600 text-lg font-semibold">
+          Gagal memuat data!
         </div>
+      </div>
     );
   }
 
   return (
-      <UpdateAlatView
-          formData={formData}
-          error={error}
-          successMessage={successMessage}
-          kategori={kategoriResponse?.data || []}
-          isUpdating={isUpdating}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-      />
+    <UpdateAlatView
+      formData={formData}
+      error={error}
+      successMessage={successMessage}
+      kategori={kategoriResponse?.data || []}
+      isUpdating={isUpdating}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+    />
   );
 };
 

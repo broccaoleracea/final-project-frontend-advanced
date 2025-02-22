@@ -16,19 +16,6 @@ interface RentalViewProps {
   handleDelete: () => void;
 }
 
-const calculateTotalPrice = (
-  hargaPerHari: number,
-  tglPinjam: string,
-  tglKembali: string
-): number => {
-  const startDate = new Date(tglPinjam);
-  const endDate = new Date(tglKembali);
-  const dayDifference = Math.ceil(
-    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-  );
-  return hargaPerHari * dayDifference;
-};
-
 const getPaymentStatusClass = (status: string) => {
   switch (status) {
     case "Lunas":
@@ -117,11 +104,7 @@ const RentalView = ({
                   Number(detail.penyewaan_detail_alat_id)
                 );
                 const alatNama = alat?.alat_nama || "-";
-                const totalHarga = calculateTotalPrice(
-                  alat?.alat_hargaPerHari || 0,
-                  item.penyewaan_tglSewa,
-                  item.penyewaan_tglKembali
-                );
+                const totalHarga = item.penyewaan_totalHarga.toLocaleString()
 
                 return (
                   <tr

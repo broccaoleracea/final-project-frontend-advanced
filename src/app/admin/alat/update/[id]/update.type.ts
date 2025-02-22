@@ -2,10 +2,10 @@ export type UpdateAlatViewProps = {
     formData: FormDataType;
     error: string;
     successMessage: string;
-    kategori: { id: string; kategori_nama: string }[];
+    kategori: { kategori_id: number; kategori_nama: string }[];
     isUpdating: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-    onSubmit: (e: React.FormEvent) => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export interface UpdateAlatProps  {

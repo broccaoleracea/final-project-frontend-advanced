@@ -4,23 +4,23 @@ interface KategoriFormProps {
     kategoriNama: string;
     error: string;
     isLoading: boolean;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: React.FormEvent) => void;
+    onChangeAction: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmitAction: (e: React.FormEvent) => void;
 }
 
 export default function KategoriForm({
                                          kategoriNama,
                                          error,
                                          isLoading,
-                                         onChange,
-                                         onSubmit,
+                                         onChangeAction,
+                                         onSubmitAction,
                                      }: KategoriFormProps) {
     return (
         <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md border border-gray-200">
             <h2 className="text-center text-4xl font-bold text-gray-900">
                 Tambah Kategori
             </h2>
-            <form className="space-y-4" onSubmit={onSubmit}>
+            <form className="space-y-4" onSubmit={onSubmitAction}>
                 <div>
                     <label
                         htmlFor="kategoriNama"
@@ -34,7 +34,7 @@ export default function KategoriForm({
                         type="text"
                         required
                         value={kategoriNama}
-                        onChange={onChange}
+                        onChange={onChangeAction}
                         className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
                         placeholder="Masukkan nama kategori"
                     />

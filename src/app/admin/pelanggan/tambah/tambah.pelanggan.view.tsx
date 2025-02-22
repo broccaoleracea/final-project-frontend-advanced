@@ -12,12 +12,12 @@ interface TambahPelangganProps {
   file: File | null;
   error: string;
   successMessage: string;
-  jenisPelangganOptions: { id: string; nama: string }[];
+  jenisPelangganOptions: string[];
   isAdding: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onJenisChange: (value: string) => void;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const TambahPelanggan: React.FC<TambahPelangganProps> = ({

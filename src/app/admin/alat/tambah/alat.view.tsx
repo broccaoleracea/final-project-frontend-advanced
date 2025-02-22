@@ -8,12 +8,12 @@ interface TambahAlatProps {
     alat_stok: number;
     alat_kategori_id: string;
   };
-  kategori: { kategori_id: string; kategori_nama: string }[];
+  kategori: { kategori_id: number; kategori_nama: string }[];
   isCreating: boolean;
   error: string;
   successMessage: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const TambahAlat: React.FC<TambahAlatProps> = ({

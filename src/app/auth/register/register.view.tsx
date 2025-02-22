@@ -6,10 +6,10 @@ interface RegisterFormProps {
   name: string;
   email: string;
   password: string;
-  setName: Dispatch<SetStateAction<string>>;
-  setEmail: Dispatch<SetStateAction<string>>;
-  setPassword: Dispatch<SetStateAction<string>>;
-  handleSubmit: (e: React.FormEvent) => void;
+  setNameAction: Dispatch<SetStateAction<string>>;
+  setEmailAction: Dispatch<SetStateAction<string>>;
+  setPasswordAction: Dispatch<SetStateAction<string>>;
+  handleSubmitAction: (e: React.FormEvent) => void;
   error: string;
   isLoading: boolean;
 }
@@ -18,10 +18,10 @@ export default function RegisterView({
                                        name,
                                        email,
                                        password,
-                                       setName,
-                                       setEmail,
-                                       setPassword,
-                                       handleSubmit,
+                                       setNameAction,
+                                       setEmailAction,
+                                       setPasswordAction,
+                                       handleSubmitAction,
                                        error,
                                        isLoading,
                                      }: RegisterFormProps) {
@@ -39,7 +39,7 @@ export default function RegisterView({
                 </div>
 
                 {/* Form */}
-                <form className="space-y-4" onSubmit={handleSubmit}>
+                <form className="space-y-4" onSubmit={handleSubmitAction}>
                   {/* Full Name Input */}
                   <div>
                     <label
@@ -54,7 +54,7 @@ export default function RegisterView({
                         type="text"
                         required
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setNameAction(e.target.value)}
                         className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
                         placeholder="John Doe"
                     />
@@ -75,7 +75,7 @@ export default function RegisterView({
                         autoComplete="email"
                         required
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmailAction(e.target.value)}
                         className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
                         placeholder="you@example.com"
                     />
@@ -96,7 +96,7 @@ export default function RegisterView({
                         autoComplete="new-password"
                         required
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPasswordAction(e.target.value)}
                         className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
                         placeholder="Password"
                     />

@@ -1,13 +1,17 @@
 import React from "react";
 import Link from "next/link";
-import { logoutUser } from "@/app/auth/logout";
 import { useDispatch } from "react-redux";
+import {logout} from "@/state/api/authSlice";
+import {redirect} from "next/navigation";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+
   const handleLogout = () => {
-    logoutUser(dispatch);
+    dispatch(logout());
+    redirect(`/auth/login`);
   };
+
 
   return (
       <aside

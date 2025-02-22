@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface PelangganDataState {
-  pelangganId: number;
-  jenis: string;
-  file: string;
+export interface PelangganDataState {
+  pelanggan_data_id: number;
+  pelanggan_data_jenis: string;
+  pelanggan_data_file: string;
+  pelanggan_data_pelanggan_id: number;
 }
 
 const initialState: PelangganDataState = {
-  pelangganId: 0,
-  jenis: '',
-  file: '',
+  pelanggan_data_id: 0,
+  pelanggan_data_jenis: '',
+  pelanggan_data_file: '',
+  pelanggan_data_pelanggan_id: 0,
 };
 
 const pelangganDataSlice = createSlice({

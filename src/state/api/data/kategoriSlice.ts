@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface KategoriState {
-    nama: string;
+export interface KategoriState {
+    kategori_id:number, 
+    kategori_nama: string;
 }
 
 const initialState: KategoriState = {
-    nama: '',
+    kategori_id:0,
+    kategori_nama:''
 };
 
 const kategoriSlice = createSlice({

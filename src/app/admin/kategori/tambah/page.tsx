@@ -38,8 +38,8 @@ export default function TambahKategoriPage() {
         kategoriNama={kategoriNama}
         error={error}
         isLoading={isLoading}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+        onChangeAction={handleChange}
+        onSubmitAction={handleSubmit}
       />
     </div>
   );

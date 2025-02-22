@@ -16,7 +16,7 @@ const ForgotPassword: React.FC = () => {
             const response = await forgotPassword({email} ).unwrap();
             toast.success("Mohon cek email anda.");
         } catch (error) {
-            toast.error("Forgot password request failed:", error);
+            toast.error("Forgot password request failed:" + error);
         }
     };
 
@@ -25,8 +25,6 @@ const ForgotPassword: React.FC = () => {
             email={email}
             setEmail={setEmail}
             handleSubmit={handleSubmit}
-            isLoading={isLoading}
-            isError={isError}
         />
     );
 };

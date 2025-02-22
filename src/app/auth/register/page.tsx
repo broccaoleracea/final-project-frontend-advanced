@@ -23,7 +23,8 @@ export default function RegisterPage() {
             toast.success("Daftar akun berhasil!");
             useRouter().push("/auth/login");
         } catch (err) {
-            toast.error(err?.data?.message || "Registrasi gagal. Mohon coba lagi.");
+            const errorMessage = (err as any)?.data?.message || "Registrasi gagal. Mohon coba lagi.";
+            toast.error(errorMessage);
         }
     };
 
@@ -32,10 +33,10 @@ export default function RegisterPage() {
             name={name}
             email={email}
             password={password}
-            setName={setName}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            handleSubmit={handleSubmit}
+            setNameAction={setName}
+            setEmailAction={setEmail}
+            setPasswordAction={setPassword}
+            handleSubmitAction={handleSubmit}
             error={error}
             isLoading={isLoading}
         />

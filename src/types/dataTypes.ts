@@ -32,17 +32,18 @@ export interface PelangganData {
 export interface Penyewaan {
     penyewaan_id: number;
     penyewaan_pelanggan_id: number;
-    penyewaan_tglSewa: string;]
+    penyewaan_tglSewa: string;
     penyewaan_tglKembali: string;
-    status_pembayaran: "Lunas" | "Belum_Dibayar" | "DP";
-    status_pengembalian: "Sudah_Kembali" | "Belum_Kembali";
+    status_Pembayaran: "Lunas" | "Belum_Dibayar" | "DP";
+    status_Pengembalian: "Sudah_Kembali" | "Belum_Kembali";
     penyewaan_totalHarga: number;
     pelanggan?: Pelanggan;
+    penyewaan_detail?: PenyewaanDetail
 }
 
 export interface PenyewaanDetail {
     penyewaan_detail_id: number;
-    penyewaan_detail_penyewaan_id: number;
+    penyewaan_detail_penyewaan_id: string; // The api requires this to be a string. Somehow.
     penyewaan_detail_alat_id: number;
     penyewaan_detail_jumlah: number;
     penyewaan_detail_subHarga: number;

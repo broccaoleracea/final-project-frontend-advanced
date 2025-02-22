@@ -166,6 +166,17 @@ const TambahPenyewaanView: React.FC<TambahPenyewaanViewProps> = ({
               required
             />
           </div>
+          <div className="mb-4">
+            <label className="text-sm font-medium text-gray-600">Sub Harga</label>
+            <input
+                type="number"
+                name="penyewaan_detail_subHarga"
+                value={detailData.penyewaan_detail_subHarga}
+                onChange={handleDetailChange}
+                className="px-3 py-2 border border-gray-300 rounded-md w-full text-sm focus:border-yellow-400 focus:ring-yellow-400"
+                required
+            />
+          </div>
 
           {/* Tombol Submit */}
           <div className="flex justify-end mt-6">
