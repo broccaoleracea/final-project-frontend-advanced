@@ -16,9 +16,6 @@ const inter = Inter({
 });
 
 
-
-
-
 const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 p-6">
@@ -56,8 +53,7 @@ export default function RootLayout({
               </Providers>
             </ErrorBoundary>
       </body>
-
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js" strategy="lazyOnload" />
+    
     </html>
   );
 }

@@ -5,7 +5,7 @@ const HomeView = () => {
     <div className="flex justify-start mt-16">
       <div className="flex max-w-[80%] mx-auto">
         <div className="max-w-[50%] pr-8">
-          <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-left">
+          <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl text-left">
             We invest in the world’s potential
           </h1>
           <p className="mb-6 text-lg font-normal text-left text-gray-500 lg:text-xl dark:text-gray-400">

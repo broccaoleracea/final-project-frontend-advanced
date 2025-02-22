@@ -1,4 +1,3 @@
-@import "../../node_modules/flowbite/src/themes/default.css";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 @tailwind base;
@@ -12,8 +11,6 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@source "../node_modules/flowbite";
-@plugin "flowbite/plugin"
 
 :root {
   --background: ;
