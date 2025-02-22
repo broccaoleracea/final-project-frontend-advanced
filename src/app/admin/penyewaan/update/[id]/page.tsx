@@ -295,7 +295,6 @@ export default function PenyewaanPage() {
       
 
   return (
-    <div className="ml-64">
       <EditPenyewaanView
         formData={formData}
         detailData={detailData}
@@ -308,6 +307,5 @@ export default function PenyewaanPage() {
         handleDetailChange={handleDetailChange}
         handleSubmit={handleSubmit}
       />
-    </div>
   );
 }

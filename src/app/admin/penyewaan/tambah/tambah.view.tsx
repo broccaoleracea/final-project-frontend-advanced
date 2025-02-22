@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 interface TambahPenyewaanViewProps {
   formData: any;
@@ -36,28 +37,20 @@ const TambahPenyewaanView: React.FC<TambahPenyewaanViewProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
-      </div>
+      <FullPageSpinner/>
     );
   }
 
   // Error state
   if (isPelangganError) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="text-red-600 text-lg font-semibold">
-          Gagal memuat data pelanggan!
-        </div>
-      </div>
-    );
+    throw new Error("gagal memuat daya!")
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl border border-gray-300">
+      <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
+        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl border border-gray-300">
         {/* Judul Form */}
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+        <h2 className="text-2xl font-bold  mb-2 text-gray-800">
           Form Tambah Penyewaan
         </h2>
 

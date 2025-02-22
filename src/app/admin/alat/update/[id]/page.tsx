@@ -10,6 +10,7 @@ import {
 import UpdateAlatView from "./update.view";
 import { FormDataType } from "@/app/admin/alat/update/[id]/update.type";
 import { toast } from "react-toastify";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
 const UpdateAlatContainer: React.FC = () => {
   const { id } = useParams();
@@ -102,9 +103,7 @@ const UpdateAlatContainer: React.FC = () => {
 
   if (isAlatLoading || isKategoriLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
-      </div>
+    <FullPageSpinner />
     );
   }
 

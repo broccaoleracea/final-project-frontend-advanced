@@ -48,7 +48,7 @@ export default function RootLayout({
           <Sidebar />
           <div className="flex flex-col flex-1 h-full w-full">
             <Navbar />
-                <main className="flex-1 p-4 overflow-y-auto">{children}</main>
+                <main className="flex-1  pb-12 overflow-y-auto">{children}</main>
                 <ToastContainer position="top-right" autoClose={3000} />
             <Footer />
           </div>

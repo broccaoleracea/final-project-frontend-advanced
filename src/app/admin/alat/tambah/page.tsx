@@ -91,7 +91,6 @@ export default function AlatComponent() {
     const kategori: Kategori[] = kategoriResponse?.data || [];
 
     return (
-        <div className="ml-64">
             <TambahAlat
                 formData={formData}
                 kategori={kategori}
@@ -101,6 +100,5 @@ export default function AlatComponent() {
                 onChange={handleChange}
                 onSubmit={handleSubmit}
             />
-        </div>
     );
 }

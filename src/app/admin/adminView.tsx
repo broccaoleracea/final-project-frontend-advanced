@@ -22,15 +22,15 @@ const AdminView: React.FC<PelangganViewProps> = ({ totalBarang, totalStok, total
 
         <div className="grid grid-cols-3 gap-8 mt-12 mb-12 w-full">
           <div className="bg-blue-200 p-8 rounded-2xl shadow-md text-center">
-            <h3 className="text-3xl font-bold">{totalBarang}</h3>
+            <h3 className="text-3xl font-bold text-gray-800">{totalBarang}</h3>
             <p className="text-gray-600 text-lg">Total Barang</p>
           </div>
           <div className="bg-green-200 p-8 rounded-2xl shadow-md text-center">
-            <h3 className="text-3xl font-bold">{totalStok}</h3>
+            <h3 className="text-3xl font-bold text-gray-800">{totalStok}</h3>
             <p className="text-gray-600 text-lg">Total Stok</p>
           </div>
           <div className="bg-purple-200 p-8 rounded-2xl shadow-md text-center">
-            <h3 className="text-3xl font-bold">{totalKategori}</h3>
+            <h3 className="text-3xl font-bold text-gray-800">{totalKategori}</h3>
             <p className="text-gray-600 text-lg">Total Kategori</p>
           </div>
         </div>

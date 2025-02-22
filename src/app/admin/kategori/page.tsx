@@ -53,7 +53,7 @@ export default function KategoriPage() {
     const kategori = kategoriResponse?.data || [];
 
     return (
-        <div className="ml-64">
+        
             <KategoriView
                 kategori={kategori}
                 isDeleting={isDeleting}
@@ -63,6 +63,6 @@ export default function KategoriPage() {
                 handleDelete={handleDelete}
                 showConfirmationPopup={showConfirmationPopup}
             />
-        </div>
+        
     );
 }

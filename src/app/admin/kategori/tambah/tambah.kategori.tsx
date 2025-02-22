@@ -16,15 +16,16 @@ export default function KategoriForm({
                                          onSubmitAction,
                                      }: KategoriFormProps) {
     return (
-        <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md border border-gray-200">
-            <h2 className="text-center text-4xl font-bold text-gray-900">
+        <div className="max-w-lg  w-full  mx-auto mt-10 bg-white p-6 rounded-lg shadow-md border border-gray-300">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
                 Tambah Kategori
-            </h2>
-            <form className="space-y-4" onSubmit={onSubmitAction}>
-                <div>
+            </h1>
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <form onSubmit={onSubmitAction}>
+                <div className="mb-4">
                     <label
                         htmlFor="kategoriNama"
-                        className="block text-lg font-medium text-gray-700 mb-2"
+                        className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         Nama Kategori
                     </label>
@@ -35,22 +36,22 @@ export default function KategoriForm({
                         required
                         value={kategoriNama}
                         onChange={onChangeAction}
-                        className="block w-full rounded-md border border-yellow-400 px-4 py-3 text-lg text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400"
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:border-yellow-400 focus:ring-yellow-400 placeholder-gray-400 text-sm"
                         placeholder="Masukkan nama kategori"
                     />
                 </div>
-                {error && <div className="text-red-600 text-base">{error}</div>}
-                <div>
+                <div className="mb-4">
                     <button
-                    id="submit"
+                        id="submit"
                         type="submit"
                         disabled={isLoading}
-                        className="w-full rounded-md border border-transparent bg-yellow-400 py-3 px-6 text-lg font-medium text-black hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-400 text-white px-3 py-2 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isLoading ? "Menambahkan..." : "Tambah"}
                     </button>
                 </div>
             </form>
         </div>
+
     );
 }

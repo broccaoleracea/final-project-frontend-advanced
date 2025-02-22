@@ -11,7 +11,6 @@ import TambahPelanggan from "@/app/admin/pelanggan/tambah/tambah.pelanggan.view"
 import { toast } from "react-toastify";
 import {Pelanggan} from "@/types/dataTypes";
 
-// Define the shape of your form data.
 interface PelangganFormData {
     pelanggan_nama: string;
     pelanggan_alamat: string;
@@ -22,35 +21,32 @@ interface PelangganFormData {
 export default function TambahPelangganContainer() {
     const router = useRouter();
 
-    // Local state for the form data.
+    
     const [formData, setFormData] = useState<PelangganFormData>({
         pelanggan_nama: "",
         pelanggan_alamat: "",
         pelanggan_noTelp: "",
         pelanggan_email: "",
     });
-    // For the select input.
+    
     const [selectedJenis, setSelectedJenis] = useState<string>("");
-    // For file upload.
+    
     const [file, setFile] = useState<File | null>(null);
-    // For error and success messages.
+    
     const [error, setError] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
-
-    // Fetch kategori options.
+    
     const { data: kategoriResponse, isLoading: isKategoriLoading, isError: isKategoriError } =
         useKategoriGetQuery();
-
-    // Mutation hook for adding pelanggan.
+    
     const [addPelanggan, { isLoading: isAddingPelanggan }] = usePelangganPostMutation();
     // Mutation hook for uploading pelanggan data (e.g. file).
     const [addPelangganData, { isLoading: isAddingPelangganData }] =
         usePelangganDataPostMutation();
 
-    // Memoize the options for jenis pelanggan.
+    
     const jenisPelangganOptions = useMemo<string[]>(() => ["KTP", "SIM"], []);
-
-    // Handle text input changes.
+    
     const handleChange = useCallback(
         (
             e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,14 +57,14 @@ export default function TambahPelangganContainer() {
         []
     );
 
-    // Handle file upload.
+
     const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setFile(e.target.files[0]);
         }
     }, []);
 
-    // Submit the form.
+
     const handleSubmit = useCallback(
         async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
@@ -124,11 +120,11 @@ export default function TambahPelangganContainer() {
     if (isKategoriLoading) return <div>Loading kategori...</div>;
     if (isKategoriError) return <div>Gagal memuat kategori!</div>;
 
-    // Assume kategoriResponse.data is an array of kategori.
+
     const kategori = kategoriResponse?.data || [];
 
     return (
-        <div className="ml-64">
+        
             <TambahPelanggan
                 formData={formData}
                 selectedJenis={selectedJenis}
@@ -142,6 +138,6 @@ export default function TambahPelangganContainer() {
                 onFileChange={handleFileChange}
                 onSubmit={handleSubmit}
             />
-        </div>
+
     );
 }

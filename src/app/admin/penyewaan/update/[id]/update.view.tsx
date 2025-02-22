@@ -51,8 +51,8 @@ const EditPenyewaanView: React.FC<UpdateViewProps> = ({
 
     return (
         <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl border border-gray-300">
-                <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl border border-gray-300">
+                <h2 className="text-2xl font-bold  mb-4 text-gray-800">
                     Form Edit Penyewaan
                 </h2>
                 
@@ -198,7 +198,7 @@ const EditPenyewaanView: React.FC<UpdateViewProps> = ({
                     <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75"
+                            className="w-full px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75"
                             disabled={isUpdating}
                         >
                             {isUpdating ? "Updating..." : "Update Penyewaan"}

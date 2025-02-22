@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState, useMemo } from "react";
+import React, {useCallback, useState, useMemo} from "react";
 import AlatView from "./alatView";
 import {
     useAlatGetQuery,
@@ -26,7 +26,7 @@ export default function Alat() {
         isError: isKategoriError,
     } = useKategoriGetQuery();
 
-    const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
+    const [deleteAlat, {isLoading: isDeleting}] = useAlatDeleteMutation();
 
     const handleDelete = useCallback(async () => {
         if (alatIdToDelete === null) return;
@@ -60,7 +60,7 @@ export default function Alat() {
     }, [alatResponse, kategoriResponse]);
 
     return (
-        <div className="ml-64">
+        <>
             <AlatView
                 alatWithKategori={alatWithKategori}
                 isLoading={isAlatLoading || isKategoriLoading}
@@ -71,7 +71,7 @@ export default function Alat() {
                 setShowPopup={setShowPopup}
                 handleDelete={handleDelete}
             />
-            {showPopup && <DeletePopup onClose={() => setShowPopup(false)} onDelete={handleDelete} />}
-        </div>
+            {showPopup && <DeletePopup onClose={() => setShowPopup(false)} onDelete={handleDelete}/>}
+        </>
     );
 }

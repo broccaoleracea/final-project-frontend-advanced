@@ -27,11 +27,11 @@ const TambahAlat: React.FC<TambahAlatProps> = ({
                                                }) => {
   return (
       <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl border border-gray-300">
-          <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        <div className="bg-white shadow-lg rounded-lg p-4 w-full max-w-4xl border border-gray-300">
+          <h2 className="text-2xl font-bold  mb-6 text-gray-800">
             Tambah Alat
           </h2>
-          {error && <div className="text-sm text-red-500 mb-4">{error}</div>}
+          {error && <div className="text-sm text-red-500 mb-2">{error}</div>}
           {successMessage && <div className="text-sm text-green-500 mb-4">{successMessage}</div>}
 
           <form onSubmit={onSubmit} className="text-gray-700">

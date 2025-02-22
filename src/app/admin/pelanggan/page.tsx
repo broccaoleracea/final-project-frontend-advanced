@@ -47,7 +47,7 @@ export default function PenyewaanPage() {
     }, []);
 
     return (
-        <div className="ml-64">
+        
             <PelangganView
                 pelanggan={pelanggan}
                 isLoading={isPelangganLoading}
@@ -59,6 +59,5 @@ export default function PenyewaanPage() {
                 setShowPopup={setShowPopup}
                 error={error}
             />
-        </div>
     );
 }

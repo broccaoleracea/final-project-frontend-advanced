@@ -19,7 +19,7 @@ export default function EditKategoriForm({
 }: EditKategoriFormProps) {
   if (isLoading) {
     return (
-      <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+      <div className="max-w-md mx-auto min-h-screen bg-white p-6 rounded-lg shadow-md">
         <div className="space-y-4">
           {[...Array(3)].map((_, i) => (
             <div
@@ -39,7 +39,8 @@ export default function EditKategoriForm({
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+      <div className="flex items-center mx-auto w-full h-full min-h-screen my-auto bg-gray-100 ">
+    <div className=" max-w-lg w-full  mx-auto  bg-white p-6 rounded-lg shadow-md border border-gray-300">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
         Edit Kategori
       </h2>
@@ -69,5 +70,6 @@ export default function EditKategoriForm({
         </button>
       </form>
     </div>
+      </div>
   );
 }
