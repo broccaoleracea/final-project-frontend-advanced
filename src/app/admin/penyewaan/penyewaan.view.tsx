@@ -1,123 +1,203 @@
 "use client";
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePenyewaanGetQuery } from "@/state/api/dataApi";
-import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import {FaPlus, FaTrash} from "react-icons/fa"; // Import Trash Icon
+import Popup from "@/app/portal/page";
+import React from "react";
+import {FaPencil} from "react-icons/fa6";
 
-const RentalPage = () => {
-  const [error, setError] = useState("");
-  
-  const {
-    data: penyewaanResponse,
-    isLoading,
-    isError,
-  } = usePenyewaanGetQuery();
-  
+interface RentalViewProps {
+    rentedItems: any[];
+    pelangganMap: Map<number, any>;
+    alatMap: Map<number, any>;
+    penyewaanDetailMap: Map<number, any[]>;
+    showPopup: boolean;
+    setShowPopup: (state: boolean) => void;
+    showConfirmationPopup: (id: number) => void;
+    handleDelete: () => void;
+}
 
-  if (isLoading) {
-    return <FullPageSpinner />;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-red-600 text-center py-8">
-        Gagal memuat data penyewaan. Silakan coba lagi nanti.
-      </div>
-    );
-  }
-
-  const rentedItems = penyewaanResponse?.data || [];
-
-  return (
-    <div className="p-4 min-h-screen bg-gray-100 overflow-y-auto">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Barang yang Disewa</h1>
-        <Link
-            href="/admin/penyewaan/tambah" // Navigasi ke halaman tambah alat
-            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
-          >
-            Tambah Alat
-          </Link>
-      </div>
-
-      {/* Table */}
-      <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
-          <table className="w-full border-collapse text-lg">
-          {/* Table Header */}
-          <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
-            <tr>
-              <th>Nama Barang</th>
-              <th>Kategori</th>
-              <th>Durasi</th>
-              <th>Penyewa</th>
-              <th>Status</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          {/* Table Body */}
-          <tbody>
-            {rentedItems.length > 0 ? (
-              rentedItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>{item.rentalPeriod}</td>
-                  <td>{item.renter}</td>
-                  <td
-                    className={`${
-                      item.status === "Dikembalikan"
-                        ? "bg-green-50 text-green-700"
-                        : "bg-yellow-50 text-yellow-700"
-                    }`}
-                  >
-                    {item.status}
-                  </td>
-                  <td>
-                    <div className="flex gap-2">
-                      {/* Tombol Edit */}
-                      <Link
-                        href={`/rental/edit/${item.id}`}
-                        className="btn btn-sm btn-secondary"
-                      >
-                        Edit
-                      </Link>
-                      {/* Tombol Hapus */}
-                      <button
-                        className="btn btn-sm btn-error"
-                        onClick={() => handleDelete(item.id)} // Panggil fungsi hapus
-                      >
-                        Hapus
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="text-center py-4">
-                  Tidak ada barang yang disewa saat ini.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-  
-  const handleDelete = async (id: number) => {
-    try {
-      console.log("Menghapus barang dengan ID:", id);
-      // TODO : add delete mutation -kat
-      // Implementasi mutation delete di sini jika diperlukan
-      // Contoh: await deletePenyewaan(id).unwrap();
-      console.log("Barang berhasil dihapus");
-    } catch (err: any) {
-      console.error("Error saat menghapus barang:", err);
-      setError(err?.data?.message || "Gagal menghapus barang.");
+const getPaymentStatusClass = (status: string) => {
+    switch (status) {
+        case "Lunas":
+            return "bg-green-100 text-green-700";
+        case "Belum_Dibayar":
+            return "bg-red-100 text-red-700";
+        case "DP":
+            return "bg-yellow-100 text-yellow-700";
+        default:
+            return "bg-gray-100 text-gray-700";
     }
-  };
 };
 
-export default RentalPage;
+const getReturnStatusClass = (status: string) => {
+    switch (status) {
+        case "Belum_Kembali":
+            return "bg-red-100 text-red-700 px-3 py-1";
+        case "Sudah_Kembali":
+            return "bg-green-100 text-green-700 px-3 py-1 ";
+        default:
+            return "bg-gray-100 text-gray-700 px-3 py-1";
+    }
+};
+
+const RentalView = ({
+                        rentedItems,
+                        pelangganMap,
+                        alatMap,
+                        penyewaanDetailMap,
+                        showPopup,
+                        setShowPopup,
+                        showConfirmationPopup,
+                        handleDelete,
+                    }: RentalViewProps) => {
+    return (
+        <div className="flex min-h-screen bg-gray-100">
+            <div className="w-full p-8">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold text-gray-800">Daftar Penyewaan</h1>
+                    <Link
+                        href="/admin/penyewaan/tambah"
+                        className="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black white text-sm font-medium rounded-md transition \"
+                    >
+                        <span className="inline-flex items-center">
+                              <FaPlus className="mr-2" size={16}/> Tambah Penyewaan
+                            </span>
+
+                    </Link>
+                </div>
+
+                {/* Table */}
+                <div className="overflow-hidden border border-gray-300 rounded-lg bg-white shadow">
+                    <table className="w-full text-sm">
+                        <thead className="bg-gray-100 text-gray-700 border-gray-300">
+                        <tr>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Nama Barang
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Penyewa
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Status Pembayaran
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Tanggal Pinjam
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Tanggal Kembali
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Jumlah Harga
+                            </th>
+                            <th className="px-3 py-2 text-left font-medium">
+                                Status Pengembalian
+                            </th>
+                            <th className="py-2 px-3 text-center font-semibold border-b border-gray-300">
+                                Aksi
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody className="text-gray-800">
+                        {rentedItems?.map((item, index) => {
+                            const pelanggan = pelangganMap.get(item.penyewaan_pelanggan_id);
+                            const details = penyewaanDetailMap.get(item.penyewaan_id) || [];
+
+                            return details.map((detail) => {
+                                const alat = alatMap.get(
+                                    Number(detail.penyewaan_detail_alat_id)
+                                );
+                                const alatNama = alat?.alat_nama || "-";
+                                const totalHarga = item.penyewaan_totalHarga.toLocaleString()
+
+                                return (
+                                    <tr
+                                        key={detail.penyewaan_detail_id}
+                                        className={` ${
+                                            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                        } hover:bg-gray-100`}
+                                    >
+                                        <td className="px-3 py-2">{alatNama}</td>
+                                        <td className="px-3 py-2">
+                                            {pelanggan?.pelanggan_nama || "-"}
+                                        </td>
+                                        <td
+                                            className={`px-3 py-2 text-center font-medium  ${getPaymentStatusClass(
+                                                item.status_pembayaran
+                                            )}`}
+                                        >
+                                            {item.status_pembayaran.replace("_", " ")}
+                                        </td>
+                                        <td className="px-3 py-2">
+                                            {new Date(item.penyewaan_tglSewa).toLocaleDateString() ||
+                                                "-"}
+                                        </td>
+                                        <td className="px-3 py-2">
+                                            {new Date(
+                                                item.penyewaan_tglKembali
+                                            ).toLocaleDateString() || "-"}
+                                        </td>
+                                        <td className="px-3 py-2">
+                                            Rp {totalHarga.toLocaleString()}
+                                        </td>
+                                        <td
+                                            className={`px-3 py-2 font-medium text-center ${getReturnStatusClass(
+                                                item.status_pengembalian
+                                            )}`}
+                                        >
+                                            {item.status_pengembalian.replace("_", " ")}
+                                        </td>
+                                        <td className="px-3 py-2 text-center">
+                                            <div className="flex justify-end gap-2">
+                                            <Link
+                                                href={`/admin/penyewaan/update/${item.penyewaan_id}`}
+                                            >
+                                                <button
+                                                    className="px-3 py-2 bg-blue-400 focus:ring-blue-400 hover:bg-blue-500 text-white text-sm rounded-md transition">
+                                                    <FaPencil size={16}/>
+                                                </button>
+                                            </Link>
+                                            <button
+                                                onClick={() => showConfirmationPopup(item.penyewaan_id)}
+                                                className="px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-md transition"
+                                            >
+                                                <FaTrash size={16}/>
+                                            </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                            });
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+
+                {showPopup && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 className="text-xl font-bold text-gray-800 mb-4">
+                                Yakin hendak menghapus penyewaan ini?
+                            </h2>
+                            <div className="flex justify-end">
+                                <button
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-md mr-2 hover:bg-gray-600 transition duration-300 ease-in-out"
+                                    onClick={() => setShowPopup(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default RentalView;

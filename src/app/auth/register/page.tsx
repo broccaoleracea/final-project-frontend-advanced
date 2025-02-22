@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRegisterMutation } from "@/state/api/authApi";
 import { useAppDispatch } from "@/hooks/hooks";
 import { useRouter } from "next/navigation";
+import {toast} from "react-toastify";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
@@ -19,9 +20,11 @@ export default function RegisterPage() {
         setError("");
         try {
             const result = await register({ name, email, password }).unwrap();
-            router.push("/auth/login");
+            toast.success("Daftar akun berhasil!");
+            useRouter().push("/auth/login");
         } catch (err) {
-            setError(err?.data?.message || "Registrasi gagal. Mohon coba lagi.");
+            const errorMessage = (err as any)?.data?.message || "Registrasi gagal. Mohon coba lagi.";
+            toast.error(errorMessage);
         }
     };
 
@@ -30,10 +33,10 @@ export default function RegisterPage() {
             name={name}
             email={email}
             password={password}
-            setName={setName}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            handleSubmit={handleSubmit}
+            setNameAction={setName}
+            setEmailAction={setEmail}
+            setPasswordAction={setPassword}
+            handleSubmitAction={handleSubmit}
             error={error}
             isLoading={isLoading}
         />

@@ -14,11 +14,13 @@ interface RefreshTokenRequest {
     refreshToken: string;
 }
 
-interface RefreshResponse {
-    user: string;
-    accessToken: string;
-    refreshToken: string;
+
+interface ApiRefreshResponse {
+    success: boolean;
+    access_token: string;
+    message: string;
 }
+
 
 interface RegisterRequest {
     name: string;

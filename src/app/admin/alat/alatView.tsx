@@ -1,188 +1,148 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link"; // Import Link untuk navigasi
-import {
-  useAlatGetQuery,
-  useKategoriGetQuery,
-  useAlatDeleteMutation,
-} from "@/state/api/dataApi";
-import Popup from "@/app/portal/page";
+import React from "react";
+import Link from "next/link";
+import {FaPlus, FaTrash} from "react-icons/fa";
+import {FaPencil} from "react-icons/fa6";
+import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
 
-const AlatView = () => {
-  const [error, setError] = useState("");
+type AlatViewProps = {
+    alatWithKategori: {
+        alat_id: number;
+        alat_nama: string;
+        alat_stok: number;
+        alat_deskripsi?: string;
+        kategori_nama: string;
+    }[];
+    isLoading: boolean;
+    isError: boolean;
+    isDeleting: boolean;
+    showPopup: boolean;
+    showConfirmationPopup: (id: number) => void;
+    setShowPopup: (show: boolean) => void;
+    handleDelete: () => void;
+};
 
-  const [showPopup, setShowPopup] = useState(false); // Untuk mengontrol tampilan popup
-  const [alatIdToDelete, setAlatIdToDelete] = useState<number | null>(null); // Untuk menyimpan ID alat yang akan dihapus
-  // Query untuk mendapatkan data alat dan kategori
-  const {
-    data: alatResponse,
-    refetch: refetchAlat,
-    isLoading: isAlatLoading,
-    isError: isAlatError,
-  } = useAlatGetQuery();
-  const {
-    data: kategoriResponse,
-    isLoading: isKategoriLoading,
-    isError: isKategoriError,
-  } = useKategoriGetQuery();
-
-  // Mutation untuk menghapus alat
-  const [deleteAlat, { isLoading: isDeleting }] = useAlatDeleteMutation();
-
-  const handleDelete = async () => {
-    if (alatIdToDelete === null) return;
-  
-    try {
-      console.log("Menghapus alat dengan ID:", alatIdToDelete);
-      await deleteAlat(alatIdToDelete).unwrap(); // Panggil mutation untuk menghapus alat
-      await refetchAlat(); // Paksa refetch data alat untuk memastikan data terbaru
-      console.log("Alat berhasil dihapus");
-      setShowPopup(false); // Tutup popup setelah penghapusan berhasil
-    } catch (err: any) {
-      console.error("Error saat menghapus alat:", err);
-      setError(err?.data?.message || "Gagal menghapus alat.");
+const AlatView: React.FC<AlatViewProps> = ({
+                                               alatWithKategori,
+                                               isLoading,
+                                               isError,
+                                               isDeleting,
+                                               showPopup,
+                                               showConfirmationPopup,
+                                           }) => {
+    if (isLoading) {
+        return (
+            <FullPageSpinner/>
+        );
     }
-  };
 
-  const showConfirmationPopup = (id: number) => {
-    setAlatIdToDelete(id); // Simpan ID alat yang akan dihapus
-    setShowPopup(true); // Tampilkan popup
-  };
+    if (isError) {
+        throw new Error("Gagal memuat data!")
+    }
 
-  // Loading state
-  if (isAlatLoading || isKategoriLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
-      </div>
-    );
-  }
+        <div className="flex min-h-screen bg-gray-100">
+            <div className="w-full p-8">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
+                    <Link
+                        href="/admin/alat/tambah"
+                        className="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black white text-sm font-medium rounded-md transition \"
+                    >
+                        <span className="inline-flex items-center">
+                              <FaPlus className="mr-2" size={16}/> Tambah Alat
+                            </span>
 
-  // Error state
-  if (isAlatError || isKategoriError) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-red-500 text-lg font-semibold">
-          Gagal memuat data!
-        </div>
-      </div>
-    );
-  }
+                    </Link>
+                </div>
 
-  // Data alat dan kategori
-  const alat = alatResponse?.data || [];
-  const kategori = kategoriResponse?.data || [];
-
-  // Gabungkan data alat dengan kategori
-  const alatWithKategori = alat.map((item) => {
-    const kategoriData = kategori.find(
-      (kat) => kat.kategori_id === item.alat_kategori_id
-    );
-    return {
-      ...item,
-      kategori_nama: kategoriData ? kategoriData.kategori_nama : "-",
-    };
-  });
-
-  return (
-    <div className="flex min-h-screen bg-gray-100">
-      <div className="w-full p-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Daftar Alat</h1>
-          <Link
-            href="/admin/alat/tambah" // Navigasi ke halaman tambah alat
-            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition duration-300 ease-in-out"
-          >
-            Tambah Alat
-          </Link>
-        </div>
-        {/* Table */}
-        <div className="overflow-hidden border border-gray-200 rounded-lg shadow-md bg-white">
-          <table className="w-full border-collapse text-lg">
-            <thead className="bg-gradient-to-r from-blue-200 to-indigo-200 text-gray-800">
-              <tr>
-                <th className="py-5 px-8 text-left font-semibold">Kategori</th>
-                <th className="py-5 px-8 text-left font-semibold">
-                  Nama Barang
-                </th>
-                <th className="py-5 px-8 text-left font-semibold">Stok</th>
-                <th className="py-5 px-8 text-left font-semibold">Deskripsi</th>
-                <th className="py-5 px-8 text-left font-semibold">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {alatWithKategori.length > 0 ? (
-                alatWithKategori.map((item, index) => (
-                  <tr
-                    key={item.alat_id}
-                    className={`transition-all duration-300 ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
-                    } hover:bg-indigo-50`}
-                  >
-                    <td className="py-6 px-8 border-b text-gray-700 font-medium">
-                      {item.kategori_nama || "-"}
-                    </td>
-                    <td className="py-6 px-8 border-b text-gray-700 font-semibold">
-                      {item.alat_nama}
-                    </td>
-                    <td className="py-6 px-8 border-b text-center">
+                <div className="overflow-hidden border border-gray-300 rounded-lg bg-white shadow">
+                    <table className="w-full text-sm">
+                        <thead className="bg-gray-100 text-gray-700">
+                        <tr>
+                            <th className="py-2 px-3 text-left font-medium text-gray-600">
+                                Kategori
+                            </th>
+                            <th className="py-2 px-3 text-left font-medium text-gray-600">
+                                Nama Barang
+                            </th>
+                            <th className="py-2 px-3 text-left font-medium text-gray-600">
+                                Stok
+                            </th>
+                            <th className="py-2 px-3 text-left font-medium text-gray-600">
+                                Deskripsi
+                            </th>
+                            <th className="py-2 px-3 text-left font-medium text-gray-600">
+                                Aksi
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {alatWithKategori.length > 0 ? (
+                            alatWithKategori.map((item, index) => (
+                                <tr
+                                    key={item.alat_id}
+                                    className={`transition-all duration-200  ${
+                                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                    } hover:bg-gray-100`}
+                                >
+                                    <td className="px-3 py-2  border-b text-gray-700">
+                                        {item.kategori_nama || "-"}
+                                    </td>
+                                    <td className="px-3 py-2  border-b font-medium text-gray-800">
+                                        {item.alat_nama}
+                                    </td>
+                                    <td className="px-3 py-2  border-b text-center">
                       <span
-                        className={`px-4 py-2 text-base font-semibold rounded-full shadow-md ${
-                          item.alat_stok > 10
-                            ? "bg-green-50 text-green-700"
-                            : "bg-red-50 text-red-700"
-                        }`}
+                          className={`px-3 py-1 rounded-md text-sm ${
+                              item.alat_stok > 0
+                                  ? "bg-green-100 text-green-700"
+                                  : "bg-red-100 text-red-700"
+                          }`}
                       >
                         {item.alat_stok || 0}
                       </span>
-                    </td>
-                    <td className="py-6 px-8 border-b text-gray-600">
-                      {item.alat_deskripsi || "-"}
-                    </td>
-                    <td className="py-6 px-8 border-b text-center">
-                      {/* Tombol Edit */}
-                      <Link
-                        href={`/admin/alat/update/${item.alat_id}`} // Navigasi ke halaman update
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 transition duration-300 ease-in-out"
-                      >
-                        Edit
-                      </Link>
-                      {/* Tombol Hapus */}
-                      <button
-                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        onClick={() => showConfirmationPopup(item.alat_id)} // Tampilkan popup
-                        disabled={isDeleting} // Nonaktifkan tombol saat proses penghapusan
-                      >
-                        {isDeleting ? "Menghapus..." : "Hapus"}
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="py-6 px-8 text-center text-gray-500"
-                  >
-                    Tidak ada alat untuk ditampilkan.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                                    </td>
+                                    <td className="px-3 py-2  border-b text-gray-600">
+                                        {item.alat_deskripsi || "-"}
+                                    </td>
+                                    <td className="px-3 py-2  border-b flex gap-2">
+                                        <div className="flex justify-end gap-2">
+                                            <Link
+                                                href={`/admin/alat/update/${item.alat_id}`}
+                                                id="update"
+                                                className="px-3 py-2 text-white rounded-md bg-blue-400 focus:ring-blue-400 hover:bg-blue-500 focus:ring-2  text-sm"
+                                            >
+                                                <FaPencil size={16}/>
+                                            </Link>
+                                            <button
 
-        {/* Popup Konfirmasi */}
-        {showPopup && (
-          <Popup
-            onClose={() => setShowPopup(false)} // Tutup popup
-            onDelete={handleDelete} // Panggil fungsi hapus
-          />
-        )}
-      </div>
-    </div>
-  );
+                                                className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-400 text-sm"
+                                                onClick={() => showConfirmationPopup(item.alat_id)}
+                                                disabled={isDeleting}
+                                            >
+                                                <FaTrash size={16}/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={5}
+                                    className="py-4 px-4 text-center text-gray-500"
+                                >
+                                    Tidak ada alat untuk ditampilkan.
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default AlatView;

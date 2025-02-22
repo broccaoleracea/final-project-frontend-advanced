@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import KategoriView from "./kategori.view";
-import { useKategoriDeleteMutation, useKategoriGetQuery } from "@/state/api/dataApi";
+import {useKategoriDeleteMutation, useKategoriGetQuery} from "@/state/api/dataApi";
 import FullPageSpinner from "@/Components/Spinner/FullPageSpinner";
+import {toast} from "react-toastify";
 
 export default function KategoriPage() {
     const [error, setError] = useState("");
@@ -17,19 +18,18 @@ export default function KategoriPage() {
         refetch: refetchKategori,
     } = useKategoriGetQuery();
 
-    const [del, { isLoading: isDeleting }] = useKategoriDeleteMutation();
+    const [del, {isLoading: isDeleting}] = useKategoriDeleteMutation();
 
     const handleDelete = async () => {
         if (kategoriIdToDelete === null) return;
         try {
             console.log("Menghapus kategori dengan ID:", kategoriIdToDelete);
             await del(kategoriIdToDelete).unwrap();
+            toast.success("Penghapusan data berhasil.");
             await refetchKategori();
-            console.log("Kategori berhasil dihapus");
             setShowPopup(false);
         } catch (err: any) {
-            console.error("Error saat menghapus kategori:", err);
-            setError(err?.data?.message || "Gagal menghapus kategori.");
+            toast.error(err?.data?.message || "Gagal menghapus kategori.");
         }
     };
 
@@ -39,7 +39,7 @@ export default function KategoriPage() {
     };
 
     if (isKategoriLoading) {
-        return <FullPageSpinner />;
+        return <FullPageSpinner/>;
     }
 
     if (isKategoriError) {
@@ -53,7 +53,7 @@ export default function KategoriPage() {
     const kategori = kategoriResponse?.data || [];
 
     return (
-        <div className="ml-64">
+        
             <KategoriView
                 kategori={kategori}
                 isDeleting={isDeleting}
@@ -63,6 +63,6 @@ export default function KategoriPage() {
                 handleDelete={handleDelete}
                 showConfirmationPopup={showConfirmationPopup}
             />
-        </div>
+        
     );
 }

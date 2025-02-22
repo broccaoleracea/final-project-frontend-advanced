@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface PenyewaanDetailState {
-    penyewaanId: number;
-    alatId: number;
-    jumlah: number;
-    subHarga: number;
+export interface PenyewaanDetailState {
+    penyewaan_detail_id: number;
+    penyewaan_detail_penyewaan_id: number;
+    penyewaan_detail_alat_id: number;
+    penyewaan_detail_jumlah: string;
+    penyewaan_detail_subHarga: number;
 }
 
 const initialState: PenyewaanDetailState = {
-    penyewaanId: 0,
-    alatId: 0,
-    jumlah: 0,
-    subHarga: 0,
+    penyewaan_detail_id: 0,
+    penyewaan_detail_penyewaan_id: 0,
+    penyewaan_detail_alat_id: 0,
+    penyewaan_detail_jumlah: '',
+    penyewaan_detail_subHarga: 0
 };
 
 const penyewaanDetailSlice = createSlice({

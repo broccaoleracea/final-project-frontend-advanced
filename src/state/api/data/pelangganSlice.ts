@@ -1,24 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface KategoriState {
-    nama: string;
+
+export interface PelangganState {
+    pelanggan_id: number;
+    pelanggan_nama: string;
+    pelanggan_alamat: string;
+    pelanggan_noTelp: string;
+    pelanggan_email: string;
 }
 
-const initialState: KategoriState = {
-    nama: '',
+const initialState: PelangganState = {
+    pelanggan_id: 0,
+    pelanggan_nama: '',
+    pelanggan_alamat: '',
+    pelanggan_noTelp: '',
+    pelanggan_email: ''
 };
 
-const kategoriSlice = createSlice({
-    name: 'kategori',
+const pelangganSlice = createSlice({
+    name: 'pelanggan',
     initialState,
     reducers: {
-        setKategori: (state, action: PayloadAction<Partial<KategoriState>>) => {
+        setPelanggan: (state, action: PayloadAction<Partial<PelangganState>>) => {
             return { ...state, ...action.payload };
         },
-        resetKategori: () => initialState,
+        resetPelanggan: () => initialState,
     },
 });
 
-export const { setKategori, resetKategori } = kategoriSlice.actions;
+export const { setPelanggan, resetPelanggan } = pelangganSlice.actions;
 
-export default kategoriSlice.reducer;
+export default pelangganSlice.reducer;
