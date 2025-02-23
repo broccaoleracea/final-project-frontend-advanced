@@ -1,4 +1,10 @@
-"use client"
+export const metadata = {
+    title: "GacorCihuy - Admin",
+    description: "Segala kebutuhanmu, ada disini!",
+    icons: {
+        icon: "/logo/key-lineal-color.ico",
+    },
+};
 export default function AdminLayout({
                                        children,
                                    }: Readonly<{ children: React.ReactNode }>) {
