@@ -25,7 +25,7 @@ function ResetPasswordContent() {
         event.preventDefault();
 
         if (password !== passwordConfirm) {
-            console.error("Passwords do not match");
+            toast.error("Konfirmasi password tidak sesuai.")
             return;
         }
 
@@ -38,8 +38,18 @@ function ResetPasswordContent() {
             }).unwrap();
             toast.success("Perubahan password berhasil. Anda dapat login dengan password baru");
             router.push("/auth/login");
-        } catch (error) {
-            toast.error("Password reset failed: " + error);
+        }catch (err: any) {
+            const apiErrors = err?.data?.error;
+            if (apiErrors && typeof apiErrors === "object") {
+                //@ts-ignore
+                Object.values(apiErrors).forEach((errorArray: string[]) => {
+                    errorArray.forEach((message) => {
+                        toast.error(message);
+                    });
+                });
+            } else {
+                toast.error("Reset passowrd gagal: " + err.message || "Terdapat error. Mohon coba lagi nanti.");
+            }
         }
     };
 

@@ -15,8 +15,18 @@ const ForgotPassword: React.FC = () => {
         try {
             const response = await forgotPassword({email} ).unwrap();
             toast.success("Mohon cek email anda.");
-        } catch (error) {
-            toast.error("Forgot password request failed:" + error);
+        }catch (err: any) {
+            const apiErrors = err?.data?.error;
+            if (apiErrors && typeof apiErrors === "object") {
+                //@ts-ignore
+                Object.values(apiErrors).forEach((errorArray: string[]) => {
+                    errorArray.forEach((message) => {
+                        toast.error(message);
+                    });
+                });
+            } else {
+                toast.error("Permintaan lupa passowrd gagal: " + err.message || "Terdapat error. Mohon coba lagi nanti.");
+            }
         }
     };
 
